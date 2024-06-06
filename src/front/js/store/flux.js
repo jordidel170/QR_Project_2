@@ -1,3 +1,6 @@
+import loginDispatcher from "./dispatcherLogin";
+import React from 'react'
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -13,14 +16,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			token: null
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-
+			
+			getTokenLogin: async(email, password) => {
+				const login = await loginDispatcher.post(email, password);
+				console.log(login)
+				const store = getStore()
+				setStore({...store, token: login})
+				
+			},
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
