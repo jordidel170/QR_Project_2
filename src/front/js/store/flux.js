@@ -1,6 +1,11 @@
+import loginDispatcher from "./dispatcherLogin";
+import signupDispatcher from "./dispatcherSignup";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			token: null,
+			register: null,
 			message: null,
 			demo: [
 				{
@@ -16,60 +21,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-
-			// getMessage: async () => {
-			// 	try{
-			// 		// fetching data from the backend
-			// 		const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-			// 		const data = await resp.json()
-			// 		setStore({ message: data.message })
-			// 		// don't forget to return something, that is how the async resolves
-			// 		return data;
-			// 	}catch(error){
-			// 		console.log("Error loading message from backend", error)
-			// 	}
-			// },
+		
 
 			
-			getTokenLogin: async(email, password) => {
-				const token = await loginDispatcher(email, password);
-				console.log(token)
-				const store = getStore()
-				if(token && token !="" && token != undefined)setStore({...store, token: token})
-				
+			syncTokenSessionStore: () => {
+                const token = sessionStorage.getItem("token");
+                if (token) {
+                    setStore({ token: token });
+                }
+            },
+            getTokenLogin: async (email, password) => {
+                const token = await loginDispatcher(email, password);
+                if (token) {
+                    sessionStorage.setItem("token", token);
+                    setStore({ token: token })}},
+
+			handleLogOut: () => {
+				sessionStorage.removeItem("token")
+				console.log("Loging out")
+				const store = setStore()
+				setStore({...store, token: null})
 			},
-			// getMessage: async () => {
-			// 	try{
-			// 		// fetching data from the backend
-			// 		const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-			// 		const data = await resp.json()
-			// 		setStore({ message: data.message })
-			// 		// don't forget to return something, that is how the async resolves
-			// 		return data;
-			// 	}catch(error){
-			// 		console.log("Error loading message from backend", error)
-			// 	}
-			// },
+			
+			getUserRegister: async(email, password) => {
+				const data = await signupDispatcher(email,password);
+				console.log(data)
+				return data;
+			},
 
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
+			
+		
 		}
 	};
 };

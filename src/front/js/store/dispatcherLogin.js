@@ -7,8 +7,8 @@ import React from 'react'
 const loginDispatcher = async (email, password) => {
     const response = await fetch(`https://urban-invention-x559rxpg57j63vrg-3001.app.github.dev/api/login`, { 
          method: "POST",
-         CORS: 'Access-Control-Allow-Origin',
          headers: { "Content-Type": "application/json" },
+         CORS: 'Access-Control-Allow-Origin',
          body: JSON.stringify({  "email": email,
             "password": password  }) 
     })
@@ -25,7 +25,6 @@ const loginDispatcher = async (email, password) => {
     // Guarda el token en la sessionStorage
     // También deberías almacenar el usuario en la store utilizando la función setItem
     sessionStorage.setItem("token", data.token);
-
     return data
 }
 
