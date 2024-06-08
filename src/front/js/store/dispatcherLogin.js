@@ -5,11 +5,11 @@ import React from 'react'
 // Se le pasa el email y el password como argumento para indicar que es lo que va a recibir como parametro. 
 
 const loginDispatcher = async (email, password) => {
-    const response = await fetch(`https://urban-invention-x559rxpg57j63vrg-3001.app.github.dev/api/login`, { 
+    const response = await fetch(`http://127.0.0.1:5000/api/auth/login`, { 
          method: "POST",
          headers: { "Content-Type": "application/json" },
          CORS: 'Access-Control-Allow-Origin',
-         body: JSON.stringify({  "email": email,
+         body: JSON.stringify({  "username": email,
             "password": password  }) 
     })
     

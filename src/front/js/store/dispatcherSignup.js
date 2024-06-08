@@ -3,15 +3,15 @@ import React from 'react'
 // Desde este dispatcher se hace la llamada fetch al (lo que debería ser) la base de datos, hace un request y a través del body se pasa la info a confirmar,   
 
 
-const signupDispatcher = async (firstName, lastName, name_of_the_restaurant, email, password) => {
+const signupDispatcher = async (restaurantName,firstName, lastName, email, password) => {
     const requestBody = {
-        "First Name": firstName,
-        "Last Name": lastName,
-        "Name of the restaurant": name_of_the_restaurant,
-        "Email": email,
-        "Password": password,
+        "restaurant name": restaurantName,
+        "first name": firstName,
+        "last name": lastName,
+        "email": email,
+        "password": password,
     }
-    const response = await fetch(`https://urban-invention-x559rxpg57j63vrg-3001.app.github.dev/api/signup`, { 
+    const response = await fetch(`http://127.0.0.1:5000/api/auth/register`, { 
          method: "POST",
          headers: { "Content-Type": "application/json" },
          CORS:'Access-Control-Allow-Origin',

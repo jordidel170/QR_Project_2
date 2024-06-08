@@ -10,8 +10,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 		
-
-			
 			syncTokenSessionStore: () => {
                 const token = sessionStorage.getItem("token");
                 if (token) {
@@ -31,8 +29,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({...store, token: null})
 			},
 			
-			getUserRegister: async(firstName, LastName,name_of_the_restaurant,email, password) => {
-				const data = await signupDispatcher(firstName, LastName, name_of_the_restaurant, email,password);
+			getUserRegister: async(restaurantName,firstName, LastName,email, password) => {
+				const data = await signupDispatcher(restaurantName,firstName, LastName, email,password);
 				console.log(data)
 				return data;
 			},

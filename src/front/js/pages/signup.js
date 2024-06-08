@@ -8,40 +8,81 @@ const [firstName, setFirstName] = useState("")
 const [lastName, setLastName] = useState("")
 const [email, setEmail] = useState("")
 const [password, setPassword] = useState("")
-const [nameOfTheRestaurant, setNameOfTheRestaurant] = useState("")
+const [validatedPassword, setValidatedPassword] = useState("")
+const [restaurantName, setRestaurantName] = useState("")
 const [disable, setDisable] = useState(false)
+const [showPassword, setShowPassword] = useState(false);
 
 const handleSubmit = async (event) => {
-    
     event.preventDefault();
-   
     // Validaciones antes de enviar los datos
-    if (!firstName || !lastName || !nameOfTheRestaurant || !email || !password){
+    if ( !restaurantName || !firstName || !lastName|| !email || !password){
         alert("All fields are required."); 
         setDisable(true)
         setDisable(false)
     } else {
         setDisable(false)
-        await actions.getUserRegister(firstName,lastName,nameOfTheRestaurant,email,password);
+        await actions.getUserRegister(firstName,lastName,restaurantName,email,password);
     }
+}
 
+const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
 }
     return (
              <>
-                 <div className="container_signup">
-                    <form method="post">
-                        <input className="container_signup_firstName" type="text" placeholder="Nombre" value={firstName} onChange={(event) => setFirstName(event.target.value)}></input>
-                        <input className="container_signup_lastName" type="text" placeholder="Apellidos" value={lastName} onChange={(event) => setLastName(event.target.value)}></input>
-                        <input className="container_signup_nameOfTheRestaurant" type="text" placeholder="Nombre del Restaurante" value={nameOfTheRestaurant} onChange={(event) => setNameOfTheRestaurant(event.target.value)}></input>
-                        <input className="container_signup_email" type="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)}></input>
-                        <input className="container_signup_password" type="password" placeholder="Contraseña" size="45" pattern="[a-z]{4,8}" value={password} onChange={(event) => setPassword(event.target.value)}></input>
-                        <button type="submit" disabled={disable} onClick={handleSubmit}>Register</button>
-                     </form>
-                </div>
+               <section>
+        <div className="container">
+            <div className="formulario inputlogin">
+                <form action="#">
+                    <h1>Sign up</h1>
+                    <div className="input-container">
+                    <i className="fa-solid fa-utensils"></i>
+                            <input type="text" required value={restaurantName} onChange={(event) => { setRestaurantName(event.target.value); }}></input>
+                            <label for="#">Nombre del Restaurante</label>
+                            </div>
+                    <div className="input-container">
+                    <i className="fa-solid fa-user"></i>
+                            <input type="text" required value={firstName} onChange={(event) => { setFirstName(event.target.value); }}></input>
+                            <label for="#">Nombre</label>
+                    </div>
+                    <div className="input-container">
+                    <i className="fa-regular fa-user"></i>
+                            <input type="text" required value={lastName} onChange={(event) => { setLastName(event.target.value); }}></input>
+                            <label for="#">Apellidos</label>
+                    </div>
+                        <div className="input-container">
+                            <i className="fa-solid fa-envelope"></i>
+                            <input type="email" required value={email} onChange={(event) => { setEmail(event.target.value); }}></input>
+                            <label for="#">Email</label>
+                        </div>
+                           
+                        <div className="input-container password">
+                            <i className={`fa-solid ${showPassword ? 'fa-lock-open' : 'fa-lock'}`} onClick={togglePasswordVisibility}></i>
+                            <input type={showPassword ? "text" : "password"} required value={password} onChange={(event) => { setPassword(event.target.value); }}></input>
+                                <label for="#">Contraseña</label>
+                            </div>
+                            <div className="input-container password">
+                            <i className={`fa-solid ${showPassword ? 'fa-lock-open' : 'fa-lock'}`} onClick={togglePasswordVisibility}></i>
+                            <input type={showPassword ? "text" : "password"} required value={validatedPassword} onChange={(event) => { setValidatedPassword(event.target.value); }}></input>
+                                <label for="#">Repetir contraseña</label>
+                            </div>
+                           
+                    </form>
+                    <div>
+                        <button className="r6" onClick={handleSubmit}>Registro</button>
+                        
+                    </div>
+                
+                
+            </div>
+        </div>
+    </section>
     
     </>
 )
 
 }
+
 
 export default Signup

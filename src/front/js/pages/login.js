@@ -8,8 +8,8 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
+	const [checkboxChecked, setCheckboxChecked] = useState(false)
 	const navigate = useNavigate();
-
 	
 	const handleLogin = async () => {
         await actions.getTokenLogin(email, password);
@@ -17,7 +17,7 @@ const Login = () => {
         if (store.token && store.token !== "" && store.token !== undefined) {
             navigate("/");
         }
-		
+	
     };
 
     useEffect(() => {
@@ -31,6 +31,11 @@ const Login = () => {
 		setShowPassword(!showPassword);
 	}
 
+	const checkboxValidation = () => {
+		if (checkboxChecked){
+			
+		}
+	}
 	return (
 		<section>
 			<div className="container">
@@ -41,20 +46,20 @@ const Login = () => {
 						
 							<div className="input-container">
 								<i className="fa-solid fa-envelope"></i>
-								<input type="email" required value={email} onChange={(event) => { setEmail(event.target.value); }}></input>
+								<input type="email" value={email} onChange={(event) => { setEmail(event.target.value); }} required></input>
 								<label for="Email">Email</label>
 							</div>
 
 								<div className="input-container">
 								<i className={`fa-solid ${showPassword ? 'fa-lock-open' : 'fa-lock'}`} onClick={togglePasswordVisibility}></i>
-								<input type={showPassword ? "text" : "password"} required value={password} onChange={(event) => { setPassword(event.target.value); }}></input>
+								<input type={showPassword ? "text" : "password"}  value={password} onChange={(event) => { setPassword(event.target.value); }} required></input>
 									<label for="Contraseña">Contraseña</label>
 								</div>
 
 								<div className="olvidar">
 									<label for="forgotPassword">
 										<input type="checkbox"/> Recordar 
-										<a href="#">Olvidé la contraseña</a>
+										{/* <a href="#">Olvidé la contraseña</a> */}
 									</label>
 								</div>
 						</form>
