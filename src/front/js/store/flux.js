@@ -6,19 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			register: null,
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			
 		},
 		actions: {
 		
@@ -43,8 +31,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({...store, token: null})
 			},
 			
-			getUserRegister: async(email, password) => {
-				const data = await signupDispatcher(email,password);
+			getUserRegister: async(firstName, LastName,name_of_the_restaurant,email, password) => {
+				const data = await signupDispatcher(firstName, LastName, name_of_the_restaurant, email,password);
 				console.log(data)
 				return data;
 			},

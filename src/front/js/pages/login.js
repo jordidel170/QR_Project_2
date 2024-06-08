@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 
@@ -17,6 +17,7 @@ const Login = () => {
         if (store.token && store.token !== "" && store.token !== undefined) {
             navigate("/");
         }
+		
     };
 
     useEffect(() => {
@@ -41,17 +42,17 @@ const Login = () => {
 							<div className="input-container">
 								<i className="fa-solid fa-envelope"></i>
 								<input type="email" required value={email} onChange={(event) => { setEmail(event.target.value); }}></input>
-								<label for="#">Email</label>
+								<label for="Email">Email</label>
 							</div>
 
 								<div className="input-container">
 								<i className={`fa-solid ${showPassword ? 'fa-lock-open' : 'fa-lock'}`} onClick={togglePasswordVisibility}></i>
 								<input type={showPassword ? "text" : "password"} required value={password} onChange={(event) => { setPassword(event.target.value); }}></input>
-									<label for="#">Contraseña</label>
+									<label for="Contraseña">Contraseña</label>
 								</div>
 
 								<div className="olvidar">
-									<label for="#">
+									<label for="forgotPassword">
 										<input type="checkbox"/> Recordar 
 										<a href="#">Olvidé la contraseña</a>
 									</label>
@@ -62,7 +63,7 @@ const Login = () => {
 							<button className="r6" onClick={handleLogin}>Acceder</button>
 
 							<div className="registrar">
-								<p>No tengo Cuenta <a href="#"> Crear una</a></p>
+								<p>No tengo Cuenta <Link to ="/api/signup"> Crear una</Link></p>
 							</div>
 						</div>
 						</>)

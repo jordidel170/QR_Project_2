@@ -12,10 +12,11 @@ const loginDispatcher = async (email, password) => {
          body: JSON.stringify({  "email": email,
             "password": password  }) 
     })
-
+    
     if(!response.ok) throw Error("There was a problem in the login request")
 
     if(response.status === 401){
+     console.log(response)
          throw("Invalid credentials")
     }
     else if(response.status === 400){
@@ -25,6 +26,7 @@ const loginDispatcher = async (email, password) => {
     // Guarda el token en la sessionStorage
     // También deberías almacenar el usuario en la store utilizando la función setItem
     sessionStorage.setItem("token", data.token);
+    console.log(data)
     return data
 }
 
