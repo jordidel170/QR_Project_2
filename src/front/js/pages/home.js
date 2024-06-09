@@ -1,15 +1,19 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
-
+	const Navigate = useNavigate()
+	const handleClick = () => {
+		Navigate("/api/login")
+	}
 	return (
 		<>
-		<div className="text-center mt-5">
+		<button className="container" onClick={handleClick}>Login</button>
+		{/* <div className="text-center mt-5">
 			<h1>Hello Rigo!!</h1>
 			<p>
 				<img src={rigoImageUrl} />
@@ -34,7 +38,7 @@ export const Home = () => {
 			}
 	
 			
-		</div>
+		</div> */}
 		</>
 		
 	);

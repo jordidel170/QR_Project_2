@@ -34,7 +34,7 @@ const Login = () => {
 	
 	return (
 		<section>
-			<div className="container">
+			<div className="container-login">
 				<div className="formulario inputlogin">
 					{store.token && store.token != "" && store.token != undefined ? navigate("/") :( <>
 					<form action="#">
