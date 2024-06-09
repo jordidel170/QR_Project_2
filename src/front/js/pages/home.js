@@ -7,12 +7,14 @@ import "../../styles/home.css";
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 	const Navigate = useNavigate()
+	
 	const handleClick = () => {
 		Navigate("/api/login")
 	}
 	return (
 		<>
 		<button className="containerHome" onClick={handleClick}>Login</button>
+		<button className="containerHome" onClick={() => actions.handleLogOut()}>Log out</button>
 		{/* <div className="text-center mt-5">
 			<h1>Hello Rigo!!</h1>
 			<p>

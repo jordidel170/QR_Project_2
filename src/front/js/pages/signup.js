@@ -52,33 +52,33 @@ const handleOnClick = () => {
                                <h1>Sign up</h1>
                                <div className="input-container">
                                <i className="fa-solid fa-utensils"></i>
-                                       <input type="text" required value={restaurantName} onChange={(event) => { setRestaurantName(event.target.value); }}></input>
+                                       <input type="text"  value={restaurantName} onChange={(event) => { setRestaurantName(event.target.value); }} required></input>
                                        <label for="#">Nombre del Restaurante</label>
                                        </div>
                                <div className="input-container">
                                <i className="fa-solid fa-user"></i>
-                                       <input type="text" required value={firstName} onChange={(event) => { setFirstName(event.target.value); }}></input>
+                                       <input type="text"  value={firstName} onChange={(event) => { setFirstName(event.target.value); }} required></input>
                                        <label for="#">Nombre</label>
                                </div>
                                <div className="input-container">
                                <i className="fa-regular fa-user"></i>
-                                       <input type="text" required value={lastName} onChange={(event) => { setLastName(event.target.value); }}></input>
+                                       <input type="text"  value={lastName} onChange={(event) => { setLastName(event.target.value); }} required></input>
                                        <label for="#">Apellidos</label>
                                </div>
                                    <div className="input-container">
                                        <i className="fa-solid fa-envelope"></i>
-                                       <input type="email" required value={email} onChange={(event) => { setEmail(event.target.value); }}></input>
-                                       <label for="#">Email</label>
+                                       <input type="email" value={email} onChange={(event) => { setEmail(event.target.value); }} required></input>
+                                       <label for="email">Email</label>
                                    </div>
                                       
                                    <div className="input-container password">
                                        <i className={`fa-solid ${showPassword ? 'fa-lock-open' : 'fa-lock'}`} onClick={togglePasswordVisibility}></i>
-                                       <input type={showPassword ? "text" : "password"} required value={password} onChange={(event) => { setPassword(event.target.value); }}></input>
+                                       <input type={showPassword ? "text" : "password"}  minlength="8" maxlength="12" value={password} onChange={(event) => { setPassword(event.target.value); }} required></input>
                                            <label for="#">Contraseña</label>
                                        </div>
                                        <div className="input-container password">
                                        <i className={`fa-solid ${showPassword ? 'fa-lock-open' : 'fa-lock'}`} onClick={togglePasswordVisibility}></i>
-                                       <input type={showPassword ? "text" : "password"} required value={validatedPassword} onChange={(event) => { setValidatedPassword(event.target.value); }}></input>
+                                       <input type={showPassword ? "text" : "password"}  value={validatedPassword} onChange={(event) => { setValidatedPassword(event.target.value); }} required></input>
                                            <label for="#">Repetir contraseña</label>
                                        </div>
                                       

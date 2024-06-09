@@ -9,7 +9,7 @@ const loginDispatcher = async (email, password) => {
          method: "POST",
          headers: { "Content-Type": "application/json" },
          CORS: 'Access-Control-Allow-Origin',
-         body: JSON.stringify({  "username": email,
+         body: JSON.stringify({  "email": email,
             "password": password  }) 
     })
     
