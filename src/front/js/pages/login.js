@@ -8,7 +8,7 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
-	const [checkboxChecked, setCheckboxChecked] = useState(false)
+	// const [checkboxChecked, setCheckboxChecked] = useState(false)
 	const navigate = useNavigate();
 	
 	const handleLogin = async () => {
@@ -31,11 +31,7 @@ const Login = () => {
 		setShowPassword(!showPassword);
 	}
 
-	const checkboxValidation = () => {
-		if (checkboxChecked){
-			
-		}
-	}
+	
 	return (
 		<section>
 			<div className="container">

@@ -22,13 +22,15 @@ const handleSubmit = async (event) => {
         setDisable(false)
     } else {
         setDisable(false)
-        await actions.getUserRegister(firstName,lastName,restaurantName,email,password);
+       const userRegister = await actions.getUserRegister(firstName,lastName,restaurantName,email,password);
     }
 }
 
 const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
 }
+
+
     return (
              <>
                <section>
@@ -71,7 +73,6 @@ const togglePasswordVisibility = () => {
                     </form>
                     <div>
                         <button className="r6" onClick={handleSubmit}>Registro</button>
-                        
                     </div>
                 
                 
