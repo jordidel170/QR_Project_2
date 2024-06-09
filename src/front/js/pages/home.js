@@ -12,7 +12,7 @@ export const Home = () => {
 	}
 	return (
 		<>
-		<button className="container" onClick={handleClick}>Login</button>
+		<button className="containerHome" onClick={handleClick}>Login</button>
 		{/* <div className="text-center mt-5">
 			<h1>Hello Rigo!!</h1>
 			<p>
