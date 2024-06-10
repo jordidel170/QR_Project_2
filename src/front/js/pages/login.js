@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom"
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 
@@ -10,33 +11,46 @@ const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	// const [checkboxChecked, setCheckboxChecked] = useState(false)
 	const navigate = useNavigate();
+	const [token, setToken] = useState()
+	const [isMounted, setIsMounted] = useState(true)
 	
 	const handleLogin = async () => {
         await actions.getTokenLogin(email, password);
         // Check token after login attempt
-        if (store.token && store.token !== "" && store.token !== undefined) {
-            navigate("/");
-        }
-	
+		const localStoraged = localStorage.getItem("token")
+        if (localStoraged) {
+            navigate("/app/login/home");
+			setToken(localStorage)
+        } 
     };
 
     useEffect(() => {
-        actions.syncTokenSessionStore();
-        if (store.token && store.token !== "" && store.token !== undefined) {
-            navigate("/");
+        actions.syncTokenLocalStorage();
+        if (localStorage.getItem("token")) {
+            navigate("/app/login/home");
+			console.log("if")
         }
-    }, [store.token, navigate]);
+		
+		return () => {
+			setIsMounted(false)
+		}
+    }, []);
 
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
 	}
 
+	const handleSectionCreateAccount = () => {
+		navigate("/app/signup")
+	}
 	
 	return (
+		<>
 		<section>
 			<div className="container-login">
 				<div className="formulario inputlogin">
-					{store.token && store.token != "" && store.token != undefined ? navigate("/") :( <>
+					{/* {store.token && store.token != "" && store.token != undefined ? navigate("/app/login/home") :(  */}
+						
 					<form action="#">
 						<h1>Iniciar Sesión</h1>
 						
@@ -64,62 +78,25 @@ const Login = () => {
 							<button className="r6" onClick={handleLogin}>Acceder</button>
 
 							<div className="registrar">
-								<p>No tengo Cuenta <Link to ="/api/signup"> Crear una</Link></p>
+								<p>No tienes cuenta? </p>
+								<button onClick={handleSectionCreateAccount}>Crea una Cuenta</button>
 							</div>
 						</div>
-						</>)
-					}
+						
+					
 					
 				</div>
 			</div>
 		</section>
+		<nav>
+			<Link to="/app/login/home"></Link>
+		</nav>
+		<Outlet/>
+		</>
+		
+		
 	);
 
 };
 export default Login
 
-
-// import React, {useContext, useState, useEffect} from "react"
-// import { useNavigate } from "react-router-dom"
-// import { Context } from "../store/appContext";
-// import "../../styles/home.css";
-
-// const Login = () => {
-// 	// contexto global, con useContext me traigo actions para aplicar las funciones que se encuentran en el store.
-// 	const { store, actions } = useContext(Context);
-// 	// estado de los inputs 
-// 	const [email, setEmail] = useState("");
-// 	const [password, setPassword] = useState("");
-// 	// navigate permite navegar a diferentes rutas programáticamente. Por ejemplo, si quieres redirigir al usuario a otra página después de un evento (como enviar un formulario), 
-// 	const navigate = useNavigate();
-	
-
-
-// 	const handleLogin = () => {
-// 		actions.getTokenLogin(email, password)
-// 	}
-
-// 	useEffect(() => {
-// 		actions.syncTokenSessionStore();
-// 		if (store.token && store.token !== "" && store.token !== undefined) {
-// 			navigate("/");
-// 		}
-// 	}, [store.token, navigate]);
-
-// 	return (
-// 		<>
-// 		<div className="inputlogin">
-// 			<h1>Login</h1>
-// 			{(store.token && store.token != "" && store.token != undefined) ? "You are logged in" + store.token : 
-// 			<div>
-// 			<input type="text" placeholder="email" value={email}  onChange={(event) => {setEmail(event.target.value)}}></input>
-// 			<input type="password" placeholder="password" value={password} onChange={(event) => {setPassword(event.target.value)}}></input>
-// 			<button onClick={handleLogin}>Login</button>
-// 			</div> 
-// 			}
-// 		</div>
-// 		</>
-// 	);
-
-// };
-// export default Login

@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/signup.css";
 import { Navigate, useNavigate } from "react-router-dom";
+import Login from './login';
 
 const Signup = () => {
 const {store, actions} = useContext(Context)
@@ -32,8 +34,10 @@ const togglePasswordVisibility = () => {
 }
 
 const handleOnClick = () => {
-    Navigate("/api/login")
+    Navigate("/app/login")
 }
+
+
 
     return (
              <>
@@ -83,10 +87,11 @@ const handleOnClick = () => {
                                        </div>
                                       
                                </form>
-                               <div>
+                               <div className="register-button">
                                    <button className="r6" onClick={handleSubmit}>Registro</button>
+                                   <p className="">Ya tienes una cuenta? <Link to="/app/login">Inicia Sesión</Link></p>
                                </div>
-                           
+                              
                            
                        </div>
                    </div>

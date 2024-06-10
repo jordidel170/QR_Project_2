@@ -186,6 +186,25 @@ button:hover{
 .container2 .content button:hover{
     opacity: .9;
 }
+
+.r7 {
+    margin-top: 15px;
+}
+
+.register-button p {
+    margin-top: 15px;
+    
+}
+
+.register-button a {
+    font-weight: 700;
+    color: white;
+}
+
+.register-button a:hover{
+    color: black;
+}
+
 /* @media (max-width: 480px) {
     .container {
         width: 70%;
