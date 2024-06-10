@@ -9,10 +9,6 @@ export const Home = () => {
 	const navigate = useNavigate()
 	const [isMounted, setIsMounted] = useState(true)
 	
-	const handleClick = () => {
-		navigate("/app/login")
-	}
-
 	
 	const redirectToLogin = () => {
 		actions.handleLogOut();
@@ -34,7 +30,7 @@ export const Home = () => {
 
 	return (
 		<>
-		<button className="containerHome" onClick={handleClick}>Login</button>
+		
 		<button className="containerHome" onClick={() => redirectToLogin() }>Log out</button>
 		</>
 		

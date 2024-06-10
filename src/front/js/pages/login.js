@@ -20,7 +20,7 @@ const Login = () => {
 		const localStoraged = localStorage.getItem("token")
         if (localStoraged) {
             navigate("/app/login/home");
-			setToken(localStorage)
+			setToken(localStoraged)
         } 
     };
 
@@ -88,10 +88,8 @@ const Login = () => {
 				</div>
 			</div>
 		</section>
-		<nav>
-			<Link to="/app/login/home"></Link>
-		</nav>
-		<Outlet/>
+	
+
 		</>
 		
 		
