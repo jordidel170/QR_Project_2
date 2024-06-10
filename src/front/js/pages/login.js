@@ -19,22 +19,22 @@ const Login = () => {
         // Check token after login attempt
 		const localStoraged = localStorage.getItem("token")
         if (localStoraged) {
-            navigate("/app/login/home");
+            navigate("/app/home");
 			setToken(localStoraged)
         } 
     };
 
-    useEffect(() => {
-        actions.syncTokenLocalStorage();
-        if (localStorage.getItem("token")) {
-            navigate("/app/login/home");
-			console.log("if")
-        }
+    // useEffect(() => {
+    //     actions.syncTokenLocalStorage();
+    //     if (localStorage.getItem("token")) {
+    //         navigate("/app/login/home");
+	// 		console.log("if")
+    //     }
 		
-		return () => {
-			setIsMounted(false)
-		}
-    }, []);
+	// 	return () => {
+	// 		setIsMounted(false)
+	// 	}
+    // }, []);
 
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
