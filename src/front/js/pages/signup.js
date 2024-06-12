@@ -12,19 +12,27 @@ const [lastName, setLastName] = useState("")
 const [email, setEmail] = useState("")
 const [password, setPassword] = useState("")
 const [validatedPassword, setValidatedPassword] = useState("")
-const [restaurantName, setRestaurantName] = useState("")
+const [restaurantName, setRestaurantName] = useState([
+    "Restaurante A",
+    "Restaurante B",
+    "Restaurante C",
+    "Restaurante D"
+])
+const [selectedRestaurant, setSelectedRestaurantName] = useState()
 const [showPassword, setShowPassword] = useState(false);
 const [registerStatus, setRegisterStatus] = useState()
 const Navigate = useNavigate()
 
+
+
 const handleSubmit = async (event) => {
     event.preventDefault();
     // Validaciones antes de enviar los datos
-    if ( !restaurantName || !firstName || !lastName|| !email || !password){
+    if ( !selectedRestaurant || !firstName || !lastName|| !email || !password){
         alert("All fields are required."); 
     } else {
        
-       const data = await actions.getUserRegister(firstName,lastName,restaurantName,email,password);
+       const data = await actions.getUserRegister(selectedRestaurant,firstName,lastName,email,password);
        setRegisterStatus(data[0].status)
     }
 }
@@ -37,7 +45,10 @@ const handleOnClick = () => {
     Navigate("/app/login")
 }
 
-
+const handleSelectChange = (event) => {
+    setSelectedRestaurantName(event.target.value)
+   
+}
 
     return (
              <>
@@ -56,8 +67,11 @@ const handleOnClick = () => {
                                <h1>Sign up</h1>
                                <div className="input-container">
                                <i className="fa-solid fa-utensils"></i>
-                                       <input type="text"  value={restaurantName} onChange={(event) => { setRestaurantName(event.target.value); }} required></input>
-                                       <label for="#">Nombre del Restaurante</label>
+                               {/* <label htmlFor="restaurant-dropdown">Select a restaurant: </label> */}
+                                <select className="restaurant-dropdown" value={selectedRestaurant} onChange={handleSelectChange}>
+                                    <option value="" disabled >Selecciona un Restaurante</option>
+                                    {restaurantName.map((name, index) => (<option key={index} value={name} onChange={handleSelectChange}>
+                                        {name}</option>))}</select>
                                        </div>
                                <div className="input-container">
                                <i className="fa-solid fa-user"></i>
@@ -77,14 +91,14 @@ const handleOnClick = () => {
                                       
                                    <div className="input-container password">
                                        <i className={`fa-solid ${showPassword ? 'fa-lock-open' : 'fa-lock'}`} onClick={togglePasswordVisibility}></i>
-                                       <input type={showPassword ? "text" : "password"}  minlength="8" maxlength="12" value={password} onChange={(event) => { setPassword(event.target.value); }} required></input>
+                                       <input type={showPassword ? "text" : "password"}  minLength="8" maxLength="12" value={password} onChange={(event) => { setPassword(event.target.value); }} required></input>
                                            <label for="#">Contraseña</label>
                                        </div>
-                                       <div className="input-container password">
+                                       {/* <div className="input-container password">
                                        <i className={`fa-solid ${showPassword ? 'fa-lock-open' : 'fa-lock'}`} onClick={togglePasswordVisibility}></i>
                                        <input type={showPassword ? "text" : "password"}  value={validatedPassword} onChange={(event) => { setValidatedPassword(event.target.value); }} required></input>
                                            <label for="#">Repetir contraseña</label>
-                                       </div>
+                                       </div> */}
                                       
                                </form>
                                <div className="register-button">
