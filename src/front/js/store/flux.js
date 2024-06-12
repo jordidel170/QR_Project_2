@@ -10,20 +10,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 		
-			syncTokenSessionStore: () => {
-                const token = sessionStorage.getItem("token");
-                if (token) {
-                    setStore({ token: token });
-                }
-            },
+			
             getTokenLogin: async (email, password) => {
-                const token = await loginDispatcher(email, password);
-                if (token) {
-                    sessionStorage.setItem("token", token);
-                    setStore({ token: token })}},
+                const {access_token} = await loginDispatcher(email, password);
+                if (access_token) {
+                    localStorage.setItem("token", access_token);
+                    setStore({ token: access_token })}},
+			
+			syncTokenLocalStorage: () => {
+				const token = localStorage.getItem("token");
+					if (token) {
+					setStore({ token: token });
+						}
+					},
 
 			handleLogOut: () => {
-				sessionStorage.removeItem("token")
+				localStorage.removeItem("token")
 				console.log("Loging out")
 				const store = setStore()
 				setStore({...store, token: null})

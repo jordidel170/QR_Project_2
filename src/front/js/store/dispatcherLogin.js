@@ -5,11 +5,11 @@ import React from 'react'
 // Se le pasa el email y el password como argumento para indicar que es lo que va a recibir como parametro. 
 
 const loginDispatcher = async (email, password) => {
-    const response = await fetch(`http://127.0.0.1:5000/api/auth/login`, { 
+    const response = await fetch(`http://127.0.0.1:5000/app/login`, { 
          method: "POST",
          headers: { "Content-Type": "application/json" },
          CORS: 'Access-Control-Allow-Origin',
-         body: JSON.stringify({  "username": email,
+         body: JSON.stringify({  "email": email,
             "password": password  }) 
     })
     
@@ -23,9 +23,9 @@ const loginDispatcher = async (email, password) => {
          throw ("Invalid email or password format")
     }
     const data = await response.json()
-    // Guarda el token en la sessionStorage
+    // Guarda el token en el LocalStorage
     // También deberías almacenar el usuario en la store utilizando la función setItem
-    sessionStorage.setItem("token", data.token);
+    localStorage.setItem("token", data.token);
     console.log(data)
     return data
 }

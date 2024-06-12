@@ -186,6 +186,58 @@ button:hover{
 .container2 .content button:hover{
     opacity: .9;
 }
+
+.r7 {
+    margin-top: 15px;
+}
+
+.register-button p {
+    margin-top: 15px;
+    
+}
+
+.register-button a {
+    font-weight: 700;
+    color: white;
+}
+
+.register-button a:hover{
+    color: black;
+}
+
+.restaurant-dropdown {
+    width: 100%;
+    height: 50px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.restaurant-dropdown option {
+    color: black;
+}
+
+.restaurant-dropdown:focus {
+    outline: none;
+    border-bottom: 2px solid #fff;
+}
+
+.white-text-option {
+    color: #fff;
+}
+
+.nombreDelRestaurante {
+    color: black;
+}
+
+.white-text-option{
+    color: white;
+} 
 /* @media (max-width: 480px) {
     .container {
         width: 70%;
@@ -242,5 +294,4 @@ button:hover{
         font-size: 0.6rem;
     }
 } */
-
 
