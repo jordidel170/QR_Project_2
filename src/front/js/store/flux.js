@@ -1,9 +1,12 @@
 import loginDispatcher from "./dispatcherLogin";
+
 import signupDispatcher from "./dispatcherSignup";
+
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+
 			token: null,
 			register: null,
 			menu: [],
@@ -37,6 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await signupDispatcher(restaurantName,firstName, LastName, email,password);
 				console.log(data)
 				return data;
+
 			},
 
 			getMenu: (restaurantId,tableId) => {

@@ -22,8 +22,7 @@ const [selectedRestaurant, setSelectedRestaurantName] = useState()
 const [showPassword, setShowPassword] = useState(false);
 const [registerStatus, setRegisterStatus] = useState()
 const Navigate = useNavigate()
-
-
+const [loading, setLoading] = useState(false)
 
 const handleSubmit = async (event) => {
     event.preventDefault();
@@ -34,6 +33,18 @@ const handleSubmit = async (event) => {
        
        const data = await actions.getUserRegister(selectedRestaurant,firstName,lastName,email,password);
        setRegisterStatus(data[0].status)
+       if (data[0].status === "ok"){
+        console.log("if")
+        await actions.getTokenLogin(email, password)
+        const localStoraged = localStorage.getItem("token")
+        if (localStoraged) {
+            setLoading(true)
+            setTimeout( () => {
+               
+                Navigate("/app/home");
+                setToken(localStoraged)}, 3000)
+        } 
+       }
     }
 }
 
@@ -52,7 +63,16 @@ const handleSelectChange = (event) => {
 
     return (
              <>
+
               <section>
+                {/* {loading === true ? (<div class="container-loading">
+            <div class="loading">
+              <div class="dots"></div>
+              <div class="dots"></div>
+              <div class="dots"></div>
+              <span class="text-loading">Cargando...</span>
+            </div>
+          </div>): } */}
                 {registerStatus === "ok"? (  <div class="container2">
             <div class="content">
                 <h1>USUARIO REGISTRADO CON ÉXITO!</h1>
@@ -103,7 +123,7 @@ const handleSelectChange = (event) => {
                                </form>
                                <div className="register-button">
                                    <button className="r6" onClick={handleSubmit}>Registro</button>
-                                   <p className="">Ya tienes una cuenta? <Link to="/app/login">Inicia Sesión</Link></p>
+                                   <p className="account">Ya tienes una cuenta? <Link to="/app/login">Inicia Sesión</Link></p>
                                </div>
                               
                            
