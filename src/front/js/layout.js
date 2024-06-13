@@ -14,7 +14,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import  Login  from "./pages/login";
 import injectContext from "./store/appContext";
-import Login from "./pages/login"
+
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -50,7 +50,10 @@ const Layout = () => {
                         <Route element ={<Login/>} path="/app/login"/>
                         <Route element={<Signup />} path="/app/signup" />
                     <Route element={<ProtectedRoute role="user"> <Home /> </ProtectedRoute>} path="app/home" />
-                        
+                        <Route element={<Menu />} path="/restaurants/:restaurantId/tables/:tableId/menu" />
+                        <Route element={<OrderSummary />} path="/order-summary" />
+                        <Route element={<OrderSuccess />} path="/order-success" />
+                        <Route element={<AboutUs />} path="/about-us" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     {/* <Footer /> */}
