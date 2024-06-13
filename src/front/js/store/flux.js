@@ -1,63 +1,48 @@
 import loginDispatcher from "./dispatcherLogin";
-import React from 'react'
+
+import signupDispatcher from "./dispatcherSignup";
+
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			],
-			token: null
+
+			token: null,
+			register: null,
+			
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+		
+			
+            getTokenLogin: async (email, password) => {
+                const {access_token} = await loginDispatcher(email, password);
+                if (access_token) {
+                    localStorage.setItem("token", access_token);
+                    setStore({ token: access_token })}},
+			
+			syncTokenLocalStorage: () => {
+				const token = localStorage.getItem("token");
+					if (token) {
+					setStore({ token: token });
+						}
+					},
+
+			handleLogOut: () => {
+				localStorage.removeItem("token")
+				console.log("Loging out")
+				const store = setStore()
+				setStore({...store, token: null})
 			},
 			
-			getTokenLogin: async(email, password) => {
-				const login = await loginDispatcher.post(email, password);
-				console.log(login)
-				const store = getStore()
-				setStore({...store, token: login})
-				
-			},
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+			getUserRegister: async(restaurantName,firstName, LastName,email, password) => {
+				const data = await signupDispatcher(restaurantName,firstName, LastName, email,password);
+				console.log(data)
+				return data;
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+			},
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
+			
+		
 		}
 	};
 };

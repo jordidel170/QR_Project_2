@@ -2,16 +2,32 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+import  {jwtDecode}  from "jwt-decode";
+import { Navigate } from "react-router-dom";
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import  Login  from "./pages/login";
 import injectContext from "./store/appContext";
+import Login from "./pages/login"
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import Signup from "./pages/signup";
 
+const ProtectedRoute = ({ children, role }) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return <Navigate to="/app/login" />;
+    }
+    const decodedToken = jwtDecode(token);
+    console.log(decodedToken.roles)
+    if (role && decodedToken.roles !== role) {
+      return <Navigate to="/app/login" />;
+    }
+    return children;
+  };
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -24,15 +40,17 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+                    {/* <Navbar /> */}
                     <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element ={<Login/>} path="/login"/>
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
+
+                        <Route element ={<Login/>} path="/app/login"/>
+                        <Route element={<Signup />} path="/app/signup" />
+                    <Route element={<ProtectedRoute role="user"> <Home /> </ProtectedRoute>} path="app/home" />
+                        
+
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
-                    <Footer />
+                    {/* <Footer /> */}
                 </ScrollToTop>
             </BrowserRouter>
         </div>
