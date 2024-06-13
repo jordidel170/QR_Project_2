@@ -14,6 +14,7 @@ import Login from "./pages/login"
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Signup from "./pages/signup";
+import Dashboard from "./pages/dashboard";
 
 const ProtectedRoute = ({ children, role }) => {
     const token = localStorage.getItem("token");
@@ -43,6 +44,7 @@ const Layout = () => {
                     <Routes>
                         <Route element ={<Login/>} path="/app/login"/>
                         <Route element={<Signup />} path="/app/signup" />
+                        <Route element={<Dashboard />} path="/app/dashboard" />
                     <Route element={<ProtectedRoute role="user"> <Home /> </ProtectedRoute>} path="app/home" />
                         
                         <Route element={<h1>Not found!</h1>} />

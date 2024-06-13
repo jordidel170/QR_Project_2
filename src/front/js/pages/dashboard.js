@@ -2,9 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate, Outlet } from "react-router-dom"
 import { Context } from "../store/appContext";
-import "../../styles/dashboard.css";
+import "../../styles/login.css";
 
-const Login = () => {
+const Dashboard = () => {
 	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -108,5 +108,5 @@ const Login = () => {
 	);
 
 };
-export default Login
+export default Dashboard
 
