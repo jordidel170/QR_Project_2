@@ -1,7 +1,9 @@
 {
     "_meta": {
         "hash": {
+
             "sha256": "ec419aa623b2e933b0f4f75c9433786a33c2233171e9ae494e8324ecf1308fb3"
+
         },
         "pipfile-spec": 6,
         "requires": {
@@ -54,6 +56,7 @@
             ],
             "index": "pypi",
             "version": "==1.40.0"
+
         },
         "colorama": {
             "hashes": [
@@ -62,6 +65,7 @@
             ],
             "markers": "platform_system == 'Windows'",
             "version": "==0.4.6"
+
         },
         "flask": {
             "hashes": [
@@ -69,7 +73,9 @@
                 "sha256:ceb27b0af3823ea2737928a4d99d125a06175b8512c445cbd9a9ce200ef76842"
             ],
             "index": "pypi",
+
             "markers": "python_version >= '3.8'",
+
             "version": "==3.0.3"
         },
         "flask-admin": {
@@ -78,13 +84,16 @@
                 "sha256:fd8190f1ec3355913a22739c46ed3623f1d82b8112cde324c60a6fc9b21c9406"
             ],
             "index": "pypi",
+
             "markers": "python_version >= '3.6'",
+
             "version": "==1.6.1"
         },
         "flask-cors": {
             "hashes": [
                 "sha256:eeb69b342142fdbf4766ad99357a7f3876a2ceb77689dc10ff912aac06c389e4",
                 "sha256:f2a704e4458665580c074b714c4627dd5a306b333deb9074d0b1794dfa2fb677"
+
             ],
             "index": "pypi",
             "version": "==4.0.1"
@@ -96,6 +105,7 @@
             ],
             "index": "pypi",
             "markers": "python_version >= '3.7' and python_version < '4'",
+
             "version": "==4.6.0"
         },
         "flask-migrate": {
@@ -104,7 +114,9 @@
                 "sha256:dff7dd25113c210b069af280ea713b883f3840c1e3455274745d7355778c8622"
             ],
             "index": "pypi",
+
             "markers": "python_version >= '3.6'",
+
             "version": "==4.0.7"
         },
         "flask-sqlalchemy": {
@@ -113,7 +125,9 @@
                 "sha256:cabb6600ddd819a9f859f36515bb1bd8e7dbf30206cc679d2b081dff9e383283"
             ],
             "index": "pypi",
+
             "markers": "python_version >= '3.7'",
+
             "version": "==3.0.5"
         },
         "flask-swagger": {
@@ -194,7 +208,9 @@
                 "sha256:4a0b436239ff76fb33f11c07a16482c521a7e09c1ce3cc293c2330afe01bec63"
             ],
             "index": "pypi",
+
             "markers": "python_version >= '3.7'",
+
             "version": "==22.0.0"
         },
         "itsdangerous": {
@@ -283,6 +299,7 @@
                 "sha256:fa9db3f79de01457b03d4f01b34cf91bc0048eb2c3846ff26f66687c2f6d16ab",
                 "sha256:fce659a462a1be54d2ffcacea5e3ba2d74daa74f30f5f143fe0c58636e355fdd",
                 "sha256:ffee1f21e5ef0d712f9033568f8344d5da8cc2869dbd08d87c84656e6a2d2f68"
+
             ],
             "markers": "python_version >= '3.7'",
             "version": "==2.1.5"
@@ -294,6 +311,7 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==24.1"
+
         },
         "psycopg2-binary": {
             "hashes": [
@@ -371,7 +389,9 @@
                 "sha256:f9b5571d33660d5009a8b3c25dc1db560206e2d2f89d3df1cb32d72c0d117d52"
             ],
             "index": "pypi",
+
             "markers": "python_version >= '3.7'",
+
             "version": "==2.9.9"
         },
         "pyjwt": {
@@ -388,7 +408,9 @@
                 "sha256:f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a"
             ],
             "index": "pypi",
+
             "markers": "python_version >= '3.8'",
+
             "version": "==1.0.1"
         },
         "pyyaml": {
@@ -506,12 +528,14 @@
         },
         "typing-extensions": {
             "hashes": [
+
                 "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d",
                 "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==4.12.2"
+
         },
         "urllib3": {
             "hashes": [
