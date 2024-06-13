@@ -6,6 +6,10 @@ import  {jwtDecode}  from "jwt-decode";
 import { Navigate } from "react-router-dom";
 
 import { Home } from "./pages/home";
+import { Menu } from "./pages/menu";
+import { OrderSummary } from "./pages/OrderSummary";
+import { OrderSuccess } from "./pages/OrderSuccess";
+import { AboutUs } from "./pages/AboutUs";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
@@ -43,8 +47,11 @@ const Layout = () => {
                     <Routes>
                         <Route element ={<Login/>} path="/app/login"/>
                         <Route element={<Signup />} path="/app/signup" />
-                    <Route element={<ProtectedRoute role="user"> <Home /> </ProtectedRoute>} path="app/home" />
-                        
+                        <Route element={<ProtectedRoute role="user"> <Home /> </ProtectedRoute>} path="app/home" />
+                        <Route element={<Menu />} path="/restaurants/:restaurantId/tables/:tableId/menu" />
+                        <Route element={<OrderSummary />} path="/order-summary" />
+                        <Route element={<OrderSuccess />} path="/order-success" />
+                        <Route element={<AboutUs />} path="/about-us" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     {/* <Footer /> */}
