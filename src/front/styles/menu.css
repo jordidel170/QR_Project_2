@@ -1,0 +1,198 @@
+body {
+    background-image: none; 
+}
+.summary {
+    text-align: center;
+    max-width: 45rem;
+    width: 90%;
+    margin: auto;
+    margin-top: -10rem;
+    position: relative;
+    background-color: white;
+    color: black;
+    border-radius: 14px;
+    padding: 1rem;
+    box-shadow: 0 1px 18px 10px rgba(0, 0, 0, 0.25);
+  }
+  .summary h2 {
+    font-size: 2rem;
+    margin-top: 0;
+    color: rgb(30, 30, 141);
+  }
+  .meal {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    margin: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .meal-items {
+    flex-grow: 1;
+  }
+  
+  .meal h3 {
+    margin: 0 0 0.25rem 0;
+  }
+  
+  .description {
+    font-style: italic;
+  }
+  
+  .price {
+    margin-top: 0.25rem;
+    font-weight: bold;
+    color: rgb(253, 130, 82);
+    font-size: 0.8rem;
+  }
+  .meals {
+    max-width: 60rem;
+    width: 90%;
+    margin: 2rem auto;
+    animation: meals-appear 1s ease-out forwards;
+  }
+  
+  .meals ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  @keyframes meals-appear {
+    from {
+      opacity: 0;
+      transform: translateY(3rem);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .card {
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 14px;
+    background-color: white;
+  }
+  
+  .meal-image {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 1rem;
+    border-radius: 5px;
+  }
+  .card h2 {
+    color: rgb(16, 16, 47);
+  }
+  .menu-category {
+    margin-bottom: 1rem;
+  }
+  
+  .menu-category h2 {
+    font-size: 1.5rem;
+    /* margin-bottom: -1.5rem; */
+    color: rgb(30, 30, 141);
+    cursor: pointer;
+  }
+  
+  .menu-category ul {
+    list-style: none;
+    padding: 0;
+  }
+  .menu-category h2:hover {
+    color: rgb(30, 30, 141);
+    cursor: pointer;
+  }
+  
+  @media (max-width: 600px) {
+    .summary {
+      margin-top: 0;
+      padding: 0.5rem;
+    }
+  
+    .meal {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .meal-image {
+      width: 100%;
+      height: auto;
+      margin-bottom: 0.5rem;
+    }
+  
+    .price {
+      font-size: 1rem;
+    }
+  
+    .order-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .order-item-details {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  
+    .order-item-actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  
+    .total {
+     
+      align-items: flex-start;
+    }
+  
+    .payment-method select {
+      width: 100%;
+    }
+  
+    .order-finish {
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .button1 {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  /* Small to Medium Devices (601px to 768px) */
+  @media (min-width: 601px) and (max-width: 768px) {
+    .summary {
+      margin-top: -5rem;
+    }
+  
+    .meal {
+      margin: 0.5rem;
+    }
+  
+    .order-summary {
+      padding: 0.5rem;
+    }
+  
+    .button1 {
+      padding: 0.5rem 1rem;
+    }
+  }
+  
+  /* Large Devices (769px to 1024px) */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .summary {
+      margin-top: -7rem;
+    }
+  
+    .order-summary {
+      padding: 0.75rem;
+    }
+  
+    .button1 {
+      padding: 0.75rem 1.25rem;
+    }
+  }

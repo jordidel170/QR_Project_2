@@ -6,10 +6,16 @@ import { jwtDecode } from "jwt-decode";
 import { Navigate } from "react-router-dom";
 
 import { Home } from "./pages/home";
+import { Menu } from "./pages/menu";
+import { OrderSummary } from "./pages/OrderSummary";
+import { OrderSuccess } from "./pages/OrderSuccess";
+import { AboutUs } from "./pages/AboutUs";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import  Login  from "./pages/login";
 import injectContext from "./store/appContext";
 import Login from "./pages/login";
+
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -38,33 +44,29 @@ const Layout = () => {
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
     return <BackendURL />;
 
-  return (
-    <div>
-      <BrowserRouter basename={basename}>
-        <ScrollToTop>
-          {/* <Navbar /> */}
-          <Routes>
-            <Route element={<Login />} path="/app/login" />
-            <Route element={<Signup />} path="/app/signup" />
-            <Route element={<QrScanner />} path="/app/qrcodescanner" />
-            <Route element={<App />} path="/app/app" />
-            <Route
-              element={
-                <ProtectedRoute role="user">
-                  {" "}
-                  <Home />{" "}
-                </ProtectedRoute>
-              }
-              path="app/home"
-            />
 
-            <Route element={<h1>Not found!</h1>} />
-          </Routes>
-          {/* <Footer /> */}
-        </ScrollToTop>
-      </BrowserRouter>
-    </div>
-  );
+    return (
+        <div>
+            <BrowserRouter basename={basename}>
+                <ScrollToTop>
+                    {/* <Navbar /> */}
+                    <Routes>
+
+                        <Route element ={<Login/>} path="/app/login"/>
+                        <Route element={<Signup />} path="/app/signup" />
+                    <Route element={<ProtectedRoute role="user"> <Home /> </ProtectedRoute>} path="app/home" />
+                        <Route element={<Menu />} path="/restaurants/:restaurantId/tables/:tableId/menu" />
+                        <Route element={<OrderSummary />} path="/order-summary" />
+                        <Route element={<OrderSuccess />} path="/order-success" />
+                        <Route element={<AboutUs />} path="/about-us" />
+                        <Route element={<h1>Not found!</h1>} />
+                    </Routes>
+                    {/* <Footer /> */}
+                </ScrollToTop>
+            </BrowserRouter>
+        </div>
+    );
+
 };
 
 export default injectContext(Layout);
