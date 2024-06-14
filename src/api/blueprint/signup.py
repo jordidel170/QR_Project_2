@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import get_jwt, jwt_required, create_access_token
 
-from api.modelUser import User, db
+from modelUser import User, db
 
 
 signup_bp = Blueprint('signup', __name__)

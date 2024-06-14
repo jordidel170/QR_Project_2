@@ -2,8 +2,8 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.modelUser import db, User, Table, Restaurant, Menu
-from api.utils import generate_sitemap, APIException
+from modelUser import db, Table, Restaurant, Menu
+
 
 
 
@@ -140,3 +140,4 @@ def delete_menu_item(restaurant_id, table_id, item_id):
     db.session.delete(menu_item)
     db.session.commit()
     return jsonify({"message": "Menu item deleted successfully"}), 200
+
