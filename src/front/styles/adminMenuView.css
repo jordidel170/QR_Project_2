@@ -83,6 +83,10 @@ body {
     padding: 20px;
     text-align: center;
     transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
 }
 
 .menu-item:hover {
@@ -90,7 +94,8 @@ body {
 }
 
 .menu-item img {
-    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
     border-radius: 10px;
     margin-bottom: 10px;
 }
@@ -113,14 +118,37 @@ body {
     font-weight: bold;
 }
 
-.menu-item .ratings {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
+.material-symbols-outlined{
+    border: 1px solid black;
+    border-color: gray;
+    font-size: 30px;
+    border-radius: 10px;
+   
 }
 
-.menu-item .ratings span {
-    margin-left: 5px;
-    color: #ffa500;
+.figuremenu-item{
+    height: 150px;
+
 }
+
+.editButton{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.editButton button{
+    width: 45px;
+}
+
+@MEDIA (MAX-WIDTH: 400PX) {
+
+    .sidebar{
+        display: none;
+        position: absolute;
+    }
+    
+    .menu-container{
+        margin-left: 0;
+    }
+    }

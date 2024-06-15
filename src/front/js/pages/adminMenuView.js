@@ -1,44 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../component/sidebar';
 import "../../styles/adminMenuView.css"
+import CategoriesButton from '../component/categoriesButton';
+import ProductsCard from '../component/productsCard';
 
 
 
 
   const adminMenuView = () => {
-  const categories = ['Starters', 'Main', 'Dessert', 'Drink'];
-  const menuItems = [
-    { name: 'Peanut Butter Chicken Burger', price: '₹220', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', img: 'https://tse2.mm.bing.net/th?id=OIP.Epgh66370jM69NUWAw1LHQHaEK&pid=Api' },
-    { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', img: 'https://tse2.mm.bing.net/th?id=OIP.a7BG_WibT85epZU5IYOh5QHaE8&pid=Api' },
-    { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', ratings: 55, delivered: 60, img: 'https://tse4.mm.bing.net/th?id=OIP.761GqK-wlfuf9P8b3_sa3QHaHa&pid=Api' }
-    // Añade más elementos de menú según sea necesario
-  ];
 
+    const menuItems = [
+      { name: 'Peanut Butter Chicken Burger', price: '₹220', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Desserts' ,img: 'https://tse2.mm.bing.net/th?id=OIP.Epgh66370jM69NUWAw1LHQHaEK&pid=Api' },
+      { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category:'Starters', img: 'https://tse2.mm.bing.net/th?id=OIP.a7BG_WibT85epZU5IYOh5QHaE8&pid=Api' },
+      { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Mains',img: 'https://tse4.mm.bing.net/th?id=OIP.761GqK-wlfuf9P8b3_sa3QHaHa&pid=Api' },
+      { name: 'Water from fiji', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Drinks',img: 'https://tse2.mm.bing.net/th?id=OIP.jqpR0Et_ZgU15kf80MOmkAAAAA&pid=Api' },  
+      { name: 'Peanut Butter Chicken Burger', price: '₹220', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Desserts' ,img: 'https://tse2.mm.bing.net/th?id=OIP.Epgh66370jM69NUWAw1LHQHaEK&pid=Api' },
+      { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category:'Starters', img: 'https://tse2.mm.bing.net/th?id=OIP.a7BG_WibT85epZU5IYOh5QHaE8&pid=Api' },
+      { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Mains',img: 'https://tse4.mm.bing.net/th?id=OIP.761GqK-wlfuf9P8b3_sa3QHaHa&pid=Api' },
+      { name: 'Water from fiji', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Drinks',img: 'https://tse2.mm.bing.net/th?id=OIP.jqpR0Et_ZgU15kf80MOmkAAAAA&pid=Api' },  
+      { name: 'Peanut Butter Chicken Burger', price: '₹220', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Desserts' , img: 'https://tse2.mm.bing.net/th?id=OIP.Epgh66370jM69NUWAw1LHQHaEK&pid=Api' },
+      { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category:'Starters', img: 'https://tse2.mm.bing.net/th?id=OIP.a7BG_WibT85epZU5IYOh5QHaE8&pid=Api' },
+      { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Mains',img: 'https://tse4.mm.bing.net/th?id=OIP.761GqK-wlfuf9P8b3_sa3QHaHa&pid=Api' },
+      { name: 'Water from fiji', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Drinks',img: 'https://tse2.mm.bing.net/th?id=OIP.jqpR0Et_ZgU15kf80MOmkAAAAA&pid=Api' }
+    
+    ];
+    const categoryName = ["Starters", "Mains", "Desserts","Drinks", "All"]
+    const [selectedCategory, setSelectedCategory] = useState("All");
+    let filteredItems = selectedCategory === "All"
+    ? menuItems
+    : menuItems.filter(item => item.category === selectedCategory);
+
+    useEffect ( () => {
+     filteredItems = []
+    },[selectedCategory])
+console.log(selectedCategory)
   return (
     <div>
       <Sidebar />
       <div className="menu-container">
-        <div className="menu-header">
-          <h1>Menu</h1>
-          <button>+ Add Menu</button>
-        </div>
-        <div className="menu-categories">
-          {categories.map(category => (
-            <div className="category" key={category}>{category}</div>
-          ))}
-        </div>
-        <div className="menu-items">
-          {menuItems.map(item => (
-            <div className="menu-item" key={item.name}>
-              <img src={item.img} alt={item.name} />
-              <h3>{item.name}</h3>
-              <p className="price">{item.price}</p>
-              <div className="ratings">
-               <p>{item.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory}/>
+        <ProductsCard menuItems={filteredItems}/>
       </div>
     </div>
   );
