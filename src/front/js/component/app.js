@@ -7,7 +7,7 @@ import {
   useNavigate,
   Routes,
 } from "react-router-dom";
-import QRScanner from "./Qrscanner";
+
 import Menu from "./Menu";
 import { Navigate } from "react-router-dom";
 

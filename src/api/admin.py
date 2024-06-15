@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from modelUser import db, User, Usuario, Menu, Restaurant, Table
+from api.modelUser import db, User, Usuario, Menu, Restaurant, Table
 from flask_admin.contrib.sqla import ModelView
 
 

@@ -23,6 +23,7 @@ const [showPassword, setShowPassword] = useState(false);
 const [registerStatus, setRegisterStatus] = useState()
 const Navigate = useNavigate()
 const [isLoading, setIsLoading] = useState(false)
+const [token, setToken] = useState()
 
 const handleSubmit = async (event) => {
     event.preventDefault();

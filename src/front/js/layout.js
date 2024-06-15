@@ -14,13 +14,12 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import  Login  from "./pages/login";
 import injectContext from "./store/appContext";
-import Login from "./pages/login";
+
 
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Signup from "./pages/signup";
-import QrScanner from "./component/Qrscanner";
 import App from "./component/app";
 
 const ProtectedRoute = ({ children, role }) => {
