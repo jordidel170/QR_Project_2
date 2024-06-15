@@ -21,7 +21,7 @@ import EditMenuModal from '../component/editMenuModal';
     const categoryName = ["All", "Starters", "Mains", "Desserts", "Drinks"];
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [filteredItems, setFilteredItems] = useState(menuItems);
-    
+    console.log(filteredItems)
   
   
   
