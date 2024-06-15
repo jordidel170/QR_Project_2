@@ -1,4 +1,6 @@
 import loginDispatcher from "./dispatcherLogin";
+import productDispatcher from "./dispatcherProduct";
+import dispatcherProduct from "./dispatcherProduct";
 
 import signupDispatcher from "./dispatcherSignup";
 
@@ -103,6 +105,18 @@ const getState = ({ getStore, getActions, setStore }) => {
             clearCart: () => {
                 const store = getStore();
                 setStore({ ...store, cart: [], totalAmount: 0 });
+            },
+
+            getProduct: async() => {
+              const data = await productDispatcher.get();
+            //   console.log(data)
+              return data;
+            }, 
+
+            getProductById: async (id) => {
+                const data = await productDispatcher.getById(id)
+                // console.log(data)
+                return data;
             }
 		
 		}

@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "../../styles/editMenuModal.css"
+import { Context } from '../store/appContext'
 
 
-const EditMenuModal = ({filteredItems}) => {
+const EditMenuModal = ({filteredItems, productId, setProductId}) => {
+    const {store, actions} = useContext(Context)
 const product = filteredItems.filter(item => item.id === 2)
-console.log([...product])
+// console.log(product)
 
-const [formData, setFormData] = useState([...product])
+const [formData, setFormData] = useState([])
+// console.log(formData)
 const categoryName = ["Starters", "Mains", "Desserts", "Drinks"];
 const handleSubmit = (event) => {
     event.preventDefatult();
@@ -16,7 +19,16 @@ const handleSubmit = (event) => {
     const handleClick = (event) => {
         console.log(event.target)
     }
+    const fetchProductById = async (id) => {
+        const product = await actions.getProductById(id);
+        setFormData(product)
+      }
+
+useEffect( () => {
+    fetchProductById(productId)
+},[])
   return (
+    
     <div>
     <div className="modal-overlay">
       <div className="modal-content">
@@ -24,15 +36,15 @@ const handleSubmit = (event) => {
         <form onSubmit={handleSubmit}>
           <label>
             Name:
-            <input type="text" name="name" value={formData[0].name} onClick={handleClick}/>
+            <input type="text" name="name" value={formData.name} onClick={handleClick}/>
           </label>
           <label>
             Price:
-            <input type="text" name="price"  />
+            <input type="text" name="price" value={formData.price}  />
           </label>
           <label>
             Description:
-            <textarea name="description" ></textarea>
+            <textarea name="description" value={formData.description}></textarea>
           </label>
           <label>
             Category:
@@ -42,10 +54,10 @@ const handleSubmit = (event) => {
           </label>
           <label>
             Image URL:
-            <input type="text" name="img" />
+            <input type="text" name="img" value={formData.image}/>
           </label>
           <button type="submit">Save</button>
-          <button type="button" >Cancel</button>
+          <button type="button" onClick={() => {setProductId("")}}>Cancel</button>
         </form>
       </div>
     </div>
