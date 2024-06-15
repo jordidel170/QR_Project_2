@@ -1,11 +1,17 @@
 import React from 'react'
 
 const ProductsCard = ({menuItems}) => {
+
+    
+const handleEditModal = () => {}
+    
+   
   return (
     
-        <div className="menu-items">
-          {menuItems.map(item => (
-            <div className="menu-item" key={item.name}>
+        <>
+        {console.log(menuItems)}
+        {menuItems.map((item, index) => (
+            <div className="menu-item" key={index}>
               <figure className='figuremenu-item'>
               <img src={item.img} alt={item.name} />
               </figure>
@@ -15,12 +21,13 @@ const ProductsCard = ({menuItems}) => {
               </div>
               <div className='editButton'>
               <p className="price">{item.price}</p>
-             <button class="material-symbols-outlined">edit</button>
+             <button className="material-symbols-outlined">edit</button>
               </div>
             </div>
 
           ))}
-        </div>
+        </>
+          
   )
 }
 

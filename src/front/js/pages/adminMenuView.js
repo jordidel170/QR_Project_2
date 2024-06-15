@@ -10,36 +10,37 @@ import ProductsCard from '../component/productsCard';
   const adminMenuView = () => {
 
     const menuItems = [
-      { name: 'Peanut Butter Chicken Burger', price: '₹220', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Desserts' ,img: 'https://tse2.mm.bing.net/th?id=OIP.Epgh66370jM69NUWAw1LHQHaEK&pid=Api' },
-      { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category:'Starters', img: 'https://tse2.mm.bing.net/th?id=OIP.a7BG_WibT85epZU5IYOh5QHaE8&pid=Api' },
-      { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Mains',img: 'https://tse4.mm.bing.net/th?id=OIP.761GqK-wlfuf9P8b3_sa3QHaHa&pid=Api' },
-      { name: 'Water from fiji', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Drinks',img: 'https://tse2.mm.bing.net/th?id=OIP.jqpR0Et_ZgU15kf80MOmkAAAAA&pid=Api' },  
-      { name: 'Peanut Butter Chicken Burger', price: '₹220', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Desserts' ,img: 'https://tse2.mm.bing.net/th?id=OIP.Epgh66370jM69NUWAw1LHQHaEK&pid=Api' },
-      { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category:'Starters', img: 'https://tse2.mm.bing.net/th?id=OIP.a7BG_WibT85epZU5IYOh5QHaE8&pid=Api' },
-      { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Mains',img: 'https://tse4.mm.bing.net/th?id=OIP.761GqK-wlfuf9P8b3_sa3QHaHa&pid=Api' },
-      { name: 'Water from fiji', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Drinks',img: 'https://tse2.mm.bing.net/th?id=OIP.jqpR0Et_ZgU15kf80MOmkAAAAA&pid=Api' },  
-      { name: 'Peanut Butter Chicken Burger', price: '₹220', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Desserts' , img: 'https://tse2.mm.bing.net/th?id=OIP.Epgh66370jM69NUWAw1LHQHaEK&pid=Api' },
-      { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category:'Starters', img: 'https://tse2.mm.bing.net/th?id=OIP.a7BG_WibT85epZU5IYOh5QHaE8&pid=Api' },
-      { name: 'Texas Style BBQ Burger', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Mains',img: 'https://tse4.mm.bing.net/th?id=OIP.761GqK-wlfuf9P8b3_sa3QHaHa&pid=Api' },
-      { name: 'Water from fiji', price: '₹210', description: 'hacer treinta palabras por lo menos lo que llegue a alcanzar a lo que se puede, esta seria la mitad, entonces faltaria un poco más algo así entonces', category: 'Drinks',img: 'https://tse2.mm.bing.net/th?id=OIP.jqpR0Et_ZgU15kf80MOmkAAAAA&pid=Api' }
+      { id: 2, name: 'Texas Style BBQ Burger', price: '₹210', description: 'Descripción larga para asegurar 30 palabras...', category:'Starters', img: 'https://tse2.mm.bing.net/th?id=OIP.a7BG_WibT85epZU5IYOh5QHaE8&pid=Api' },
+      { id: 3, name: 'Texas Style BBQ Burger', price: '₹210', description: 'Descripción larga para asegurar 30 palabras...', category: 'Mains',img: 'https://tse4.mm.bing.net/th?id=OIP.761GqK-wlfuf9P8b3_sa3QHaHa&pid=Api' },
+      { id: 4, name: 'Water from fiji', price: '₹210', description: 'Descripción larga para asegurar 30 palabras...', category: 'Drinks',img: 'https://tse2.mm.bing.net/th?id=OIP.jqpR0Et_ZgU15kf80MOmkAAAAA&pid=Api' },  
+      { id: 5, name: 'Peanut Butter Chicken Burger', price: '₹220', description: 'Descripción larga para asegurar 30 palabras...', category: 'Desserts' ,img: 'https://tse2.mm.bing.net/th?id=OIP.Epgh66370jM69NUWAw1LHQHaEK&pid=Api' },
+      { id: 6, name: 'Peanut Butter Chicken Burger', price: '₹220', description: 'Descripción larga para asegurar 30 palabras...', category: 'Desserts' ,img: 'https://tse2.mm.bing.net/th?id=OIP.Epgh66370jM69NUWAw1LHQHaEK&pid=Api' },
     
     ];
-    const categoryName = ["Starters", "Mains", "Desserts","Drinks", "All"]
+    const categoryName = ["All", "Starters", "Mains", "Desserts", "Drinks"];
     const [selectedCategory, setSelectedCategory] = useState("All");
-    let filteredItems = selectedCategory === "All"
-    ? menuItems
-    : menuItems.filter(item => item.category === selectedCategory);
-
-    useEffect ( () => {
-     filteredItems = []
-    },[selectedCategory])
-console.log(selectedCategory)
+    const [filteredItems, setFilteredItems] = useState(menuItems);
+  const Starters = menuItems.filter(item => item.category === "Starters")
+  console.log(selectedCategory)
+    // useEffect(() => {
+      
+    //   if (selectedCategory === "All") {
+    //     setFilteredItems(menuItems);
+    //   } else {
+    //     setFilteredItems(menuItems.filter(item => item.category === selectedCategory));
+    //     console.log(filteredItems)
+    //   }
+    // }, [selectedCategory]);
+  
   return (
     <div>
       <Sidebar />
       <div className="menu-container">
         <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory}/>
-        <ProductsCard menuItems={filteredItems}/>
+        <div className='menu-items'>
+          {selectedCategory === "All" ?  <ProductsCard menuItems={menuItems}/> : <ProductsCard menuItems={menuItems.filter(item => item.category === selectedCategory)}/>}
+       
+        </div>
       </div>
     </div>
   );
