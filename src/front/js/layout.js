@@ -21,6 +21,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Signup from "./pages/signup";
 import App from "./component/app";
+import AdminMenuView from './pages/adminMenuView';
 
 const ProtectedRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");
@@ -58,6 +59,7 @@ const Layout = () => {
                         <Route element={<OrderSummary />} path="/order-summary" />
                         <Route element={<OrderSuccess />} path="/order-success" />
                         <Route element={<AboutUs />} path="/about-us" />
+                        <Route element={<AdminMenuView />} path="/app/adminmenu" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     {/* <Footer /> */}
