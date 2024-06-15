@@ -117,6 +117,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const data = await productDispatcher.getById(id)
                 // console.log(data)
                 return data;
+            },
+
+            uptadeProductById: async(id, name, price, description, image, category) => {
+                const data = await productDispatcher.put(id, name, price, description, image, category)
+                return data;
             }
 		
 		}

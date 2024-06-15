@@ -11,14 +11,35 @@ const product = filteredItems.filter(item => item.id === 2)
 const [formData, setFormData] = useState([])
 // console.log(formData)
 const categoryName = ["Starters", "Mains", "Desserts", "Drinks"];
-const handleSubmit = (event) => {
-    event.preventDefatult();
-    onSave(formData)
+
+const onSave = (formData) => {
+actions.uptadeProductById(productId, formData.name, formData.price, formData.description, formData.image, formData.category)
 }
 
-    const handleClick = (event) => {
-        console.log(event.target)
-    }
+// const form = {
+//     "name": name,
+//     "price": price,
+//     "description": description,
+//     "image": image,
+//     "category": category
+// }
+
+const handleSubmit = (event) => {
+    // setFormData()
+    event.preventDefault();
+    onSave(formData)
+    
+}
+
+
+const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+    }));
+}
+
     const fetchProductById = async (id) => {
         const product = await actions.getProductById(id);
         setFormData(product)
@@ -33,30 +54,29 @@ useEffect( () => {
     <div className="modal-overlay">
       <div className="modal-content">
         <h2>Edit Product</h2>
-        <form onSubmit={handleSubmit}>
+        <form>
           <label>
             Name:
-            <input type="text" name="name" value={formData.name} onClick={handleClick}/>
+            <input type="text" name="name" value={formData.name} onChange={handleChange}/>
           </label>
           <label>
             Price:
-            <input type="text" name="price" value={formData.price}  />
+            <input type="text" name="price" value={formData.price} onChange={handleChange} />
           </label>
           <label>
             Description:
-            <textarea name="description" value={formData.description}></textarea>
+            <textarea name="description" value={formData.description} onChange={handleChange}></textarea>
           </label>
           <label>
             Category:
-            <select className="category-dropdown" >
-                {categoryName.map((name, index) => (<option key={index} value={name}>{name}</option>))}</select>
-            <input type="text" name="category"  />
+            <select className="category-dropdown" onChange={handleChange}>
+                {categoryName.map((name, index) => (<option key={index} value={name} >{name}</option>))} </select>
           </label>
           <label>
             Image URL:
-            <input type="text" name="img" value={formData.image}/>
+            <input type="text" name="img" value={formData.image} onChange={handleChange}/>
           </label>
-          <button type="submit">Save</button>
+          <button type="submit" onClick={handleSubmit}>Save</button>
           <button type="button" onClick={() => {setProductId("")}}>Cancel</button>
         </form>
       </div>
