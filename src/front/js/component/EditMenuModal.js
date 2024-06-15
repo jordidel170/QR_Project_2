@@ -24,9 +24,9 @@ actions.uptadeProductById(productId, formData.name, formData.price, formData.des
 //     "category": category
 // }
 
-const handleSubmit = (event) => {
+const handleSubmit = () => {
     // setFormData()
-    event.preventDefault();
+    
     onSave(formData)
     
 }
