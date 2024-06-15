@@ -22,6 +22,7 @@ import { Footer } from "./component/footer";
 import Signup from "./pages/signup";
 import App from "./component/app";
 import AdminMenuView from './pages/adminMenuView';
+import EditMenuModal from "./component/editMenuModal";
 
 const ProtectedRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");
@@ -60,6 +61,7 @@ const Layout = () => {
                         <Route element={<OrderSuccess />} path="/order-success" />
                         <Route element={<AboutUs />} path="/about-us" />
                         <Route element={<AdminMenuView />} path="/app/adminmenu" />
+                        <Route element={<EditMenuModal />} path="/app/editmenumodal" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     {/* <Footer /> */}

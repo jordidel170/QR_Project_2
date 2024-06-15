@@ -3,6 +3,7 @@ import Sidebar from '../component/sidebar';
 import "../../styles/adminMenuView.css"
 import CategoriesButton from '../component/categoriesButton';
 import ProductsCard from '../component/productsCard';
+import EditMenuModal from '../component/editMenuModal';
 
 
 
@@ -20,17 +21,9 @@ import ProductsCard from '../component/productsCard';
     const categoryName = ["All", "Starters", "Mains", "Desserts", "Drinks"];
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [filteredItems, setFilteredItems] = useState(menuItems);
-  const Starters = menuItems.filter(item => item.category === "Starters")
-  console.log(selectedCategory)
-    // useEffect(() => {
-      
-    //   if (selectedCategory === "All") {
-    //     setFilteredItems(menuItems);
-    //   } else {
-    //     setFilteredItems(menuItems.filter(item => item.category === selectedCategory));
-    //     console.log(filteredItems)
-    //   }
-    // }, [selectedCategory]);
+    
+  
+  
   
   return (
     <div>
@@ -39,7 +32,9 @@ import ProductsCard from '../component/productsCard';
         <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory}/>
         <div className='menu-items'>
           {selectedCategory === "All" ?  <ProductsCard menuItems={menuItems}/> : <ProductsCard menuItems={menuItems.filter(item => item.category === selectedCategory)}/>}
-       
+        </div>
+        <div className='editModalMenu'>
+      <EditMenuModal filteredItems={filteredItems}/>
         </div>
       </div>
     </div>
