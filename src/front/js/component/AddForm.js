@@ -50,7 +50,9 @@ export const AddForm = (props) => {
     return (
 
         <form className='form' onSubmit={submitHandler}>
-            <button type="submit" className='add-button'><i class="fa-solid fa-circle-plus"></i></button>
+            <button type="submit" className='add-button'>
+                
+                <i class="fa-solid fa-plus"></i></button>
         </form>
 
     );

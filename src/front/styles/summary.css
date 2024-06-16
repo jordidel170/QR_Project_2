@@ -134,10 +134,17 @@
     gap: 0.5rem;
   }
   .trash-icon {
-    margin: -0.5rem -2.5rem;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: lightgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    background: none;
+    transition: background-color 0.3s;
     border: none;
+    padding: 0;
   }
   
   .trash-icon:hover {
@@ -148,12 +155,17 @@
     margin: 15px;
   }
   .payment-icons button {
+    display:flex;
+    align-items: center;
     margin: 5px 0px;
-    padding: 8px;
+    padding: 25px 55px;
     border: 1px solid #ccc;
     background-color: white;
     cursor: pointer;
   }
+  .payment-icons button i {
+    margin-right: 70px; 
+}
   
   .payment-icons button.selected {
     border-color: #007bff;

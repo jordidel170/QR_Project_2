@@ -1,7 +1,8 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+import io
+from flask import Flask, request, jsonify, url_for, Blueprint, send_file
 from api.modelUser import db, User, Table, Restaurant, Menu
 from api.utils import generate_sitemap, APIException
 

@@ -52,6 +52,48 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
                     .catch(error => console.error('Error fetching menu:', error));
             },
+            // getMenuItem: (restaurantId, tableId, menuId) => {
+            //     const store = getStore();
+            //     fetch(`https://humble-pancake-977xqppgr6q427j55-3001.app.github.dev/api/restaurants/${restaurantId}/tables/${tableId}/menus/${menuId}`)
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             setStore({ ...store, menuItem: data, menu: [] }); 
+            //         })
+            //         .catch(error => console.error('Error fetching menu item:', error));
+            // },
+
+            // getOrder: (restaurantId,tableId) => {
+            //     const orderData = {
+            //         restaurant_id: restaurantId,
+            //         table_id: tableId,
+            //         comment: comment,
+            //         payment_method: paymentMethod,
+            //         items: store.cart.map(meal => ({
+            //             menu_id: meal.id,
+            //             quantity: meal.quantity,
+            //             price: meal.price
+            //         }))
+            //     };
+        
+            //     try {
+            //         const response = fetch(`https://humble-pancake-977xqppgr6q427j55-3001.app.github.dev/api/restaurants/${restaurantId}/tables/${tableId}/menu/orders`, {
+            //             method: 'POST',
+            //             headers: {
+            //                 'Content-Type': 'application/json'
+            //             },
+            //             body: JSON.stringify(orderData)
+            //         });
+        
+            //         if (!response.ok) {
+            //             throw new Error('Failed to create order');
+            //         }
+        
+            //         const result = response.json();
+            //     } catch (error) {
+            //         console.error('Error:', error);
+            //         alert('Error creating order. Please try again.');
+            //     }
+            // },
        
             addToCart: (meal, quantity = 1) => {
                 const store = getStore()
