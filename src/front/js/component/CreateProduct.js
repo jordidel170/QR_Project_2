@@ -15,7 +15,7 @@ const [creationMode, setCreationMode] = useState(true)
             [name]: value
         }));
     }
-    console.log(newProductData)
+    // console.log(newProductData)
     const onSave = (newProductData) => {
         actions.createNewProduct(newProductData.name, newProductData.price, newProductData.description, newProductData.image,newProductData.category)
         }
@@ -46,7 +46,7 @@ const [creationMode, setCreationMode] = useState(true)
             </label>
             <label>
               Category:
-              <select className="category-dropdown" name = "category" onChange={handleChange}>
+              <select className="category-dropdown" name="category" onChange={handleChange}>
                   {categoryName.map((name, index) => (<option key={index} value={newProductData.category} >{name}</option>))} </select>
             </label>
             <label>
@@ -58,8 +58,6 @@ const [creationMode, setCreationMode] = useState(true)
           </form>
         </div>
       </div> : "" }
-      
-      
     </>
   )
 }

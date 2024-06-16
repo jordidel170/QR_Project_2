@@ -10,11 +10,9 @@ const [openModal, setOpenModal] = useState(false)
       <>
       <div className="menu-header">
           <h1>Menu</h1>
-          <button className='createproduct' onClick={setOpenModal(true)}> Create New Product
+          <button className='createproduct' onClick={() => {setOpenModal(true)}}> Create New Product
         </button>
-        <div className='modal-createproduct'>
-{/* {openModal === true ? <CreateProduct /> : <></>} */}
-        </div>
+      {openModal ? <CreateProduct /> : <></> }
         </div>
         <div className="menu-categories">
           {categoryName.map((category, index) => (

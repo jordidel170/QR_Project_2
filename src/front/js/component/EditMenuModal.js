@@ -30,10 +30,12 @@ const handleChange = (event) => {
     }));
 }
 
+
     const fetchProductById = async (id) => {
         const product = await actions.getProductById(id);
         setUpdatedFormData(product)
       }
+      console.log(updatedFormData)
 
 useEffect( () => {
     fetchProductById(productId)
@@ -59,7 +61,7 @@ useEffect( () => {
           </label>
           <label>
             Category:
-            <select className="category-dropdown" onChange={handleChange}>
+            <select className="category-dropdown" name="category" onChange={handleChange} >
                 {categoryName.map((name, index) => (<option key={index} value={name} >{name}</option>))} </select>
           </label>
           <label>
