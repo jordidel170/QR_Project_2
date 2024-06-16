@@ -31,7 +31,7 @@ const Mesas = () => {
         const maxId = mesas.reduce((max, mesa) => Math.max(max, mesa.id), 0);
         const nuevaMesa = {
             id: maxId + 1,
-            nombre: `Mesa ${maxId + 1}`,
+            nombre: `${maxId + 1}`,
             posicion: { x: 0, y: 10 },
             icono: icono, // Agrega la propiedad icono a la nueva mesa
         };
@@ -98,7 +98,7 @@ const Mesas = () => {
         const id = e.dataTransfer.getData("text/plain");
         // Ajuste para centrar el icono en la posición del cursor
         const ajusteX = 51; // La mitad del ancho del icono
-        const ajusteY = 39; // La mitad del alto del icono
+        const ajusteY = 50; // La mitad del alto del icono
         const nuevaPosicion = {
             x: e.clientX - contenedor.left - ajusteX,
             y: e.clientY - contenedor.top - ajusteY
@@ -219,8 +219,8 @@ const Mesas = () => {
                                     }}
                                     placeholder="Ancho"
                                 />
-                                <button onClick={agregarCopia}>Agregar Copia del Salón</button>
-                                <button onClick={agregarSalon}>Añadir Salón</button>
+                                {/* <button onClick={agregarCopia}>Agregar Copia del Salón</button>
+                                <button onClick={agregarSalon}>Añadir Salón</button> */}
                                 <button className='editar'>Guardar</button>
                             </div>
                         </div>

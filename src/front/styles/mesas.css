@@ -125,7 +125,10 @@ section{
 }
 
 .numeroMesa{
+    bottom: 11px;
+    position: absolute;
     padding-bottom: 30px;
+    font-weight: bold;
 }
 
 .input-nombre-mesa{
