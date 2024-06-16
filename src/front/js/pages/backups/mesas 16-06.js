@@ -59,6 +59,7 @@ const Mesas = () => {
         e.preventDefault();
     };
 
+    
     const actualizarTamañoSala = () => {
         const proporcion = 55;
         const nuevoAncho = anchoSala * proporcion;
@@ -119,7 +120,7 @@ const Mesas = () => {
                         <h3>{nombreSalon}</h3>
                         <div
                             className="sala container-mesas"
-                            style={{ width: '1080px', height: '600px', position: 'relative', border: '1px solid black', backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}
+                            style={{ width: '1080px', height: '600px', position: 'relative', border: '1px solid black', backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center'}}
                             onDragOver={permitirSoltar}
                             onDrop={manejarSoltar}
                         >
