@@ -20,9 +20,6 @@ body {
     color: rgb(30, 30, 141);
   }
   .meal {
-    display: flex;
-    /* justify-content: space-between; */
-    align-items: center;
     margin: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid #ccc;
@@ -30,6 +27,8 @@ body {
   
   .meal-items {
     flex-grow: 1;
+    display:flex;
+    justify-content:space-between;
   }
   
   .meal h3 {
@@ -41,10 +40,10 @@ body {
   }
   
   .price {
-    margin-top: 0.25rem;
     font-weight: bold;
     color: rgb(253, 130, 82);
     font-size: 0.8rem;
+    margin-left: auto;
   }
   .meals {
     max-width: 60rem;
@@ -93,9 +92,22 @@ body {
   
   .menu-category h2 {
     font-size: 1.5rem;
-    /* margin-bottom: -1.5rem; */
     color: rgb(30, 30, 141);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .arrow {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+    font-size: 0.8rem;
+  }
+  
+  .arrow.up {
+    transform: rotate(180deg);
+    font-size: 0.8rem;
   }
   
   .menu-category ul {

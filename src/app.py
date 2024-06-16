@@ -1,8 +1,10 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+# import io
+# import qrcode
 import os
-from flask import Flask, request, jsonify, url_for, send_from_directory
+from flask import Flask, request, jsonify, url_for, send_from_directory, send_file
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
@@ -15,6 +17,7 @@ from api.blueprint.login import login_bp
 from api.blueprint.signup import signup_bp
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+
 
 
 
@@ -85,7 +88,36 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
+# BASE_URL = 'https://humble-pancake-977xqppgr6q427j55-3000.app.github.dev/restaurants'
+# @app.route('/generate_qr', methods=['GET'])
+# def generate_qr():
+#     restaurant_id = request.args.get('restaurantId')
+#     table_id = request.args.get('tableId')
+    
+#     if not restaurant_id or not table_id:
+#         return "Both restaurantId and tableId are required", 400
 
+#     # Create the URL for the specific table
+#     url = f"{BASE_URL}/{restaurant_id}/tables/{table_id}/menu"
+
+#     # Generate QR code
+#     qr = qrcode.QRCode(
+#         version=1,
+#         error_correction=qrcode.constants.ERROR_CORRECT_L,
+#         box_size=10,
+#         border=4,
+#     )
+#     qr.add_data(url)
+#     qr.make(fit=True)
+    
+#     # Create an image of the QR code
+#     img = qr.make_image(fill='black', back_color='white')
+#     img_io = io.BytesIO()
+#     img.save(img_io, 'PNG')
+#     img_io.seek(0)
+
+#     # Serve the image
+#     return send_file(img_io, mimetype='image/png')
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))

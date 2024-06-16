@@ -12,6 +12,8 @@ export const OrderSummary = props => {
     const { store, actions } = useContext(Context);
     const [comment, setComment] = useState('');
     const [paymentMethod, setPaymentMethod] = useState('');
+    const [restaurantId, setRestaurantId] = useState('');
+    const [tableId, setTableId] = useState('');
     const totalPrice = store.cart.reduce((total, meal) => total + meal.price * meal.quantity, 0);
     const navigate = useNavigate();
     const handleCommentChange = (e) => {
@@ -21,7 +23,7 @@ export const OrderSummary = props => {
     const handlePaymentMethodChange = (method) => {
         setPaymentMethod(method);
     };
-    const handleFinishOrder = () => {
+    const handleFinishOrder = async() => {
         if (!paymentMethod) {
             alert('Please choose your payment method!')
             return;
@@ -32,7 +34,10 @@ export const OrderSummary = props => {
         }
         else { alert('Redirecting to bank payment gateway...'); }
 
-
+            // actions.getOrder(restaurantId,tableId)
+            actions.clearCart();
+            navigate('/order-success');
+     
     }
     return (
         <>
@@ -45,9 +50,19 @@ export const OrderSummary = props => {
                             <div>{meal.name}</div>
                             <div>x {meal.quantity}</div>
                             <div className="butt">
-                                <button className='trash-icon' onClick={(e) => actions.removeItem(meal.id)}><i class="fa-solid fa-trash" ></i></button>
-                                <button className="butt1" onClick={(e) => actions.removeFromCart(meal.id)}>−</button>
-                                <button className="butt1" onClick={(e) => actions.addToCart(meal)}>+</button>
+                            {meal.quantity === 1 ? (
+                <>
+                    <button className='trash-icon' onClick={() => actions.removeItem(meal.id)}>
+                    <i className="fa-solid fa-trash fa-xs"></i>
+                    </button>
+                    <button className="butt1" onClick={() => actions.addToCart(meal)}>+</button>
+                </>
+            ) : (
+                <>
+                    <button className="butt1" onClick={() => actions.removeFromCart(meal.id)}>−</button>
+                    <button className="butt1" onClick={() => actions.addToCart(meal)}>+</button>
+                </>
+            )}
                             </div>
                             
                             <div>${(meal.price * meal.quantity).toFixed(2)}</div>
@@ -89,8 +104,8 @@ export const OrderSummary = props => {
                     </div>
                 </div>
                 <div className='order-finish'>
-                    <button onClick={actions.clearCart} className='button1'>Clear Order</button>
-                    <button className='button1' onClick={handleFinishOrder}>Finish order</button>
+                    <button onClick={actions.clearCart} className='button1'>Clear</button>
+                    <button className='button1' onClick={handleFinishOrder}>Finish</button>
                 </div>
             </div>
             <Footer />
