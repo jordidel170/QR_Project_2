@@ -5,36 +5,26 @@ import { Context } from '../store/appContext'
 
 const EditMenuModal = ({filteredItems, productId, setProductId}) => {
     const {store, actions} = useContext(Context)
-const product = filteredItems.filter(item => item.id === 2)
-// console.log(product)
+// const product = filteredItems.filter(item => item.id === 2)
 
-const [formData, setFormData] = useState([])
-// console.log(formData)
+
+const [updatedFormData, setUpdatedFormData] = useState([])
+
 const categoryName = ["Starters", "Mains", "Desserts", "Drinks"];
 
-const onSave = (formData) => {
-actions.uptadeProductById(productId, formData.name, formData.price, formData.description, formData.image, formData.category)
+const onSave = (updatedFormData) => {
+actions.uptadeProductById(productId, updatedFormData.name, updatedFormData.price, updatedFormData.description, updatedFormData.image, updatedFormData.category)
 }
 
-// const form = {
-//     "name": name,
-//     "price": price,
-//     "description": description,
-//     "image": image,
-//     "category": category
-// }
 
 const handleSubmit = () => {
-    // setFormData()
-    
     onSave(formData)
-    
 }
 
 
 const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData(prevState => ({
+    setUpdatedFormData(prevState => ({
         ...prevState,
         [name]: value
     }));
@@ -42,7 +32,7 @@ const handleChange = (event) => {
 
     const fetchProductById = async (id) => {
         const product = await actions.getProductById(id);
-        setFormData(product)
+        setUpdatedFormData(product)
       }
 
 useEffect( () => {
@@ -57,15 +47,15 @@ useEffect( () => {
         <form>
           <label>
             Name:
-            <input type="text" name="name" value={formData.name} onChange={handleChange}/>
+            <input type="text" name="name" value={updatedFormData.name} onChange={handleChange}/>
           </label>
           <label>
             Price:
-            <input type="text" name="price" value={formData.price} onChange={handleChange} />
+            <input type="text" name="price" value={updatedFormData.price} onChange={handleChange} />
           </label>
           <label>
             Description:
-            <textarea name="description" value={formData.description} onChange={handleChange}></textarea>
+            <textarea name="description" value={updatedFormData.description} onChange={handleChange}></textarea>
           </label>
           <label>
             Category:
@@ -74,7 +64,7 @@ useEffect( () => {
           </label>
           <label>
             Image URL:
-            <input type="text" name="img" value={formData.image} onChange={handleChange}/>
+            <input type="text" name="img" value={updatedFormData.image} onChange={handleChange}/>
           </label>
           <button type="submit" onClick={handleSubmit}>Save</button>
           <button type="button" onClick={() => {setProductId("")}}>Cancel</button>

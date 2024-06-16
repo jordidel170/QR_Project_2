@@ -1,4 +1,5 @@
 import loginDispatcher from "./dispatcherLogin";
+import newProductDispatcher from "./dispatcherNewProduct";
 import productDispatcher from "./dispatcherProduct";
 import dispatcherProduct from "./dispatcherProduct";
 
@@ -121,6 +122,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             uptadeProductById: async(id, name, price, description, image, category) => {
                 const data = await productDispatcher.put(id, name, price, description, image, category)
+                return data;
+            },
+
+            createNewProduct: async (name, price, description, image, category) => {
+                const data = await newProductDispatcher(name, price, description, image, category)
                 return data;
             }
 		
