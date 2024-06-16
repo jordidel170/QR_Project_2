@@ -1,29 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CreateProduct from './createProduct'
 
-const CategoriesButton = ({ categoryName, setSelectedCategory }) => {
-
+const CategoriesButton = ({ categoryName, setSelectedCategory}) => {
+const [openModal, setOpenModal] = useState(false)
 
 
 
   return (
-   
-    <>
-    <div className="menu-header">
+      <>
+      <div className="menu-header">
           <h1>Menu</h1>
-          <button className='createproduct'> Create New Product
-        <CreateProduct />
+          <button className='createproduct' onClick={setOpenModal(true)}> Create New Product
         </button>
+        <div className='modal-createproduct'>
+{/* {openModal === true ? <CreateProduct /> : <></>} */}
         </div>
-      
+        </div>
         <div className="menu-categories">
           {categoryName.map((category, index) => (
             <div className="category" key={index} onClick={() => {setSelectedCategory(category)} }>{category}</div>
           ))}
         </div>
-    </>
-        
-   
+        </>
   )
 }
 

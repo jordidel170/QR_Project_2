@@ -54,7 +54,7 @@ const Login = () => {
 				<div className="formulario inputlogin">
 					{/* {store.token && store.token != "" && store.token != undefined ? navigate("/app/login/home") :(  */}
 						
-					<form action="#">
+					<form action="#" method="POST">
 						<h1>Iniciar Sesión</h1>
 						
 							<div className="input-container">

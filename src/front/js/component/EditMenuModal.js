@@ -18,7 +18,7 @@ actions.uptadeProductById(productId, updatedFormData.name, updatedFormData.price
 
 
 const handleSubmit = () => {
-    onSave(formData)
+    onSave(updatedFormData)
 }
 
 
@@ -64,7 +64,7 @@ useEffect( () => {
           </label>
           <label>
             Image URL:
-            <input type="text" name="img" value={updatedFormData.image} onChange={handleChange}/>
+            <input type="text" name="image" value={updatedFormData.image} onChange={handleChange}/>
           </label>
           <button type="submit" onClick={handleSubmit}>Save</button>
           <button type="button" onClick={() => {setProductId("")}}>Cancel</button>

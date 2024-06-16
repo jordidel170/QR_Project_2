@@ -30,8 +30,8 @@ const [creationMode, setCreationMode] = useState(true)
     {creationMode ? 
     <div className="modal-overlay">
         <div className="modal-content">
-          <h2>Edit Product</h2>
-          <form>
+          <h2>Create Product</h2>
+          <form method='POST'>
             <label>
               Name:
               <input type="text" name="name" value={newProductData.name} onChange={handleChange}/>
@@ -57,7 +57,7 @@ const [creationMode, setCreationMode] = useState(true)
             <button type="button" onClick={() => {setCreationMode(false)}}>Cancel</button>
           </form>
         </div>
-      </div> : none }
+      </div> : "" }
       
       
     </>

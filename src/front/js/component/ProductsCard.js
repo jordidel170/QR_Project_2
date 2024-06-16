@@ -7,6 +7,9 @@ const handleEditModal = (id) => {
     setProductId(id)
 }
 
+const handleDelete = () => {
+  
+}
    
   return (
     
@@ -24,6 +27,7 @@ const handleEditModal = (id) => {
               <div className='editButton'>
               <p className="price">{product.price}</p>
              <button className="material-symbols-outlined" onClick={() => {handleEditModal(product.id)}}>edit</button>
+             <button className="material-symbols-outlined" onClick={() => {handleDelete(product.id)}}>delete</button> 
               </div>
             </div>
 

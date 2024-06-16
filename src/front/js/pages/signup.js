@@ -84,7 +84,7 @@ registerStatus === "ok" ? (  <div class="container2">
                     
                <div className="container">
                <div className="formulario inputlogin">
-                   <form action="#">
+                   <form action="#" method="POST">
                        <h1>Sign up</h1>
                        <div className="input-container">
                        <i className="fa-solid fa-utensils"></i>
