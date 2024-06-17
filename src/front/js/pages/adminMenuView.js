@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import "../../styles/adminMenuView.css"
 import CategoriesButton from '../component/categoriesButton';
-import ProductsCard from '../component/productsCard';
+import ProductsCard from '../component/ProductsCard';
 import EditMenuModal from '../component/EditMenuModal';
 import { Context } from '../store/appContext';
 import CreateProduct from '../component/CreateProduct';
@@ -35,12 +35,17 @@ import CreateProduct from '../component/CreateProduct';
   
     },[openModal])
   
+    const handleDeleteProduct = async (id) => {
+      await actions.deleteProduct(id);
+      const updatedProducts = filteredItems.filter(product => product.id !== id);
+      setFilteredItems(updatedProducts);
+    };
   return (
     <div>
       <div className="menu-container">
         <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory} setOpenModal={setOpenModal}/>
         <div className='menu-items'>
-          {selectedCategory === "All" ?  <ProductsCard menuItems={filteredItems} setProductId={setProductId}/> : <ProductsCard menuItems={filteredItems.filter(product => product.category === selectedCategory)} setProductId={setProductId}/>} 
+          {selectedCategory === "All" ?  <ProductsCard menuItems={filteredItems} setProductId={setProductId}/> : <ProductsCard menuItems={filteredItems.filter(product => product.category === selectedCategory)} setProductId={setProductId} onDeleteProduct={handleDeleteProduct}/>} 
         </div>
         <div className='editModalMenu'>
      {productId === "" ? <></> : <EditMenuModal filteredItems={filteredItems} productId={productId} setProductId={setProductId} /> }
