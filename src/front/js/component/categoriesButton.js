@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import CreateProduct from './CreateProduct'
 
-const CategoriesButton = ({ categoryName, setSelectedCategory}) => {
-const [openModal, setOpenModal] = useState(false)
+const CategoriesButton = ({ categoryName, setSelectedCategory, setOpenModal}) => {
 
-const handleCloseModal = () => {
-  setOpenModal(false)
-}
 
 
   return (
@@ -15,11 +11,10 @@ const handleCloseModal = () => {
           <h1>Menu</h1>
           <button className='createproduct' onClick={() => {setOpenModal(true)}}> Create New Product
         </button>
-      {openModal ? <CreateProduct handleCloseModal={handleCloseModal} /> : <></> }
         </div>
         <div className="menu-categories">
           {categoryName.map((category, index) => (
-            <div className="category" key={index} onClick={() => {setSelectedCategory(category)} }>{category}</div>
+            <button className="category" key={index} onClick={() => {setSelectedCategory(category)} }>{category}</button>
           ))}
         </div>
         </>

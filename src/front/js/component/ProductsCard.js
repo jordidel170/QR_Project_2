@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { Context } from '../store/appContext'
+import "../../styles/productCard.css"
 
 const ProductsCard = ({menuItems, setProductId}) => {
-
-    
-const handleEditModal = (id) => {
+  const {store, actions} = useContext(Context)
+  const handleEditModal = (id) => {
     setProductId(id)
-}
+  }
 
-const handleDelete = () => {
-  
-}
+  const handleDeleteProduct = async(id) => {
+      await actions.deleteProduct(id);
+      
+  }
    
+
   return (
     
         <>
@@ -27,7 +30,7 @@ const handleDelete = () => {
               <div className='editButton'>
               <p className="price">{product.price}</p>
              <button className="material-symbols-outlined" onClick={() => {handleEditModal(product.id)}}>edit</button>
-             <button className="material-symbols-outlined" onClick={() => {handleDelete(product.id)}}>delete</button> 
+             <button className="material-symbols-outlined" onClick={() => {handleDeleteProduct(product.id)}}>delete</button> 
               </div>
             </div>
 

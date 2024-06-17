@@ -1,45 +1,50 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Sidebar from '../component/sidebar';
 import "../../styles/adminMenuView.css"
 import CategoriesButton from '../component/categoriesButton';
 import ProductsCard from '../component/productsCard';
 import EditMenuModal from '../component/EditMenuModal';
 import { Context } from '../store/appContext';
+import CreateProduct from '../component/CreateProduct';
 
 
 
 
   const adminMenuView = () => {
-const {store, actions} = useContext(Context)
+    const {store, actions} = useContext(Context)
    
     const categoryName = ["All", "Starters", "Mains", "Desserts", "Drinks"];
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [filteredItems, setFilteredItems] = useState([]);
     const [productId, setProductId] = useState("")
+    const [openModal, setOpenModal] = useState(false)
+    
+      const handleCloseModal = () => {
+        setOpenModal(false)
+      }
+
     // console.log(filteredItems)
   
-const fetchProduct = async() => {
-  const products =  await actions.getProduct()
-  setFilteredItems(products)
-}
+    const fetchProduct = async() => {
+    const products =  await actions.getProduct()
+    setFilteredItems(products)
+    }
 
 
-  useEffect( () => {
+    useEffect( () => {
     fetchProduct()
   
-  },[])
+    },[openModal])
   
   return (
     <div>
-      {/* <Sidebar /> */}
       <div className="menu-container">
-        <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory}/>
-        
+        <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory} setOpenModal={setOpenModal}/>
         <div className='menu-items'>
-          {selectedCategory === "All" ?  <ProductsCard menuItems={filteredItems} setProductId={setProductId}/> : <ProductsCard menuItems={filteredItems.filter(product => product.category === selectedCategory)} setProductId={setProductId}/>}
+          {selectedCategory === "All" ?  <ProductsCard menuItems={filteredItems} setProductId={setProductId}/> : <ProductsCard menuItems={filteredItems.filter(product => product.category === selectedCategory)} setProductId={setProductId}/>} 
         </div>
         <div className='editModalMenu'>
-     {productId === "" ? <></> : <EditMenuModal filteredItems={filteredItems} productId={productId} setProductId={setProductId}/> }
+     {productId === "" ? <></> : <EditMenuModal filteredItems={filteredItems} productId={productId} setProductId={setProductId} /> }
+     { openModal ? <CreateProduct handleCloseModal={handleCloseModal} /> : <></> }
         </div>
       </div>
     </div>

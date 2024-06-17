@@ -1,0 +1,15 @@
+.menu-item {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .description {
+    max-height: 3em; /* Ajusta esta altura a lo que consideres el texto corto */
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
+  
+  .menu-item:hover .description {
+    max-height: 100em; /* Suficientemente alto para mostrar todo el texto */
+  }
+  

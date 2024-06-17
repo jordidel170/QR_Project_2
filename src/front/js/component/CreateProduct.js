@@ -16,14 +16,13 @@ const [creationMode, setCreationMode] = useState(true)
         }));
     }
     // console.log(newProductData)
-    const onSave = async(newProductData) => {
-      await actions.createNewProduct(newProductData.name, newProductData.price, newProductData.description, newProductData.image,newProductData.category)
+    const onSave = (newProductData) => {
+       actions.createNewProduct(newProductData.name, newProductData.price, newProductData.description, newProductData.image,newProductData.category)
       handleCloseModal();
       }
   
-    const handleSubmit = async(event) => {
+    const handleSubmit = (event) => {
       event.preventDefault();
-      
       onSave(newProductData)
       }
   

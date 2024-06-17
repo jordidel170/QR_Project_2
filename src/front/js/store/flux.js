@@ -1,3 +1,4 @@
+import deleteProductDispatcher from "./dispatcherDeleteProduct";
 import loginDispatcher from "./dispatcherLogin";
 import newProductDispatcher from "./dispatcherNewProduct";
 import productDispatcher from "./dispatcherProduct";
@@ -127,6 +128,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             createNewProduct: async (name, price, description, image, category) => {
                 const data = await newProductDispatcher(name, price, description, image, category)
+                return data;
+            },
+
+            deleteProduct: async(id) => {
+                const data = await deleteProductDispatcher(id);
                 return data;
             }
 		
