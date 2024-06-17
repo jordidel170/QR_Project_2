@@ -22,7 +22,7 @@ import { Footer } from "./component/footer";
 import Signup from "./pages/signup";
 import App from "./component/app";
 import AdminMenuView from './pages/adminMenuView';
-import EditMenuModal from "./component/editMenuModal";
+import EditMenuModal from "./component/EditMenuModal";
 
 const ProtectedRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");

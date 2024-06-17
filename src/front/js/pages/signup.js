@@ -34,7 +34,6 @@ const handleSubmit = async (event) => {
        const data = await actions.getUserRegister(selectedRestaurant,firstName,lastName,email,password);
        setRegisterStatus(data[0].status)
        if (data[0].status === "ok"){
-        console.log("if")
         setIsLoading(false)
 
         setTimeout( async() => {

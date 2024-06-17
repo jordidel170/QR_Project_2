@@ -3,7 +3,7 @@ import Sidebar from '../component/sidebar';
 import "../../styles/adminMenuView.css"
 import CategoriesButton from '../component/categoriesButton';
 import ProductsCard from '../component/productsCard';
-import EditMenuModal from '../component/editMenuModal';
+import EditMenuModal from '../component/EditMenuModal';
 import { Context } from '../store/appContext';
 
 
@@ -31,7 +31,7 @@ const fetchProduct = async() => {
   
   return (
     <div>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className="menu-container">
         <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory}/>
         

@@ -3,9 +3,8 @@ import "../../styles/editMenuModal.css"
 import { Context } from '../store/appContext'
 
 
-const EditMenuModal = ({filteredItems, productId, setProductId}) => {
+const EditMenuModal = ({productId, setProductId}) => {
     const {store, actions} = useContext(Context)
-// const product = filteredItems.filter(item => item.id === 2)
 
 
 const [updatedFormData, setUpdatedFormData] = useState([])

@@ -34,7 +34,9 @@ body {
 }
 
 .menu-container {
-    margin-left: 270px;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 25px;
     padding: 20px;
 }
 
