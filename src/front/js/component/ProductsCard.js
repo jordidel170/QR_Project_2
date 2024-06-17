@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../store/appContext'
-import "../../styles/productCard.css"
+
 
 const ProductsCard = ({menuItems, setProductId}) => {
   const {store, actions} = useContext(Context)
