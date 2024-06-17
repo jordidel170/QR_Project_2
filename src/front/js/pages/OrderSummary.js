@@ -29,12 +29,12 @@ export const OrderSummary = ({ restaurantId, tableId }) => {
         }
 
         if (paymentMethod === 'cash') {
-                actions.getOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
+                actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
                 actions.clearCart();
                 navigate('/order-success');
         } else {
                 alert('Redirecting to bank payment gateway...');
-                actions.getOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
+                actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
                 actions.clearCart();
                 navigate('/order-success');
             }

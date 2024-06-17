@@ -160,13 +160,13 @@
   .cart-item-summary .price {
     color: rgb(253, 130, 82);
     font-weight: bold;
-    margin-left: 10px;
+    margin-left: 20px;
   }
   
   .cart-item-summary .quantity {
     margin-left: 30px;
     background-color: #f1f1f1;
-    padding: 2px 11px;
+    padding: 2px 6px;
     border-radius: 5px;
   }
   

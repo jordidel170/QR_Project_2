@@ -143,7 +143,7 @@ def delete_menu_item(restaurant_id, table_id, item_id):
     db.session.commit()
     return jsonify({"message": "Menu item deleted successfully"}), 200
 
-@api.route('/api/restaurants/<int:restaurant_id>/tables/<int:table_id>/orders', methods=['POST'])
+@api.route('/restaurants/<int:restaurant_id>/tables/<int:table_id>/orders', methods=['POST'])
 def create_order(restaurant_id, table_id):
     data = request.json
     comment = data.get('comment', '')
@@ -180,7 +180,7 @@ def create_order(restaurant_id, table_id):
 
     return jsonify(order.serialize()), 201
 
-@api.route('/api/restaurants/<int:restaurant_id>/tables/<int:table_id>/orders/<int:order_id>', methods=['GET'])
+@api.route('/restaurants/<int:restaurant_id>/tables/<int:table_id>/orders/<int:order_id>', methods=['GET'])
 def get_order(restaurant_id, table_id, order_id):
     order = Order.query.get(order_id)
     if not order:

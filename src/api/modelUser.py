@@ -107,7 +107,7 @@ class Order(db.Model):
     payment_method = db.Column(db.String(50), nullable=False)
     total_price = db.Column(db.Float, nullable=False)
     order_items = db.relationship('OrderItem', backref='order', lazy=True)
-
+    
     def __repr__(self):
         return f'<Order {self.id}>'
 

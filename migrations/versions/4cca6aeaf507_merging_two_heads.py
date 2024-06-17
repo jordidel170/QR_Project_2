@@ -17,40 +17,40 @@ depends_on = None
 
 
 def upgrade():
-    op.create_table('user',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('first_name', sa.String(length=255), nullable=True),
-    sa.Column('last_name', sa.String(length=255), nullable=True),
-    sa.Column('name_of_the_restaurant', sa.String(length=255), nullable=True),
-    sa.Column('email', sa.String(length=255), nullable=False),
-    sa.Column('password', sa.String(length=255), nullable=False),
-    sa.Column('is_active', sa.Boolean(), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email')
-    )
+    # op.create_table('user',
+    # sa.Column('id', sa.Integer(), nullable=False),
+    # sa.Column('first_name', sa.String(length=255), nullable=True),
+    # sa.Column('last_name', sa.String(length=255), nullable=True),
+    # sa.Column('name_of_the_restaurant', sa.String(length=255), nullable=True),
+    # sa.Column('email', sa.String(length=255), nullable=False),
+    # sa.Column('password', sa.String(length=255), nullable=False),
+    # sa.Column('is_active', sa.Boolean(), nullable=False),
+    # sa.PrimaryKeyConstraint('id'),
+    # sa.UniqueConstraint('email')
+    # )
     # ### end Alembic commands ###
-    op.create_table('restaurant',
-        sa.Column('id', sa.Integer(), nullable=False),
-        sa.Column('name', sa.String(length=100), nullable=False),
-        sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('menu',
-        sa.Column('id', sa.Integer(), nullable=False),
-        sa.Column('name', sa.String(length=100), nullable=False),
-        sa.Column('description', sa.Text(), nullable=True),
-        sa.Column('price', sa.Float(), nullable=False),
-        sa.Column('category', sa.String(length=50), nullable=False),
-        sa.Column('restaurant_id', sa.Integer(), nullable=False),
-        sa.ForeignKeyConstraint(['restaurant_id'], ['restaurant.id'], ),
-        sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('table',
-        sa.Column('id', sa.Integer(), nullable=False),
-        sa.Column('number', sa.String(length=10), nullable=False),
-        sa.Column('restaurant_id', sa.Integer(), nullable=False),
-        sa.ForeignKeyConstraint(['restaurant_id'], ['restaurant.id'], ),
-        sa.PrimaryKeyConstraint('id')
-    )
+    # op.create_table('restaurant',
+    #     sa.Column('id', sa.Integer(), nullable=False),
+    #     sa.Column('name', sa.String(length=100), nullable=False),
+    #     sa.PrimaryKeyConstraint('id')
+    # )
+    # op.create_table('menu',
+    #     sa.Column('id', sa.Integer(), nullable=False),
+    #     sa.Column('name', sa.String(length=100), nullable=False),
+    #     sa.Column('description', sa.Text(), nullable=True),
+    #     sa.Column('price', sa.Float(), nullable=False),
+    #     sa.Column('category', sa.String(length=50), nullable=False),
+    #     sa.Column('restaurant_id', sa.Integer(), nullable=False),
+    #     sa.ForeignKeyConstraint(['restaurant_id'], ['restaurant.id'], ),
+    #     sa.PrimaryKeyConstraint('id')
+    # )
+    # op.create_table('table',
+    #     sa.Column('id', sa.Integer(), nullable=False),
+    #     sa.Column('number', sa.String(length=10), nullable=False),
+    #     sa.Column('restaurant_id', sa.Integer(), nullable=False),
+    #     sa.ForeignKeyConstraint(['restaurant_id'], ['restaurant.id'], ),
+    #     sa.PrimaryKeyConstraint('id')
+    # )
 
     op.create_table('order',
         sa.Column('id', sa.Integer(), nullable=False),
@@ -78,8 +78,8 @@ def upgrade():
 def downgrade():
     op.drop_table('order_item')
     op.drop_table('order')
-    op.drop_table('user')
+    # op.drop_table('user')
     # ### end Alembic commands ###
-    op.drop_table('menu')
-    op.drop_table('restaurant')
-    op.drop_table('table')
+    # op.drop_table('menu')
+    # op.drop_table('restaurant')
+    # op.drop_table('table')

@@ -53,17 +53,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     })
                     .catch(error => console.error('Error fetching menu:', error));
             },
-            // getMenuItem: (restaurantId, tableId, menuId) => {
-            //     const store = getStore();
-            //     fetch(`https://humble-pancake-977xqppgr6q427j55-3001.app.github.dev/api/restaurants/${restaurantId}/tables/${tableId}/menus/${menuId}`)
-            //         .then(response => response.json())
-            //         .then(data => {
-            //             setStore({ ...store, menuItem: data, menu: [] }); 
-            //         })
-            //         .catch(error => console.error('Error fetching menu item:', error));
-            // },
 
-            getOrder: async(restaurantId, tableId, comment, paymentMethod, totalPrice) => {
+            createOrder: async(restaurantId, tableId, comment, paymentMethod, totalPrice) => {
                 const store = getStore()
                 const orderData = {
                     restaurant_id: restaurantId,
@@ -85,6 +76,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         headers: {
                             'Content-Type': 'application/json'
                         },
+                        CORS:'Access-Control-Allow-Origin',
                         body: JSON.stringify(orderData)
                     });
         
@@ -97,7 +89,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log('Order created successfully:', result);
                 } catch (error) {
                     console.error('Error:', error);
-                    alert('Error creating order. Please try again.');
+                    // alert('Error creating order. Please try again.');
                 }
             },
        
