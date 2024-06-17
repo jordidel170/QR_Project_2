@@ -51,7 +51,7 @@ const Layout = () => {
                         <Route element={<Signup />} path="/app/signup" />
                     <Route element={<ProtectedRoute role="user"> <Home /> </ProtectedRoute>} path="app/home" />
                         <Route element={<Menu />} path="/restaurants/:restaurantId/tables/:tableId/menu" />
-                        <Route element={<OrderSummary />} path="/order-summary" />
+                        <Route element={<OrderSummary restaurantId={1} tableId={1}/>} path="/order-summary" />
                         <Route element={<OrderSuccess />} path="/order-success" />
                         <Route element={<AboutUs />} path="/about-us" />
                         <Route element={<h1>Not found!</h1>} />

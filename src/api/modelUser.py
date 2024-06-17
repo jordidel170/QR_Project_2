@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -48,6 +49,7 @@ class Usuario(db.Model):
         }
 
 class Restaurant(db.Model):
+    __tablename__ = 'restaurant'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     menus = db.relationship('Menu', backref='restaurant', lazy=True)
@@ -74,6 +76,7 @@ class Table(db.Model):
             "number": self.number
         }        
 class Menu(db.Model):
+    __tablename__ = 'menu'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
@@ -94,4 +97,48 @@ class Menu(db.Model):
             "category": self.category,
             "image": self.image,
             "restaurant_id": self.restaurant_id
+        }
+
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    restaurant_id = db.Column(db.Integer, nullable=False)
+    table_id = db.Column(db.Integer, nullable=False)
+    comment = db.Column(db.String(255), nullable=True)
+    payment_method = db.Column(db.String(50), nullable=False)
+    total_price = db.Column(db.Float, nullable=False)
+    order_items = db.relationship('OrderItem', backref='order', lazy=True)
+
+    def __repr__(self):
+        return f'<Order {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "restaurant_id": self.restaurant_id,
+            "table_id": self.table_id,
+            "comment": self.comment,
+            "payment_method": self.payment_method,
+            "total_price": self.total_price,
+            "order_items": [item.serialize() for item in self.order_items]
+        }
+
+class OrderItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    menu_id = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(255), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+
+    def __repr__(self):
+        return f'<OrderItem {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "order_id": self.order_id,
+            "menu_id": self.menu_id,
+            "name": self.name,
+            "quantity": self.quantity,
+            "price": self.price
         }

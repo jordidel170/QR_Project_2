@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Navbar } from "../component/navbar";
 import { Footer } from "../component/footer";
 
-export const OrderSuccess = () => {
+export const OrderSuccess = ({restaurantId,tableId}) => {
     return (
         <>
             {/* <Navbar /> */}
@@ -13,7 +13,7 @@ export const OrderSuccess = () => {
                     Your order has been placed successfully!
                 </div>
                 <br />
-                <Link to="/restaurants/${restaurantId}/tables/${tableId}/menu">
+                <Link to="/restaurants/1/tables/1/menu">
                     <button className="button1">Back to Menu</button>
                 </Link>
             </div>

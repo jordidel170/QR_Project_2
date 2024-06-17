@@ -2,8 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import io
+import qrcode
 from flask import Flask, request, jsonify, url_for, Blueprint, send_file
-from api.modelUser import db, User, Table, Restaurant, Menu
+from api.modelUser import db, User, Table, Restaurant, Menu, Order, OrderItem
 from api.utils import generate_sitemap, APIException
 
 
@@ -141,3 +142,49 @@ def delete_menu_item(restaurant_id, table_id, item_id):
     db.session.delete(menu_item)
     db.session.commit()
     return jsonify({"message": "Menu item deleted successfully"}), 200
+
+@api.route('/api/restaurants/<int:restaurant_id>/tables/<int:table_id>/orders', methods=['POST'])
+def create_order(restaurant_id, table_id):
+    data = request.json
+    comment = data.get('comment', '')
+    payment_method = data['payment_method']
+    items = data['items']
+
+    total_price = sum(item['price'] * item['quantity'] for item in items)
+
+    order = Order(
+        restaurant_id=restaurant_id,
+        table_id=table_id,
+        comment=comment,
+        payment_method=payment_method,
+        total_price=total_price
+    )
+    db.session.add(order)
+    db.session.commit()
+
+    for item in items:
+        menu_id = item['menu_id']
+        name = item['name']
+        quantity = item['quantity']
+        price = item['price']
+        order_item = OrderItem(
+            order_id=order.id,
+            menu_id=menu_id,
+            name=name,
+            quantity=quantity,
+            price=price
+        )
+        db.session.add(order_item)
+
+    db.session.commit()
+
+    return jsonify(order.serialize()), 201
+
+@api.route('/api/restaurants/<int:restaurant_id>/tables/<int:table_id>/orders/<int:order_id>', methods=['GET'])
+def get_order(restaurant_id, table_id, order_id):
+    order = Order.query.get(order_id)
+    if not order:
+        return jsonify({"error": "Order not found"}), 404
+
+    return jsonify(order.serialize()), 200
+
