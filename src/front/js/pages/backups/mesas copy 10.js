@@ -105,38 +105,6 @@ const Mesas = () => {
         actualizarTamañoSala();
     }, [largoSala, anchoSala]);
 
-
-    useEffect(() => {
-        // Intenta cargar el estado inicial de las mesas desde localStorage al iniciar el componente
-        const mesasGuardadas = localStorage.getItem('mesas');
-        const angulosGuardados = localStorage.getItem('angulosRotacion');
-        const largoSalaGuardado = localStorage.getItem('largoSala');
-        const anchoSalaGuardado = localStorage.getItem('anchoSala');
-        const tempLargoSalaGuardado = localStorage.getItem('tempLargoSala');
-        const tempAnchoSalaGuardado = localStorage.getItem('tempAnchoSala');
-        const nombreSalonGuardado = localStorage.getItem('nombreSalon');
-      
-        if (mesasGuardadas) setMesas(JSON.parse(mesasGuardadas));
-        if (angulosGuardados) setAngulosRotacion(JSON.parse(angulosGuardados));
-        if (largoSalaGuardado) setLargoSala(JSON.parse(largoSalaGuardado));
-        if (anchoSalaGuardado) setAnchoSala(JSON.parse(anchoSalaGuardado));
-        if (tempLargoSalaGuardado) setTempLargoSala(JSON.parse(tempLargoSalaGuardado));
-        if (tempAnchoSalaGuardado) setTempAnchoSala(JSON.parse(tempAnchoSalaGuardado));
-        if (nombreSalonGuardado) setNombreSalon(nombreSalonGuardado);
-      }, []);
-      
-      const guardarEstado = () => {
-        // Guarda el estado actual en localStorage
-        localStorage.setItem('mesas', JSON.stringify(mesas));
-        localStorage.setItem('angulosRotacion', JSON.stringify(angulosRotacion));
-        localStorage.setItem('largoSala', JSON.stringify(largoSala));
-        localStorage.setItem('anchoSala', JSON.stringify(anchoSala));
-        localStorage.setItem('tempLargoSala', JSON.stringify(tempLargoSala));
-        localStorage.setItem('tempAnchoSala', JSON.stringify(tempAnchoSala));
-        localStorage.setItem('nombreSalon', nombreSalon);
-        alert('Guardado con éxito');
-      };
-
     return (
         <>
             <section>
@@ -230,8 +198,8 @@ const Mesas = () => {
                                 }}
                                 placeholder="Ancho"
                             />
-                            <button className='guardar' onClick={guardarEstado}>Guardar</button>
-                            <Link to="../app/dashboard" className='link-boton-dash'>
+                            <button className='guardar'>Guardar</button>
+                            <Link to="../app/dashboard">
                             <button className='salir'>Salir</button>
                             </Link>
                         </div>
