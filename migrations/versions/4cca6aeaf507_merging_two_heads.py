@@ -71,10 +71,11 @@ def upgrade():
         sa.Column('name', sa.String(length=255), nullable=False),
         sa.Column('quantity', sa.Integer(), nullable=False),
         sa.Column('price', sa.Float(), nullable=False),
+      
         sa.ForeignKeyConstraint(['order_id'], ['order.id'], ),
         sa.PrimaryKeyConstraint('id')
     )
-
+  
 def downgrade():
     op.drop_table('order_item')
     op.drop_table('order')

@@ -130,6 +130,7 @@ class OrderItem(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float, nullable=False)
 
+
     def __repr__(self):
         return f'<OrderItem {self.id}>'
 
@@ -140,5 +141,6 @@ class OrderItem(db.Model):
             "menu_id": self.menu_id,
             "name": self.name,
             "quantity": self.quantity,
-            "price": self.price
+            "price": self.price,
+          
         }

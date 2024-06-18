@@ -167,12 +167,15 @@ def create_order(restaurant_id, table_id):
         name = item['name']
         quantity = item['quantity']
         price = item['price']
+        # category = item['category']
         order_item = OrderItem(
             order_id=order.id,
             menu_id=menu_id,
             name=name,
             quantity=quantity,
-            price=price
+            price=price,
+            # category=category
+
         )
         db.session.add(order_item)
 
@@ -180,11 +183,59 @@ def create_order(restaurant_id, table_id):
 
     return jsonify(order.serialize()), 201
 
-@api.route('/restaurants/<int:restaurant_id>/tables/<int:table_id>/orders/<int:order_id>', methods=['GET'])
-def get_order(restaurant_id, table_id, order_id):
+@api.route('/restaurants/<int:restaurant_id>/orders', methods=['GET'])
+def get_order(restaurant_id):
+    orders = Order.query.filter_by(restaurant_id=restaurant_id,).all()
+    return jsonify([order.serialize() for order in orders]), 200
+
+
+@api.route('/restaurants/<int:restaurant_id>/tables/<int:table_id>/orders/<int:order_id>', methods=['PUT'])
+def update_order(restaurant_id, table_id, order_id):
+    data = request.json
     order = Order.query.get(order_id)
     if not order:
         return jsonify({"error": "Order not found"}), 404
 
+    order.comment = data.get('comment', order.comment)
+    order.payment_method = data['payment_method']
+    
+    total_price = 0
+    new_items = data['items']
+    
+    OrderItem.query.filter_by(order_id=order_id).delete()
+    
+    for item in new_items:
+        menu_id = item['menu_id']
+        name = item['name']
+        quantity = item['quantity']
+        price = item['price']
+        # category = item['category']
+        total_price += price * quantity
+        order_item = OrderItem(
+            order_id=order.id,
+            menu_id=menu_id,
+            name=name,
+            quantity=quantity,
+            price=price,
+            # category=category
+        )
+        db.session.add(order_item)
+
+    order.total_price = total_price
+
+    db.session.commit()
     return jsonify(order.serialize()), 200
+
+@api.route('/restaurants/<int:restaurant_id>/tables/<int:table_id>/orders/<int:order_id>', methods=['DELETE'])
+def delete_order(restaurant_id, table_id, order_id):
+    order = Order.query.get(order_id)
+    if not order:
+        return jsonify({"error": "Order not found"}), 404
+
+    OrderItem.query.filter_by(order_id=order_id).delete()
+    
+    db.session.delete(order)
+    db.session.commit()
+
+    return '', 204
 

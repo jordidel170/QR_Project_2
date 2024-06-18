@@ -13,7 +13,7 @@ export const OrderSuccess = ({restaurantId,tableId}) => {
                     Your order has been placed successfully!
                 </div>
                 <br />
-                <Link to="/restaurants/1/tables/1/menu">
+                <Link to={`/restaurants/${restaurantId}/tables/${tableId}/menu`}>
                     <button className="button1">Back to Menu</button>
                 </Link>
             </div>

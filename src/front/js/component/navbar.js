@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import "../../styles/navbar.css";
 import { Context } from "../store/appContext";
 
 
 export const Navbar = ({onClose}) => {
 	const { store, actions } = useContext(Context)
+	const {restaurantId,tableId} = useParams()
 	const totalAmount = store.cart.reduce((total, meal) => total + meal.price * meal.quantity, 0);
 	const cartNotEmpty = store.cart.length > 0;
 	return (
@@ -28,7 +29,7 @@ export const Navbar = ({onClose}) => {
 										{store.cart.map((meal, id) => {
 											return <li className="dropdown-item cart-item" key={id}>
 												<div className="cart-item-details">
-													<p className='cart-name'>{meal.name}</p>
+													<p className='cart-name'>{meal.name}{meal.category}</p>
 													<div className="cart-item-summary">
 														<span className='quantity'>x {meal.quantity}</span>
 														<span className='price'>${meal.price.toFixed(2)}</span>
@@ -50,7 +51,7 @@ export const Navbar = ({onClose}) => {
 										</li>
 										<li className="dropdown-item cart-actions">
 											<button className="butt-close" onClick={onClose}>Close</button>
-											<Link to = '/order-summary'>
+											<Link to = {`/restaurants/${restaurantId}/tables/${tableId}/order-summary`}>
 												<button className="butt-order">Order</button>
 											</Link>
 										</li>
