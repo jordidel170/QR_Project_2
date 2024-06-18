@@ -7,8 +7,6 @@ import { Context } from '../store/appContext';
 import CreateProduct from '../component/CreateProduct';
 
 
-
-
   const adminMenuView = () => {
     const {store, actions} = useContext(Context)
    
@@ -43,7 +41,7 @@ import CreateProduct from '../component/CreateProduct';
   return (
     <div>
       <div className="menu-container">
-        <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory} setOpenModal={setOpenModal}/>
+        <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory} setOpenModal={setOpenModal} selectedCategory={selectedCategory}/>
         <div className='menu-items'>
           {selectedCategory === "All" ?  <ProductsCard menuItems={filteredItems} setProductId={setProductId}/> : <ProductsCard menuItems={filteredItems.filter(product => product.category === selectedCategory)} setProductId={setProductId} onDeleteProduct={handleDeleteProduct}/>} 
         </div>

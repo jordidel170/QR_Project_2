@@ -10,7 +10,7 @@ import signupDispatcher from "./dispatcherSignup";
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-
+            product:[],
 			token: null,
 			register: null,
 			menu: [],
@@ -112,7 +112,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             getProduct: async() => {
               const data = await productDispatcher.get();
             //   console.log(data)
+                const store = getStore();
+                
               return data;
+            
             }, 
 
             getProductById: async (id) => {

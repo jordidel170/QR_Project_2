@@ -40,20 +40,18 @@ body {
 }
 
 .menu-categories .category {
-    padding: 10px 15px;
-    background-color: #fff;
-    border-radius: 20px;
-    border: 1px solid #f9e7e7;
+    padding: 10px 20px;
+    margin: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 .menu-categories .category:hover {
-    background-color: #ddd;
+    background-color: #905f5f;
 }
 
-.menu-categories .category:focus {
-    background-color: #f35e19;
+.menu-categories .category.active {
+    background-color: #ed4e14;
+    color: rgb(253, 253, 253);
 }
 
 
@@ -99,7 +97,11 @@ body {
 .menu-item p {
     font-size: 16px;
     color: #777;
-    margin-bottom: 10px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: white-space 0.5s ease;
 }
 
   
@@ -109,14 +111,7 @@ body {
     position: relative;
     transition: max-height 0.5s ease;
 }
-  
-.description p {
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: white-space 0.5s ease;
-}
+
   
 .menu-item:hover .description p {
     white-space: normal;
@@ -127,26 +122,26 @@ body {
 }
 
 .menu-item {
-  flex: 1 1 auto; /* Permite que las cartas se expandan y contraigan adecuadamente */
+  flex: 1 1 auto; 
   position: relative;
   overflow: hidden;
   transition: transform 0.3s ease;
-  margin: 10px; /* Añade un margen para que las cartas no estén pegadas entre sí */
+  margin: 10px; 
 }
 
 .menu-item:hover {
-  transform: scale(1.05); /* Agranda la carta ligeramente */
-  z-index: 1; /* Asegura que la carta se superponga a las otras mientras está expandida */
+  transform: scale(1.05); 
+  z-index: 1; 
 }
 
 .description {
-  max-height: 3em; /* Ajusta esta altura a lo que consideres el texto corto */
+  max-height: 3em; 
   overflow: hidden;
   transition: max-height 0.5s ease;
 }
 
 .menu-item:hover .description {
-  max-height: 100em; /* Suficientemente alto para mostrar todo el texto */
+  max-height: 100em; 
 }
 
 .menu-item .price {
@@ -177,6 +172,11 @@ body {
     width: 45px;
 }
 
+.update-message{
+    margin-top: 10px;
+    color:#ed4e14;
+    font-weight: bold;
+}
 @MEDIA (MAX-WIDTH: 400PX) {
     
     .menu-container{

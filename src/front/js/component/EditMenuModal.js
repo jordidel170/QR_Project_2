@@ -6,17 +6,20 @@ import { Context } from '../store/appContext'
 const EditMenuModal = ({productId, setProductId}) => {
     const {store, actions} = useContext(Context)
 
-
 const [updatedFormData, setUpdatedFormData] = useState([])
-
 const categoryName = ["Starters", "Mains", "Desserts", "Drinks"];
+const [isUpdated, setIsUpdated] = useState(false)
 
 const onSave = (updatedFormData) => {
-actions.uptadeProductById(productId, updatedFormData.name, updatedFormData.price, updatedFormData.description, updatedFormData.image, updatedFormData.category)
+actions.uptadeProductById(productId, updatedFormData.name, updatedFormData.price, updatedFormData.description, updatedFormData.image, updatedFormData.category);
+  setIsUpdated(true);
+  setTimeout(() => setIsUpdated(false), 3000);  // Ocultar mensaje después de 3 segundos
+  setTimeout(() => setProductId(""), 3000);
 }
 
 
-const handleSubmit = () => {
+const handleSubmit = (event) => {
+  event.preventDefault();
     onSave(updatedFormData)
 }
 
@@ -38,14 +41,23 @@ const handleChange = (event) => {
 
 useEffect( () => {
     fetchProductById(productId)
-},[])
+},[productId])
+// useEffect(() => {
+//   let isMounted = true;
+//   if (productId && isMounted) {
+//       fetchProductById(productId);
+//   }
+//   return () => {
+//       isMounted = false;
+//   };
+// }, [productId]);
   return (
     
     <div>
     <div className="modal-overlay">
       <div className="modal-content">
         <h2>Edit Product</h2>
-        <form>
+        <form method='PUT' onSubmit={handleSubmit}>
           <label>
             Name:
             <input type="text" name="name" value={updatedFormData.name} onChange={handleChange}/>
@@ -67,9 +79,10 @@ useEffect( () => {
             Image URL:
             <input type="text" name="image" value={updatedFormData.image} onChange={handleChange}/>
           </label>
-          <button type="submit" onClick={handleSubmit}>Save</button>
+          <button type="submit">Save</button>
           <button type="button" onClick={() => {setProductId("")}}>Cancel</button>
         </form>
+        {isUpdated && <div className='update-message'>Product updated!</div>}
       </div>
     </div>
     </div>
