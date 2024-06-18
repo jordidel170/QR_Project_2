@@ -38,6 +38,7 @@ import CreateProduct from '../component/CreateProduct';
       const updatedProducts = filteredItems.filter(product => product.id !== id);
       setFilteredItems(updatedProducts);
     };
+    
   return (
     <div>
       <div className="menu-container">
