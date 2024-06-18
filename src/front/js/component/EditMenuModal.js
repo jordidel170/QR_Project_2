@@ -10,11 +10,13 @@ const [updatedFormData, setUpdatedFormData] = useState([])
 const categoryName = ["Starters", "Mains", "Desserts", "Drinks"];
 const [isUpdated, setIsUpdated] = useState(false)
 
-const onSave = (updatedFormData) => {
-actions.uptadeProductById(productId, updatedFormData.name, updatedFormData.price, updatedFormData.description, updatedFormData.image, updatedFormData.category);
-  setIsUpdated(true);
-  setTimeout(() => setIsUpdated(false), 3000);  // Ocultar mensaje después de 3 segundos
-  setTimeout(() => setProductId(""), 3000);
+const onSave = async(updatedFormData) => {
+await actions.uptadeProductById(productId, updatedFormData.name, updatedFormData.price, updatedFormData.description, updatedFormData.image, updatedFormData.category)
+
+  setIsUpdated(true)
+  setProductId(""),
+  setIsUpdated(false)   // Ocultar mensaje después de 3 segundos
+  
 }
 
 
