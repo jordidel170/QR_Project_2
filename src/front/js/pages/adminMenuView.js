@@ -38,13 +38,13 @@ import CreateProduct from '../component/CreateProduct';
       const updatedProducts = filteredItems.filter(product => product.id !== id);
       setFilteredItems(updatedProducts);
     };
-    
+
   return (
     <div>
       <div className="menu-container">
         <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory} setOpenModal={setOpenModal} selectedCategory={selectedCategory}/>
         <div className='menu-items'>
-          {selectedCategory === "All" ?  <ProductsCard menuItems={filteredItems} setProductId={setProductId}/> : <ProductsCard menuItems={filteredItems.filter(product => product.category === selectedCategory)} setProductId={setProductId} onDeleteProduct={handleDeleteProduct}/>} 
+          {selectedCategory === "All" ?  <ProductsCard onDeleteProduct={handleDeleteProduct} menuItems={filteredItems} setProductId={setProductId}/> : <ProductsCard menuItems={filteredItems.filter(product => product.category === selectedCategory)} setProductId={setProductId} onDeleteProduct={handleDeleteProduct}/>} 
         </div>
         <div className='editModalMenu'>
      {productId === "" ? <></> : <EditMenuModal filteredItems={filteredItems} productId={productId} setProductId={setProductId} /> }
