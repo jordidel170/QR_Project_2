@@ -8,10 +8,13 @@ import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/summary.css";
 
 
-export const OrderSummary = props => {
+export const OrderSummary = () => {
     const { store, actions } = useContext(Context);
     const [comment, setComment] = useState('');
     const [paymentMethod, setPaymentMethod] = useState('');
+    const { restaurantId, tableId} = useParams();
+
+   
     const totalPrice = store.cart.reduce((total, meal) => total + meal.price * meal.quantity, 0);
     const navigate = useNavigate();
     const handleCommentChange = (e) => {
@@ -23,17 +26,19 @@ export const OrderSummary = props => {
     };
     const handleFinishOrder = () => {
         if (!paymentMethod) {
-            alert('Please choose your payment method!')
+            alert('Please choose your payment method!');
             return;
-        };
-        if (paymentMethod === 'cash') {
-            actions.clearCart();
-            navigate('/order-success')
         }
-        else { alert('Redirecting to bank payment gateway...'); }
 
-
-    }
+        actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
+        actions.clearCart();
+        navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`)
+     
+              
+                
+            }
+     
+    
     return (
         <>
             <Navbar />
@@ -45,9 +50,19 @@ export const OrderSummary = props => {
                             <div>{meal.name}</div>
                             <div>x {meal.quantity}</div>
                             <div className="butt">
-                                <button className='trash-icon' onClick={(e) => actions.removeItem(meal.id)}><i class="fa-solid fa-trash" ></i></button>
-                                <button className="butt1" onClick={(e) => actions.removeFromCart(meal.id)}>−</button>
-                                <button className="butt1" onClick={(e) => actions.addToCart(meal)}>+</button>
+                            {meal.quantity === 1 ? (
+                <>
+                    <button className='trash-icon' onClick={() => actions.removeItem(meal.id)}>
+                    <i className="fa-solid fa-trash fa-xs"></i>
+                    </button>
+                    <button className="butt1" onClick={() => actions.addToCart(meal)}>+</button>
+                </>
+            ) : (
+                <>
+                    <button className="butt1" onClick={() => actions.removeFromCart(meal.id)}>−</button>
+                    <button className="butt1" onClick={() => actions.addToCart(meal)}>+</button>
+                </>
+            )}
                             </div>
                             
                             <div>${(meal.price * meal.quantity).toFixed(2)}</div>
@@ -89,8 +104,8 @@ export const OrderSummary = props => {
                     </div>
                 </div>
                 <div className='order-finish'>
-                    <button onClick={actions.clearCart} className='button1'>Clear Order</button>
-                    <button className='button1' onClick={handleFinishOrder}>Finish order</button>
+                    <button onClick={actions.clearCart} className='button1'>Clear</button>
+                    <button className='button1' onClick={handleFinishOrder}>Finish</button>
                 </div>
             </div>
             <Footer />

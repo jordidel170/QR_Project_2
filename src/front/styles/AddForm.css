@@ -1,27 +1,52 @@
 .form {
-    text-align: right;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  border: 1px solid rgb(250, 123, 72);
+  color: rgb(253, 130, 82);
+  margin-top: 10px;
+}
+
+.add-button .remove-button {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px;
+  margin: 0 5px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+  color: rgb(253, 130, 82);
+  cursor: pointer;
+}
+
+/* .button input {
+    border-radius: 10px;
   }
-  
-  .add-button {
-    font: inherit;
-    cursor: pointer;
-    background-color: rgb(253, 130, 82);
-    border: 1px solid rgb(250, 123, 72);
-    color: white;
-    padding: 0.25rem 2rem;
-    border-radius: 20px;
-    font-weight: bold;
-  }
-  
   .add-button:hover,
   .add-button:active {
-    background-color: rgb(247, 112, 59);
+    background-color: rgb(247, 182, 157);
     border-color: rgb(250, 123, 72);
   }
   @media screen and (max-width: 600px){
     .add-button {
       margin-left: 0; 
       margin-top: 1rem; 
-      text-align: right; 
+ 
     }
-  }
+  } */
+.quantity-control:disabled {
+  cursor: not-allowed;
+  background-color: #e0e0e0;
+}
+
+.quantity {
+  font-size: 18px;
+  width: 30px;
+  text-align: center;
+}

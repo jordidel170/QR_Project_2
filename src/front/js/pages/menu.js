@@ -109,9 +109,11 @@ const MenuItem = ({ meal }) => (
 	  <img src={meal.image} alt={meal.name} className='meal-image' />
 	  <div className='meal-items'>
 		<h5>{meal.name}</h5>
-		<div className='description'>{meal.description}</div>
 		<div className='price'>${meal.price}</div>
-	  </div>
+		</div>
+	  <div className='description'>{meal.description}</div>
+		
+
 	  <AddForm
 		id={meal.id}
 		name={meal.name}
@@ -120,17 +122,18 @@ const MenuItem = ({ meal }) => (
 	</li>
   );
   
-  const MenuCategory = ({ category, meals }) => {
-	const [collapsed, setCollapsed] = useState(true);
-  
+  const MenuCategory = ({ category, meals,collapseOthers, isCollapsed }) => {
 	const toggleCollapsed = () => {
-	  setCollapsed(!collapsed);
+		collapseOthers(category);
 	};
   
 	return (
 	  <div className="menu-category">
-		<h2 onClick={toggleCollapsed}>{category}</h2>
-		{!collapsed && (
+		<h2 onClick={toggleCollapsed} className={`category-title ${isCollapsed ? 'collapsed' : 'expanded'}`}>
+		{category}
+		<span className={`arrow ${isCollapsed ? 'down' : 'up'}`}>▼</span>
+		</h2>
+		{!isCollapsed && (
 		  <ul>{meals.map((meal) => <MenuItem key={meal.id} meal={meal} />)}</ul>
 		)}
 	  </div>
@@ -139,12 +142,20 @@ const MenuItem = ({ meal }) => (
   
   export const Menu = () => {
 	const { store, actions } = useContext(Context);
-	const { restaurantId, tableId } = useParams();
+	const { restaurantId, tableId} = useParams();
 
 	useEffect(() => {
-	  actions.getMenu(restaurantId,tableId);
+		actions.getMenu(restaurantId, tableId);
 	}, [restaurantId,tableId]);
-  
+	const [collapsedCategories, setCollapsedCategories] = useState([]);
+
+ 	const collapseOthers = (category) => {
+    if (collapsedCategories.includes(category)) {
+      setCollapsedCategories(collapsedCategories.filter(cat => cat !== category));
+    } else {
+      setCollapsedCategories([category]);
+    }
+  };
 	const starters = store.menu.filter(item => item.category === 'starter');
 	const mains = store.menu.filter(item => item.category === 'main');
 	const desserts = store.menu.filter(item => item.category === 'dessert');
@@ -155,10 +166,14 @@ const MenuItem = ({ meal }) => (
 		<Navbar />
 		<div className='meals'>
 		  <div className='card'>
-			<MenuCategory category="Starters" meals={starters} />
-			<MenuCategory category="Main Course" meals={mains} />
-			<MenuCategory category="Desserts" meals={desserts} />
-			<MenuCategory category="Drinks" meals={drinks} />
+			<MenuCategory category="Starters" meals={starters} collapseOthers={collapseOthers}
+            isCollapsed={!collapsedCategories.includes("Starters")}/>
+			<MenuCategory category="Main Course" meals={mains} collapseOthers={collapseOthers}
+            isCollapsed={!collapsedCategories.includes("Main Course")}/>
+			<MenuCategory category="Desserts" meals={desserts} collapseOthers={collapseOthers}
+            isCollapsed={!collapsedCategories.includes("Desserts")}/>
+			<MenuCategory category="Drinks" meals={drinks} collapseOthers={collapseOthers}
+            isCollapsed={!collapsedCategories.includes("Drinks")}/>
 		  </div>
 		</div>
 		<Footer />
