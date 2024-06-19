@@ -75,6 +75,7 @@ class Table(db.Model):
             "restaurant_id": self.restaurant_id,
             "number": self.number
         }        
+        
 class Menu(db.Model):
     __tablename__ = 'menu'
     id = db.Column(db.Integer, primary_key=True)
@@ -98,6 +99,7 @@ class Menu(db.Model):
             "image": self.image,
             "restaurant_id": self.restaurant_id
         }
+
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -144,3 +146,4 @@ class OrderItem(db.Model):
             "price": self.price,
           
         }
+

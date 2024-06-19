@@ -1,5 +1,11 @@
+import deleteProductDispatcher from "./dispatcherDeleteProduct";
 import loginDispatcher from "./dispatcherLogin";
+
+import newProductDispatcher from "./dispatcherNewProduct";
+import productDispatcher from "./dispatcherProduct";
+// import dispatcherProduct from "./dispatcherProduct";
 import { dispatcherOrder } from "./dispatcherOrder";
+
 
 import signupDispatcher from "./dispatcherSignup";
 
@@ -7,7 +13,7 @@ import signupDispatcher from "./dispatcherSignup";
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-
+            product:[],
 			token: null,
 			register: null,
 			menu: [],
@@ -201,6 +207,35 @@ const getState = ({ getStore, getActions, setStore }) => {
             clearCart: () => {
                 const store = getStore();
                 setStore({ ...store, cart: [], totalAmount: 0 });
+            },
+
+            getProduct: async() => {
+              const data = await productDispatcher.get();
+            //   console.log(data)
+                // const store = getStore();
+                // setStore({...store, data})
+            return data
+            }, 
+
+            getProductById: async (id) => {
+                const data = await productDispatcher.getById(id)
+                // console.log(data)
+                return data;
+            },
+
+            uptadeProductById: async(id, name, price, description, image, category) => {
+                const data = await productDispatcher.put(id, name, price, description, image, category)
+                return data;
+            },
+
+            createNewProduct: async (name, price, description, image, category) => {
+                const data = await newProductDispatcher(name, price, description, image, category)
+                return data;
+            },
+
+            deleteProduct: async(id) => {
+                const data = await deleteProductDispatcher(id);
+                return data;
             }
 		
 		}

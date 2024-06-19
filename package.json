@@ -74,7 +74,6 @@
 	},
 	"dependencies": {
 		"crypto-js": "^4.2.0",
-		"html5-qrcode": "^2.3.8",
 		"jwt-decode": "^4.0.0",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
