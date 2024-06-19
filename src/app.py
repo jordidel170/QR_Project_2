@@ -15,6 +15,7 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from api.blueprint.login import login_bp
 from api.blueprint.signup import signup_bp
+from api.blueprint.restaurants import restaurants_bp
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
@@ -61,6 +62,7 @@ setup_commands(app)
 app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(login_bp, url_prefix='/api')
 app.register_blueprint(signup_bp, url_prefix='/api')
+app.register_blueprint(restaurants_bp, url_prefix='/api')
 # Handle/serialize errors like a JSON object
 
 
