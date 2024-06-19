@@ -34,7 +34,6 @@ const handleSubmit = async (event) => {
        const data = await actions.getUserRegister(selectedRestaurant,firstName,lastName,email,password);
        setRegisterStatus(data[0].status)
        if (data[0].status === "ok"){
-        console.log("if")
         setIsLoading(false)
 
         setTimeout( async() => {
@@ -84,7 +83,7 @@ registerStatus === "ok" ? (  <div class="container2">
                     
                <div className="container">
                <div className="formulario inputlogin">
-                   <form action="#">
+                   <form action="#" method="POST">
                        <h1>Sign up</h1>
                        <div className="input-container">
                        <i className="fa-solid fa-utensils"></i>

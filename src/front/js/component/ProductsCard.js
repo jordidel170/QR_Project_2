@@ -1,27 +1,35 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { Context } from '../store/appContext'
 
-const ProductsCard = ({menuItems}) => {
 
-    
-const handleEditModal = () => {}
-    
-   
+const ProductsCard = ({menuItems, setProductId, onDeleteProduct}) => {
+  const {store, actions} = useContext(Context)
+ 
+  const handleEditModal = (id) => {
+    setProductId(id)
+  }
+
+  const handleDelete = (id) => {
+    onDeleteProduct(id);
+  }
+
   return (
     
         <>
-        {console.log(menuItems)}
-        {menuItems.map((item, index) => (
+        
+        {menuItems.map((product, index) => (
             <div className="menu-item" key={index}>
               <figure className='figuremenu-item'>
-              <img src={item.img} alt={item.name} />
+              <img src={product.image} alt={product.name} />
               </figure>
-              <h3>{item.name}</h3>
+              <h3>{product.name}</h3>
               <div className="description">
-               <p>{item.description}</p>
+               <p>{product.description}</p>
               </div>
               <div className='editButton'>
-              <p className="price">{item.price}</p>
-             <button className="material-symbols-outlined">edit</button>
+              <p className="price">{product.price}</p>
+             <button className="material-symbols-outlined" onClick={() => {handleEditModal(product.id)}}>edit</button>
+             <button className="material-symbols-outlined" onClick={() => {handleDelete(product.id)}}>delete</button> 
               </div>
             </div>
 

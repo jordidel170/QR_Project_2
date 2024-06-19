@@ -1,40 +1,54 @@
-import React, { useEffect, useState } from 'react'
-import Sidebar from '../component/sidebar';
+import React, { useContext, useEffect, useState } from 'react'
 import "../../styles/adminMenuView.css"
 import CategoriesButton from '../component/categoriesButton';
-import ProductsCard from '../component/productsCard';
-import EditMenuModal from '../component/editMenuModal';
-
-
+import ProductsCard from '../component/ProductsCard';
+import EditMenuModal from '../component/EditMenuModal';
+import { Context } from '../store/appContext';
+import CreateProduct from '../component/CreateProduct';
 
 
   const adminMenuView = () => {
-
-    const menuItems = [
-      { id: 2, name: 'Texas Style BBQ Burger', price: '₹210', description: 'Descripción larga para asegurar 30 palabras...', category:'Starters', img: 'https://tse2.mm.bing.net/th?id=OIP.a7BG_WibT85epZU5IYOh5QHaE8&pid=Api' },
-      { id: 3, name: 'Texas Style BBQ Burger', price: '₹210', description: 'Descripción larga para asegurar 30 palabras...', category: 'Mains',img: 'https://tse4.mm.bing.net/th?id=OIP.761GqK-wlfuf9P8b3_sa3QHaHa&pid=Api' },
-      { id: 4, name: 'Water from fiji', price: '₹210', description: 'Descripción larga para asegurar 30 palabras...', category: 'Drinks',img: 'https://tse2.mm.bing.net/th?id=OIP.jqpR0Et_ZgU15kf80MOmkAAAAA&pid=Api' },  
-      { id: 5, name: 'Peanut Butter Chicken Burger', price: '₹220', description: 'Descripción larga para asegurar 30 palabras...', category: 'Desserts' ,img: 'https://tse2.mm.bing.net/th?id=OIP.Epgh66370jM69NUWAw1LHQHaEK&pid=Api' },
-      { id: 6, name: 'Peanut Butter Chicken Burger', price: '₹220', description: 'Descripción larga para asegurar 30 palabras...', category: 'Desserts' ,img: 'https://tse2.mm.bing.net/th?id=OIP.Epgh66370jM69NUWAw1LHQHaEK&pid=Api' },
-    
-    ];
+    const {store, actions} = useContext(Context)
+   
     const categoryName = ["All", "Starters", "Mains", "Desserts", "Drinks"];
     const [selectedCategory, setSelectedCategory] = useState("All");
-    const [filteredItems, setFilteredItems] = useState(menuItems);
+    const [filteredItems, setFilteredItems] = useState([]);
+    const [productId, setProductId] = useState("")
+    const [openModal, setOpenModal] = useState(false)
     
+      const handleCloseModal = () => {
+        setOpenModal(false)
+      }
+
+    // console.log(filteredItems)
   
+    const fetchProduct = async() => {
+    const products =  await actions.getProduct()
+    setFilteredItems(products)
+    }
+
+
+    useEffect( () => {
+    fetchProduct()
   
+    },[openModal, productId])
   
+    const handleDeleteProduct = async (id) => {
+      await actions.deleteProduct(id);
+      const updatedProducts = filteredItems.filter(product => product.id !== id);
+      setFilteredItems(updatedProducts);
+    };
+
   return (
     <div>
-      <Sidebar />
       <div className="menu-container">
-        <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory}/>
+        <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory} setOpenModal={setOpenModal} selectedCategory={selectedCategory}/>
         <div className='menu-items'>
-          {selectedCategory === "All" ?  <ProductsCard menuItems={menuItems}/> : <ProductsCard menuItems={menuItems.filter(item => item.category === selectedCategory)}/>}
+          {selectedCategory === "All" ?  <ProductsCard onDeleteProduct={handleDeleteProduct} menuItems={filteredItems} setProductId={setProductId}/> : <ProductsCard menuItems={filteredItems.filter(product => product.category === selectedCategory)} setProductId={setProductId} onDeleteProduct={handleDeleteProduct}/>} 
         </div>
         <div className='editModalMenu'>
-      <EditMenuModal filteredItems={filteredItems}/>
+     {productId === "" ? <></> : <EditMenuModal filteredItems={filteredItems} productId={productId} setProductId={setProductId} /> }
+     { openModal ? <CreateProduct handleCloseModal={handleCloseModal} /> : <></> }
         </div>
       </div>
     </div>

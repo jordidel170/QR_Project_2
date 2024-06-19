@@ -3,72 +3,57 @@ body {
     background-color: #f9f9f9;
     margin: 0;
     padding: 0;
+    background-color: rgb(58, 53, 53);
 }
 
-.sidebar {
-    width: 250px;
-    background-color: #ffe0b3;
-    position: fixed;
-    height: 100%;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-}
 
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    margin-bottom: 20px;
-    font-size: 18px;
-}
-
-.sidebar ul li a {
-    text-decoration: none;
-    color: #333;
-}
 
 .menu-container {
-    margin-left: 270px;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 25px;
     padding: 20px;
 }
 
 .menu-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    flex-direction: row;
+    justify-content: space-between;
 }
-
+.createproduct{
+    height: 40px;
+    width: 200px;
+}
 .menu-header h1 {
     font-size: 24px;
-    color: #333;
+    color: #faf6f6;
 }
 
 .menu-categories {
+    margin-top: 30px;
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    width: 50rem;
 }
 
 .menu-categories .category {
-    padding: 10px 15px;
-    background-color: #fff;
-    border-radius: 20px;
-    border: 1px solid #ddd;
+    padding: 10px 20px;
+    margin: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 .menu-categories .category:hover {
-    background-color: #ddd;
+    background-color: #905f5f;
 }
 
 .menu-categories .category.active {
-    background-color: #e0ffe0;
-    border-color: #b3ffb3;
+    background-color: #ed4e14;
+    color: rgb(253, 253, 253);
 }
+
 
 .menu-items {
     display: grid;
@@ -76,6 +61,7 @@ body {
     gap: 20px;
 }
 
+  
 .menu-item {
     background-color: #fff;
     border-radius: 10px;
@@ -86,6 +72,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    overflow: hidden;
 
 }
 
@@ -109,7 +97,51 @@ body {
 .menu-item p {
     font-size: 16px;
     color: #777;
-    margin-bottom: 10px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: white-space 0.5s ease;
+}
+
+  
+.description {
+    max-height: 3em; 
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.5s ease;
+}
+
+  
+.menu-item:hover .description p {
+    white-space: normal;
+}
+  
+.menu-item:hover .description {
+    max-height: 100em; 
+}
+
+.menu-item {
+  flex: 1 1 auto; 
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  margin: 10px; 
+}
+
+.menu-item:hover {
+  transform: scale(1.05); 
+  z-index: 1; 
+}
+
+.description {
+  max-height: 3em; 
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.menu-item:hover .description {
+  max-height: 100em; 
 }
 
 .menu-item .price {
@@ -128,7 +160,6 @@ body {
 
 .figuremenu-item{
     height: 150px;
-
 }
 
 .editButton{
@@ -141,12 +172,12 @@ body {
     width: 45px;
 }
 
+.update-message{
+    margin-top: 10px;
+    color:#ed4e14;
+    font-weight: bold;
+}
 @MEDIA (MAX-WIDTH: 400PX) {
-
-    .sidebar{
-        display: none;
-        position: absolute;
-    }
     
     .menu-container{
         margin-left: 0;
