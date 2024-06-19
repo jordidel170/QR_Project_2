@@ -242,6 +242,55 @@ button:hover{
 .white-text-option{
     color: white;
 } 
+
+.account{
+    color: white;
+}
+
+.container-loading{   
+    display: grid;
+      place-content: center;
+      height: 100vh;
+  }
+  .loading{
+      width: 120px;
+      height: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+    margin: 0 auto; 
+  }
+  .text-loading{ 
+    padding-top:20px
+  }
+  .loading span{
+      font-size: 20px;
+      text-transform: uppercase;
+  }
+  .dots {
+      width: 30px;
+      height: 30px;
+      background-color: #00b8de;
+      animation: salto .5s alternate
+      infinite;
+    border-radius: 50%  
+  }
+  .dots:nth-child(2) {
+      animation-delay: .18s;
+  }
+  .dots:nth-child(3) {
+      animation-delay: .37s;
+  }
+  @keyframes salto {
+      from {
+          transform: scaleX(1.25);
+      }
+      to{
+          transform: 
+          translateY(-50px) scaleX(1);
+      }
+  }
 /* @media (max-width: 480px) {
     .container {
         width: 70%;

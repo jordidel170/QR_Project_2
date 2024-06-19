@@ -1,13 +1,16 @@
+
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate, Outlet } from "react-router-dom"
 import { Context } from "../store/appContext";
 import "../../styles/dashboard.css";
 
+
 const Login = () => {
 	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+
 	const [showPassword, setShowPassword] = useState(false);
 	// const [checkboxChecked, setCheckboxChecked] = useState(false)
 	const navigate = useNavigate();
@@ -63,7 +66,7 @@ const Login = () => {
 				<div className="formulario inputlogin">
 					{/* {store.token && store.token != "" && store.token != undefined ? navigate("/app/login/home") :(  */}
 						
-					<form action="#">
+					<form action="#" method="POST">
 						<h1>Iniciar Sesión</h1>
 						
 							<div className="input-container">
@@ -109,4 +112,5 @@ const Login = () => {
 
 };
 export default Login
+
 
