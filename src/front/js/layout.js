@@ -20,9 +20,13 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Signup from "./pages/signup";
+
+import Dashboard from "./pages/dashboard";
+
 import App from "./component/app";
 import AdminMenuView from './pages/adminMenuView';
 import EditMenuModal from "./component/EditMenuModal";
+
 
 const ProtectedRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");
@@ -55,6 +59,7 @@ const Layout = () => {
 
                         <Route element ={<Login/>} path="/app/login"/>
                         <Route element={<Signup />} path="/app/signup" />
+                        <Route element={<Dashboard />} path="/app/dashboard" />
                     <Route element={<ProtectedRoute role="user"> <Home /> </ProtectedRoute>} path="app/home" />
                         <Route element={<Menu />} path="/restaurants/:restaurantId/tables/:tableId/menu" />
                         <Route element={<OrderSummary />} path="/order-summary" />
