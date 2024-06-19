@@ -1,0 +1,187 @@
+.order-summary {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .order-summary h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .order-summary ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .order-summary li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-right: -45px;
+  }
+  
+  .order-summary li div {
+    flex: 1;
+  }
+  
+  .button1 {
+    /* margin-top: 20px; */
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: rgb(253, 130, 82);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 15px;
+  }
+  
+  .button1:hover {
+    background-color: rgb(248, 106, 49);
+  }
+  
+  .order-summary a {
+    text-decoration: none;
+  }
+  
+  .order-summary a button {
+    margin-right: 10px;
+  }
+  
+  .total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+  }
+  
+  .order-summary .butt1 {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    border: none;
+    background-color: lightgrey;
+    color: black;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+  }
+  
+  .order-summary .butt1:hover {
+    background-color: rgb(252, 114, 60);
+  }
+  
+  .comments,
+  .payment-method {
+    margin-top: 20px;
+  }
+  
+  .comments label,
+  .payment-method label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .comments textarea {
+    width: 100%;
+    height: 100px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+  
+  .payment-method select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    font-size: 16px;
+    appearance: none;
+  }
+  
+  .payment-method select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+  
+  .payment-method option {
+    background-color: #fff;
+    color: #333;
+  }
+  
+  .order-finish {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+  }
+  
+  .success-message {
+    background-color: #dff0d8;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 4px;
+  }
+  .butt {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .trash-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: lightgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+    padding: 0;
+  }
+  
+  .trash-icon:hover {
+    color: red;
+  }
+  .payment-icons {
+    
+    margin: 15px;
+  }
+  .payment-icons button {
+    display:flex;
+    align-items: center;
+    margin: 5px 0px;
+    padding: 25px 55px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+  }
+  .payment-icons button i {
+    margin-right: 70px; 
+}
+  
+  .payment-icons button.selected {
+    border-color: #007bff;
+    background-color: #e7f3ff;
+  }
+  
+  @media (max-width: 600px) {
+    .button1 {
+      font-size: 17px;
+    }
+  
+    .order-summary .butt1 {
+      font-size: 16px;
+    }
+  
+    .comments textarea {
+      height: 80px;
+    }
+  }
