@@ -23,8 +23,10 @@ const Caja = () => {
     const [mesas, setMesas] = useState([]);
     const [angulosRotacion, setAngulosRotacion] = useState({});
     const [mostrarCarta, setMostrarCarta] = useState(false);
-    
+
+    // Supongamos que este código se encuentra en otro archivo JavaScript donde necesitas recuperar los estados guardados
     const recuperarEstado = () => {
+        // Intenta recuperar los datos; si no existen, usa valores predeterminados
         const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
         const ancho = JSON.parse(localStorage.getItem('anchoSala')) || '600px';
         const mesasGuardadas = JSON.parse(localStorage.getItem('mesas')) || [];
@@ -83,7 +85,7 @@ const Caja = () => {
                         <button className="boton-abrir-caja">Abrir caja<img src={iconoLlave} alt="Atrás" style={{ width: '35px', height: '35px' }} /> </button>
 
 
-                        <button className="boton-pagar" >Pagar <br></br><img src={iconoPagar} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
+                        <button className="boton-pagar">Pagar <br></br><img src={iconoPagar} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
                         <button className="boton-anadir" onClick={manejarClickAnadir}>Añadir <img src={iconoAnadir} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
                         <button className="boton-eliminar">Quitar <img src={iconoEliminar} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
 
