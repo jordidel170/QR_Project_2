@@ -14,6 +14,7 @@ import iconoPagar from "../../img/pagar.png";
 import iconoAnadir from "../../img/anadir.png";
 import iconoEliminar from "../../img/eliminar.png";
 import iconoDash from "../../img/dash.png";
+import suelo from "../../img/suelo506.png";
 
 
 const Caja = () => {
@@ -21,6 +22,7 @@ const Caja = () => {
     const [anchoSala, setAnchoSala] = useState('600px');
     const [mesas, setMesas] = useState([]);
     const [angulosRotacion, setAngulosRotacion] = useState({});
+    const [mostrarCarta, setMostrarCarta] = useState(false);
 
     // Supongamos que este código se encuentra en otro archivo JavaScript donde necesitas recuperar los estados guardados
     const recuperarEstado = () => {
@@ -44,6 +46,14 @@ const Caja = () => {
         navigate('../app/dashboard');
     };
 
+    const manejarClickAnadir = () => {
+        setMostrarCarta(true);
+    };
+
+    const manejarClickAtras = () => {
+        setMostrarCarta(false);
+      };
+
     useEffect(() => {
         recuperarEstado();
     }, []);
@@ -64,24 +74,25 @@ const Caja = () => {
         <>
             <section>
                 <div className="container-ticket">
-                <div className="botones-arriba">
-                <button onClick={irADashboard} className="boton-dash"><img src={iconoDash} alt="Atrás" style={{ width: '30px', height: '30px' }}/> Dashboard</button>
-                <button className="boton-atras"><img src={iconoAtras} alt="Atrás" style={{ width: '20px', height: '20px' }}/> Atrás</button>
+                    <div className="botones-arriba">
+                        <button onClick={irADashboard} className="boton-dash"><img src={iconoDash} alt="Atrás" style={{ width: '30px', height: '30px' }} /> Dashboard</button>
+                        <button className="boton-atras" onClick={manejarClickAtras}><img src={iconoAtras} alt="Atrás" style={{ width: '20px', height: '20px' }} /> Atrás</button>
 
-                </div>
+                    </div>
                     <div className="ticket"></div>
                     <div className="botones">
-                        <button className="boton-abrir-caja">Abrir caja<img src={iconoLlave} alt="Atrás" style={{ width: '35px', height: '35px' }}/> </button>
-                        
-                        
-                        <button className="boton-pagar">Pagar <br></br><img src={iconoPagar} alt="Atrás" style={{ width: '35px', height: '35px' }}/></button>
-                        <button className="boton-anadir">Añadir <img src={iconoAnadir} alt="Atrás" style={{ width: '25px', height: '25px' }}/></button>
-                        <button className="boton-eliminar">Quitar <img src={iconoEliminar} alt="Atrás" style={{ width: '25px', height: '25px' }}/></button>
-                        
-                        
+                        <button className="boton-abrir-caja">Abrir caja<img src={iconoLlave} alt="Atrás" style={{ width: '35px', height: '35px' }} /> </button>
+
+
+                        <button className="boton-pagar">Pagar <br></br><img src={iconoPagar} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
+                        <button className="boton-anadir" onClick={manejarClickAnadir}>Añadir <img src={iconoAnadir} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
+                        <button className="boton-eliminar">Quitar <img src={iconoEliminar} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
+
+
                     </div>
                 </div>
-                <div className="container-caja-mesas">
+                {!mostrarCarta ? (
+                <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
                     {mesas.map((mesa) => (
                         <div
                             key={mesa.id}
@@ -105,8 +116,14 @@ const Caja = () => {
                             />
                             <div className="numeroMesa">{mesa.nombre}</div>
                         </div>
+
                     ))}
                 </div>
+                ) : (
+                    <div className="carta-caja">
+                      
+                    </div>
+                  )}
             </section>
         </>
     );

@@ -102,7 +102,6 @@ section {
     border: 0 solid transparent;
     background-color: lightblue;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
-    outline: 1px solid;
     outline-color: rgba(255, 255, 255, 0);
     outline-offset: 0px;
     text-shadow: none;
@@ -113,6 +112,7 @@ section {
 }
 
 .boton-atras:hover {
+    outline: 1px solid;
     border: 1px solid transparent;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
     outline-offset: 15px;
@@ -126,7 +126,6 @@ section {
     border: 0 solid transparent;
     background-color: rgb(252, 166, 68);
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
-    outline: 1px solid;
     outline-color: rgba(255, 255, 255, 0);
     outline-offset: 0px;
     text-shadow: none;
@@ -137,6 +136,7 @@ section {
 }
 
 .boton-dash:hover {
+    outline: 1px solid;
     border: 1px solid transparent;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
     outline-offset: 15px;
@@ -144,11 +144,6 @@ section {
     text-shadow: 1px 1px 2px #427388;
 }
 
-/* .link-boton-dash {
-    text-decoration: none;
-    color: inherit;
-    
-  } */
 
 .boton-eliminar {
     margin-top: 5px;
@@ -158,7 +153,6 @@ section {
     border: 0 solid transparent;
     background-color: rgb(228, 0, 0);
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
-    outline: 1px solid;
     outline-color: rgba(255, 255, 255, 0);
     outline-offset: 0px;
     text-shadow: none;
@@ -168,6 +162,7 @@ section {
     outline-offset: 0px;
 }
 .boton-eliminar:hover {
+    outline: 1px solid;
     border: 1px solid transparent;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
     outline-offset: 15px;
@@ -182,7 +177,6 @@ section {
     border: 0 solid transparent;
     background-color: rgb(0, 187, 9);
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
-    outline: 1px solid;
     outline-color: rgba(255, 255, 255, 0);
     outline-offset: 0px;
     text-shadow: none;
@@ -190,8 +184,10 @@ section {
     transition: all 1000ms cubic-bezier(0.19, 1, 0.22, 1);
     outline-color: rgba(255, 255, 255, 0.5);
     outline-offset: 0px;
+    z-index: 25;
 }
 .boton-pagar:hover {
+    outline: 1px solid;
     border: 1px solid transparent;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
     outline-offset: 15px;
@@ -206,7 +202,6 @@ section {
     border: 0 solid transparent;
     background-color: rgb(75, 87, 255);
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
-    outline: 1px solid;
     outline-color: rgba(255, 255, 255, 0);
     outline-offset: 0px;
     text-shadow: none;
@@ -216,6 +211,7 @@ section {
     outline-offset: 0px;
 }
 .boton-anadir:hover {
+    outline: 1px solid;
     border: 1px solid transparent;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
     outline-offset: 15px;
@@ -230,7 +226,6 @@ section {
     border: 0 solid transparent;
     background-color: rgb(221, 224, 0);
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
-    outline: 1px solid;
     outline-color: rgba(255, 255, 255, 0);
     outline-offset: 0px;
     text-shadow: none;
@@ -240,9 +235,40 @@ section {
     outline-offset: 0px;
 }
 .boton-abrir-caja:hover {
+    outline: 1px solid;
     border: 1px solid transparent;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
     outline-offset: 15px;
     outline-color: rgba(255, 255, 255, 0);
     text-shadow: 1px 1px 2px #427388;
 }
+
+
+.carta-caja {
+    background: rgba(255, 255, 255, 0.4);
+    position: relative;
+    min-width: 750px;
+    max-width: 750px;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, .6);
+    border-radius: 20px;
+    min-height: 700px;
+}
+
+
+.carta-caja h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15%;
+    font-size: 2.6rem;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+}
+
+@media (min-width: 768px) and (max-width: 1300px) {
+    .container-ticket{
+        height: 95vh;
+    }
+  }
