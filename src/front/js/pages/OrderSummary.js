@@ -32,7 +32,7 @@ export const OrderSummary = () => {
 
         actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
         actions.clearCart();
-        navigate('/order-success')
+        navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`)
      
               
                 

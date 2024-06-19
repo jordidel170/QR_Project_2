@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useParams } from 'react-router-dom';
 import { Navbar } from "../component/navbar";
 import { Footer } from "../component/footer";
 
-export const OrderSuccess = ({restaurantId,tableId}) => {
+export const OrderSuccess = () => {
+    const { restaurantId, tableId} = useParams();
     return (
         <>
             {/* <Navbar /> */}
