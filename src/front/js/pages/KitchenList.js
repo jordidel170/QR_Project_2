@@ -102,8 +102,10 @@ export const KitchenList = () => {
 
         return (
           <div key={order.id} className="order-container">
-            <h5><FaThumbtack />{order.id}</h5>
-            <h5><MdTableBar />{order.table_id}</h5>
+            <h5><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/></svg>
+              {order.id}</h5>
+            <h5><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#434343"><path d="M173-600h614l-34-120H208l-35 120Zm307-60Zm192 140H289l-11 80h404l-10-80ZM160-160l49-360h-89q-20 0-31.5-16T82-571l57-200q4-13 14-21t24-8h606q14 0 24 8t14 21l57 200q5 19-6.5 35T840-520h-88l48 360h-80l-27-200H267l-27 200h-80Z"/></svg>
+              {order.table_id}</h5>
             <ul className="order-items-list">
               {order.order_items.map((item) => {
                 const isItemCompleted = completedItems.some(

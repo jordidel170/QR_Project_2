@@ -6,10 +6,18 @@ from api.modelUser import User, db, Restaurant, Table, Menu, Order, OrderItem
 restaurants_bp = Blueprint('restaurants', __name__)
 
 @restaurants_bp.route('/restaurants', methods=['GET'])
-def get_restaurants():
+def get_all_restaurants():
     restaurants = Restaurant.query.all()
     return jsonify([restaurant.serialize() for restaurant in restaurants]), 200
 
+@restaurants_bp.route('/restaurants/<int:restaurant_id>', methods=['GET'])
+def get_restaurant(restaurant_id):
+    restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
+    if restaurant:
+        return jsonify(restaurant.serialize()), 200
+    else:
+        return jsonify({'error': 'Restaurant not found'}), 404
+    
 @restaurants_bp.route('/restaurants', methods=['POST'])
 def add_restaurant():
     data = request.json

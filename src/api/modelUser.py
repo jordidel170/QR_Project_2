@@ -52,6 +52,7 @@ class Restaurant(db.Model):
     __tablename__ = 'restaurant'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
+    image = db.Column(db.String(255), nullable=True)
     menus = db.relationship('Menu', backref='restaurant', lazy=True)
 
     def __repr__(self):
@@ -60,6 +61,7 @@ class Restaurant(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "image": self.image
         }
 
 class Table(db.Model):

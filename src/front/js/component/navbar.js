@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link,useParams } from "react-router-dom";
 import "../../styles/navbar.css";
 import { Context } from "../store/appContext";
@@ -9,10 +9,15 @@ export const Navbar = ({onClose}) => {
 	const {restaurantId,tableId} = useParams()
 	const totalAmount = store.cart.reduce((total, meal) => total + meal.price * meal.quantity, 0);
 	const cartNotEmpty = store.cart.length > 0;
+
+	useEffect(() => {
+		actions.getRestaurant(restaurantId);
+	}, [restaurantId]);
+
 	return (
 		<>
 			<header className='nav-bar header'>
-				<h1>Restaurant</h1>
+				<h1>{store.restaurant.name}</h1>
 				
 				<div className={`cart-container ${cartNotEmpty ? 'cart-active' : ''}`}>
 					<button className="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -67,7 +72,7 @@ export const Navbar = ({onClose}) => {
 
 			</header>
 			<div className='main-image'>
-				<img src='https://res.cloudinary.com/dpujdteiu/image/upload/v1718235779/food_nx9k9j.jpg' />
+				<img src={store.restaurant.image} />
 			</div>
 		</>
 

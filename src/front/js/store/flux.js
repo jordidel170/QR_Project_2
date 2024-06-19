@@ -1,3 +1,4 @@
+import { IoRestaurantSharp } from "react-icons/io5";
 import loginDispatcher from "./dispatcherLogin";
 import { dispatcherOrder } from "./dispatcherOrder";
 
@@ -12,6 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			register: null,
 			menu: [],
             cart: [],
+            restaurant: [],
             totalAmount: 0,
             orders: []
 		},
@@ -201,6 +203,16 @@ const getState = ({ getStore, getActions, setStore }) => {
             clearCart: () => {
                 const store = getStore();
                 setStore({ ...store, cart: [], totalAmount: 0 });
+            },
+
+            getRestaurant: (restaurantId) => {
+                const store = getStore()
+                fetch(`${process.env.BACKEND_URL}/api/restaurants/${restaurantId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setStore({ ...store, restaurant: data });
+                    })
+                    .catch(error => console.error('Error fetching menu:', error));
             }
 		
 		}
