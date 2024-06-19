@@ -16,6 +16,8 @@ import { Single } from "./pages/single";
 import  Login  from "./pages/login";
 import injectContext from "./store/appContext";
 
+import Login from "./pages/login"
+import Mesas from "./pages/mesas"
 
 
 import { Navbar } from "./component/navbar";
@@ -24,6 +26,7 @@ import Signup from "./pages/signup";
 
 
 import Dashboard from "./pages/dashboard";
+import Caja from "./pages/caja";
 
 import App from "./component/app";
 import AdminMenuView from './pages/adminMenuView';
@@ -63,6 +66,8 @@ const Layout = () => {
                         <Route element ={<Login/>} path="/app/login"/>
                         <Route element={<Signup />} path="/app/signup" />
                         <Route element={<Dashboard />} path="/app/dashboard" />
+                        <Route element={<Caja />} path="/app/caja" />
+                        <Route element={<Mesas />} path="/app/mesas" />
                     <Route element={<ProtectedRoute role="user"> <Home /> </ProtectedRoute>} path="app/home" />
                         <Route element={<Menu />} path="/restaurants/:restaurantId/tables/:tableId/menu" />
                         <Route element={<OrderSummary />} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
