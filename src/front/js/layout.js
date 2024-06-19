@@ -9,6 +9,7 @@ import { Home } from "./pages/home";
 import { Menu } from "./pages/menu";
 import { OrderSummary } from "./pages/OrderSummary";
 import { OrderSuccess } from "./pages/OrderSuccess";
+import { KitchenList } from "./pages/KitchenList";
 import { AboutUs } from "./pages/AboutUs";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
