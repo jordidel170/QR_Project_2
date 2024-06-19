@@ -8,12 +8,13 @@ import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/summary.css";
 
 
-export const OrderSummary = props => {
+export const OrderSummary = () => {
     const { store, actions } = useContext(Context);
     const [comment, setComment] = useState('');
     const [paymentMethod, setPaymentMethod] = useState('');
-    const [restaurantId, setRestaurantId] = useState('');
-    const [tableId, setTableId] = useState('');
+    const { restaurantId, tableId} = useParams();
+
+   
     const totalPrice = store.cart.reduce((total, meal) => total + meal.price * meal.quantity, 0);
     const navigate = useNavigate();
     const handleCommentChange = (e) => {
@@ -23,22 +24,21 @@ export const OrderSummary = props => {
     const handlePaymentMethodChange = (method) => {
         setPaymentMethod(method);
     };
-    const handleFinishOrder = async() => {
+    const handleFinishOrder = () => {
         if (!paymentMethod) {
-            alert('Please choose your payment method!')
+            alert('Please choose your payment method!');
             return;
-        };
-        if (paymentMethod === 'cash') {
-            actions.clearCart();
-            navigate('/order-success')
         }
-        else { alert('Redirecting to bank payment gateway...'); }
 
-            // actions.getOrder(restaurantId,tableId)
-            actions.clearCart();
-            navigate('/order-success');
+        actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
+        actions.clearCart();
+        navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`)
      
-    }
+              
+                
+            }
+     
+    
     return (
         <>
             <Navbar />

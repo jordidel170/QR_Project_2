@@ -113,8 +113,7 @@ const MenuItem = ({ meal }) => (
 		</div>
 	  <div className='description'>{meal.description}</div>
 		
-	  
-	  
+
 	  <AddForm
 		id={meal.id}
 		name={meal.name}
