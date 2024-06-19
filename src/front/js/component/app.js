@@ -8,7 +8,7 @@ import {
   Routes,
 } from "react-router-dom";
 
-import Menu from "./Menu";
+import Menu from "./menu";
 import { Navigate } from "react-router-dom";
 
 const App = () => {
