@@ -156,10 +156,10 @@ const MenuItem = ({ meal }) => (
       setCollapsedCategories([category]);
     }
   };
-	const starters = store.menu.filter(item => item.category === 'starter');
+	const starters = store.menu.filter(item => item.category === 'Starters');
 	const mains = store.menu.filter(item => item.category === 'Mains');
-	const desserts = store.menu.filter(item => item.category === 'dessert');
-	const drinks = store.menu.filter(item => item.category === 'drink');
+	const desserts = store.menu.filter(item => item.category === 'Desserts');
+	const drinks = store.menu.filter(item => item.category === 'Drinks');
   
 	return (
 	  <>

@@ -42,7 +42,7 @@ const ProtectedRoute = ({ children, role }) => {
   const decodedToken = jwtDecode(token);
   console.log(decodedToken.roles);
   if (role && decodedToken.roles !== role) {
-    return <Navigate to="/app/login" />;
+    return <Navigate to="/app/home" />;
   }
   return children;
 };
@@ -65,17 +65,16 @@ const Layout = () => {
 
                         <Route element ={<Login/>} path="/app/login"/>
                         <Route element={<Signup />} path="/app/signup" />
-                        <Route element={<Dashboard />} path="/app/dashboard" />
-                        <Route element={<Caja />} path="/app/caja" />
-                        <Route element={<Mesas />} path="/app/mesas" />
-                    <Route element={<ProtectedRoute role="user"> <Home /> </ProtectedRoute>} path="app/home" />
-                        <Route element={<Menu />} path="/restaurants/:restaurantId/tables/:tableId/menu" />
-                        <Route element={<OrderSummary />} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
-                        <Route element={<OrderSuccess />} path="/restaurants/:restaurantId/tables/:tableId/order-success" />
+                        <Route element ={<Home />} path="/app/home"/>
+                        <Route element={<ProtectedRoute role="Restaurante"> <Caja />  </ProtectedRoute>} path="app/caja" />
+                    <Route element={<ProtectedRoute role="admin"> <Dashboard />  </ProtectedRoute>} path="app/dashboard" />
+                    <Route element={<ProtectedRoute role="admin"> <Mesas />  </ProtectedRoute>} path="app/mesas" />
+                    <Route element={<ProtectedRoute role="admin"> <AdminMenuView />  </ProtectedRoute>} path="app/adminmenu" />
+                    <Route element={<ProtectedRoute role="mesa1"> <Menu />  </ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/menu" />
+                    <Route element={<ProtectedRoute role="mesa1"> <OrderSummary />  </ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
+                    <Route element={<ProtectedRoute role="mesa1"> <OrderSuccess />  </ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-success"/>
                         <Route element={<AboutUs />} path="/about-us" />
 
-                        <Route element={<AdminMenuView />} path="/app/adminmenu" />
-                        {/* <Route element={<EditMenuModal />} path="/app/editmenumodal" /> */}
 
                         <Route element={<KitchenList />} path="/restaurants/:restaurantId/orders"  />
 
