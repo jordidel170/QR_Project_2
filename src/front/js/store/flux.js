@@ -53,7 +53,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getMenu: (restaurantId,tableId) => {
                 const store = getStore()
-                fetch(`${process.env.BACKEND_URL}/api/restaurants/${restaurantId}/tables/${tableId}/menu`)
+                fetch(`http://127.0.0.1:5000/app/products`)
                     .then(response => response.json())
                     .then(data => {
                         setStore({ ...store, menu: data });

@@ -145,7 +145,7 @@ const MenuItem = ({ meal }) => (
 	const { restaurantId, tableId} = useParams();
 
 	useEffect(() => {
-		actions.getMenu(restaurantId, tableId);
+		actions.getMenu();
 	}, [restaurantId,tableId]);
 	const [collapsedCategories, setCollapsedCategories] = useState([]);
 
@@ -157,7 +157,7 @@ const MenuItem = ({ meal }) => (
     }
   };
 	const starters = store.menu.filter(item => item.category === 'starter');
-	const mains = store.menu.filter(item => item.category === 'main');
+	const mains = store.menu.filter(item => item.category === 'Mains');
 	const desserts = store.menu.filter(item => item.category === 'dessert');
 	const drinks = store.menu.filter(item => item.category === 'drink');
   

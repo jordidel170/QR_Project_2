@@ -31,7 +31,7 @@ import CreateProduct from '../component/CreateProduct';
     useEffect( () => {
     fetchProduct()
   
-    },[openModal, productId])
+    },[openModal, productId,filteredItems])
   
     const handleDeleteProduct = async (id) => {
       await actions.deleteProduct(id);
