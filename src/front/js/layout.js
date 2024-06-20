@@ -16,7 +16,7 @@ import { Single } from "./pages/single";
 import  Login  from "./pages/login";
 import injectContext from "./store/appContext";
 
-import Login from "./pages/login"
+
 import Mesas from "./pages/mesas"
 
 

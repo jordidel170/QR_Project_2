@@ -19,7 +19,7 @@ cloudinary = "*"
 flask-admin = "*"
 typing-extensions = "*"
 flask-jwt-extended ="*"
-
+qrcode = "*"
 
 [requires]
 python_version = "3.10"
