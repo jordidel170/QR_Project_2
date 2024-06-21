@@ -1,4 +1,8 @@
+
+import { IoRestaurantSharp } from "react-icons/io5";
+
 import deleteProductDispatcher from "./dispatcherDeleteProduct";
+
 import loginDispatcher from "./dispatcherLogin";
 
 import newProductDispatcher from "./dispatcherNewProduct";
@@ -18,6 +22,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			register: null,
 			menu: [],
             cart: [],
+            restaurant: [],
             totalAmount: 0,
             orders: []
 		},
@@ -103,9 +108,16 @@ const getState = ({ getStore, getActions, setStore }) => {
             getOrder: async (restaurantId) => {
                 const data = await dispatcherOrder.get(restaurantId);
 				const store = getStore();
+                const ordersWithTimestamp = store.orders.map(order => ({
+                    ...order,
+                    timestamp: new Date().toISOString() 
+                  }));
+            
+                setStore({ orders: ordersWithTimestamp });
 				setStore({ ...store,orders: data}); 
 				console.log(data);
             },
+
 
             updateOrder: async (restaurantId, tableId, orderId, updatedOrderData) => {
                 try {
@@ -156,6 +168,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                     // alert('Error deleting order. Please try again.');
                 }
             },
+
+            removeOrderFromList: (orderId) => {
+				const store = getStore();
+				const updatedOrders = store.orders.filter(order => order.id !== orderId);
+				setStore({ ...store, orders: updatedOrders });
+			},
        
             addToCart: (meal, quantity = 1) => {
                 const store = getStore()
@@ -209,6 +227,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ ...store, cart: [], totalAmount: 0 });
             },
 
+
+            getRestaurant: (restaurantId) => {
+                const store = getStore()
+                fetch(`${process.env.BACKEND_URL}/api/restaurants/${restaurantId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setStore({ ...store, restaurant: data });
+                    })
+                    .catch(error => console.error('Error fetching menu:', error));
+
             getProduct: async() => {
               const data = await productDispatcher.get();
             //   console.log(data)
@@ -236,6 +264,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             deleteProduct: async(id) => {
                 const data = await deleteProductDispatcher(id);
                 return data;
+
             }
 		
 		}
