@@ -66,13 +66,13 @@ const Layout = () => {
                         <Route element ={<Login/>} path="/app/login"/>
                         <Route element={<Signup />} path="/app/signup" />
                         <Route element ={<Home />} path="/app/home"/>
-                        <Route element={<ProtectedRoute role="Restaurante"> <Caja />  </ProtectedRoute>} path="app/caja" />
+                        <Route element={<ProtectedRoute role="admin"> <Caja />  </ProtectedRoute>} path="app/caja" />
                     <Route element={<ProtectedRoute role="admin"> <Dashboard />  </ProtectedRoute>} path="app/dashboard" />
                     <Route element={<ProtectedRoute role="admin"> <Mesas />  </ProtectedRoute>} path="app/mesas" />
                     <Route element={<ProtectedRoute role="admin"> <AdminMenuView />  </ProtectedRoute>} path="app/adminmenu" />
-                    <Route element={<ProtectedRoute role="mesa1"> <Menu />  </ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/menu" />
-                    <Route element={<ProtectedRoute role="mesa1"> <OrderSummary />  </ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
-                    <Route element={<ProtectedRoute role="mesa1"> <OrderSuccess />  </ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-success"/>
+                    <Route element={<ProtectedRoute role="admin"> <Menu />  </ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/menu" />
+                    <Route element={<ProtectedRoute role="admin"> <OrderSummary />  </ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
+                    <Route element={<ProtectedRoute role="admin"> <OrderSuccess />  </ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-success"/>
                         <Route element={<AboutUs />} path="/about-us" />
 
 
