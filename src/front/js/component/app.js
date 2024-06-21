@@ -7,7 +7,12 @@ import {
   useNavigate,
   Routes,
 } from "react-router-dom";
+
+
+// import Menu from "./menu";
+
 import Menu from "./menu.js";
+
 import { Navigate } from "react-router-dom";
 
 const App = () => {

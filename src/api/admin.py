@@ -1,7 +1,11 @@
 
 import os
 from flask_admin import Admin
+
+# from api.modelUser import db, User, Usuario, Menu, Restaurant, Table
+
 from .modelUser import db, User, Usuario, Menu, Restaurant, Table, Order, OrderItem
+
 from flask_admin.contrib.sqla import ModelView
 
 

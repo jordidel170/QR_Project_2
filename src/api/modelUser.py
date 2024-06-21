@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
 
-
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -31,11 +30,8 @@ class User(db.Model):
 class Usuario(db.Model):
     __tablename__ = 'usuario'
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(255))
-    last_name = db.Column(db.String(255))
-    name_of_the_restaurant = db.Column(db.String(255))
-    email = db.Column(db.String(255), unique=True, nullable=False)
-    password = db.Column(db.String(255), unique=False, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):
@@ -47,6 +43,7 @@ class Usuario(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
 
 class Restaurant(db.Model):
     __tablename__ = 'restaurant'
@@ -146,3 +143,4 @@ class OrderItem(db.Model):
             "price": self.price,
           
         }
+
