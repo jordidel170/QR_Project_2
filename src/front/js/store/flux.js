@@ -99,9 +99,16 @@ const getState = ({ getStore, getActions, setStore }) => {
             getOrder: async (restaurantId) => {
                 const data = await dispatcherOrder.get(restaurantId);
 				const store = getStore();
+                const ordersWithTimestamp = store.orders.map(order => ({
+                    ...order,
+                    timestamp: new Date().toISOString() 
+                  }));
+            
+                setStore({ orders: ordersWithTimestamp });
 				setStore({ ...store,orders: data}); 
 				console.log(data);
             },
+
 
             updateOrder: async (restaurantId, tableId, orderId, updatedOrderData) => {
                 try {
@@ -152,6 +159,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                     // alert('Error deleting order. Please try again.');
                 }
             },
+
+            removeOrderFromList: (orderId) => {
+				const store = getStore();
+				const updatedOrders = store.orders.filter(order => order.id !== orderId);
+				setStore({ ...store, orders: updatedOrders });
+			},
        
             addToCart: (meal, quantity = 1) => {
                 const store = getStore()
