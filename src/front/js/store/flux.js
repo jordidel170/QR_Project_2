@@ -243,23 +243,23 @@ const getState = ({ getStore, getActions, setStore }) => {
                 // const store = getStore();
                 // setStore({...store, data})
             return data
-            }, 
+            };
 
             getProductById: async (id) => {
                 const data = await productDispatcher.getById(id)
                 // console.log(data)
                 return data;
-            },
+            };
 
             uptadeProductById: async(id, name, price, description, image, category) => {
                 const data = await productDispatcher.put(id, name, price, description, image, category)
                 return data;
-            },
+            };
 
             createNewProduct: async (name, price, description, image, category) => {
                 const data = await newProductDispatcher(name, price, description, image, category)
                 return data;
-            },
+            };
 
             deleteProduct: async(id) => {
                 const data = await deleteProductDispatcher(id);
@@ -268,7 +268,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
 		
 		}
-	};
+	},
 };
+}
 
 export default getState;
