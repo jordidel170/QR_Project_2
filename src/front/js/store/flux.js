@@ -9,7 +9,7 @@ import { dispatcherOrder } from "./dispatcherOrder";
 
 import signupDispatcher from "./dispatcherSignup";
 import newTableDispatcher from "./dispatcherTable";
-
+import sesionsDispatcher from "./dispatcherSesions";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -52,7 +52,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			getMenu: (restaurantId,tableId) => {
+			getMenu: () => {
                 const store = getStore()
                 fetch(`http://127.0.0.1:5000/app/products`)
                     .then(response => response.json())
@@ -79,7 +79,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 };
         
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/restaurants/${restaurantId}/tables/${tableId}/orders`, {
+                    const response = await fetch(`http://127.0.0.1:5000/app/sessions/${tableId}/products`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -242,8 +242,35 @@ const getState = ({ getStore, getActions, setStore }) => {
             createNewTable: async(table_number) => {
                 const data = await newTableDispatcher(table_number);
                 return data;
-            }
-		
+            },
+            createClient: async (name) => {
+                const data = await sesionsDispatcher.create_client(name);
+                return data;
+              },
+              assingClient: async (tableId, clientId) => {
+                const data = await sesionsDispatcher.assing_client(tableId, clientId);
+                console.log(data);
+        
+                return data;
+              },
+              getSessions: async () => {
+                const data = await sesionsDispatcher.get();
+                return data;
+              },
+              addProductToTable: async (tableId, items) => {
+                const data = await sesionsDispatcher.add_product_to_session(
+                  tableId,
+                  items
+                );
+                console.log("dato en flux addProductToTable: ", data);
+                return data;
+              },
+
+              getActiveSessionTable: async(tableId) => {
+                const data = await sesionsDispatcher.get_session_active(tableId);
+                console.log("dato en flux getActiveSessionTable", data);
+                return data;
+              }
 		}
 	};
 };
