@@ -59,10 +59,10 @@ setup_admin(app)
 setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
-app.register_blueprint(api, url_prefix='/api')
-app.register_blueprint(login_bp, url_prefix='/api')
-app.register_blueprint(signup_bp, url_prefix='/api')
-app.register_blueprint(restaurants_bp, url_prefix='/api')
+app.register_blueprint(api, url_prefix='/app')
+app.register_blueprint(login_bp, url_prefix='/app')
+app.register_blueprint(signup_bp, url_prefix='/app')
+app.register_blueprint(restaurants_bp, url_prefix='/app')
 # Handle/serialize errors like a JSON object
 
 

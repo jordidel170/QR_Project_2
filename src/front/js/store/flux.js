@@ -58,7 +58,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getMenu: (restaurantId,tableId) => {
                 const store = getStore()
-                fetch(`${process.env.BACKEND_URL}/api/restaurants/${restaurantId}/tables/${tableId}/menu`)
+                fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}/tables/${tableId}/menu`)
                     .then(response => response.json())
                     .then(data => {
                         setStore({ ...store, menu: data });
@@ -83,7 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 };
         
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/restaurants/${restaurantId}/tables/${tableId}/orders`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}/tables/${tableId}/orders`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -121,7 +121,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             updateOrder: async (restaurantId, tableId, orderId, updatedOrderData) => {
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/restaurants/${restaurantId}/tables/${tableId}/orders/${orderId}`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}/tables/${tableId}/orders/${orderId}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
@@ -147,7 +147,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             deleteOrder: async (restaurantId, tableId, orderId) => {
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/restaurants/${restaurantId}/tables/${tableId}/orders/${orderId}`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}/tables/${tableId}/orders/${orderId}`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json'
@@ -230,7 +230,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             getRestaurant: (restaurantId) => {
                 const store = getStore()
-                fetch(`${process.env.BACKEND_URL}/api/restaurants/${restaurantId}`)
+                fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}`)
                     .then(response => response.json())
                     .then(data => {
                         setStore({ ...store, restaurant: data });

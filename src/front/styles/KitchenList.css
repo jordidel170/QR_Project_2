@@ -84,7 +84,7 @@
   background-color:orange;
 }
 .done-button.done {
-  background-color: darkorange;
+  background-color: rgb(255, 77, 0);
   fill: white; 
 }
 .order-controls {
