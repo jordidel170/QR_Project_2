@@ -10,6 +10,7 @@ import { Menu } from "./pages/menu";
 import { OrderSummary } from "./pages/OrderSummary";
 import { OrderSuccess } from "./pages/OrderSuccess";
 import { KitchenList } from "./pages/KitchenList";
+import { GenerateQR } from "./pages/GenerateQR";
 import { AboutUs } from "./pages/AboutUs";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
@@ -69,15 +70,16 @@ const Layout = () => {
                         <Route element={<Caja />} path="/app/caja" />
                         <Route element={<Mesas />} path="/app/mesas" />
                     <Route element={<ProtectedRoute role="user"> <Home /> </ProtectedRoute>} path="app/home" />
-                        <Route element={<Menu />} path="/restaurants/:restaurantId/tables/:tableId/menu" />
-                        <Route element={<OrderSummary />} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
-                        <Route element={<OrderSuccess />} path="/restaurants/:restaurantId/tables/:tableId/order-success" />
+                        <Route element={<Menu />} path="app/restaurants/:restaurantId/tables/:tableId/menu" />
+                        <Route element={<OrderSummary />} path="app/restaurants/:restaurantId/tables/:tableId/order-summary" />
+                        <Route element={<OrderSuccess />} path="app/restaurants/:restaurantId/tables/:tableId/order-success" />
                         <Route element={<AboutUs />} path="/about-us" />
 
                         <Route element={<AdminMenuView />} path="/app/adminmenu" />
                         {/* <Route element={<EditMenuModal />} path="/app/editmenumodal" /> */}
 
-                        <Route element={<KitchenList />} path="/restaurants/:restaurantId/orders"  />
+                        <Route element={<GenerateQR />} path="/generate-qr" />
+                        <Route element={<KitchenList />} path="app/restaurants/:restaurantId/orders"  />
 
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

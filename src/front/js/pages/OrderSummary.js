@@ -81,13 +81,6 @@ export const OrderSummary = () => {
 
                 <div className="payment-method">
                     <label htmlFor="payment">Payment Method:</label>
-                    {/* <select id="payment" value={paymentMethod} onChange={handlePaymentMethodChange}>
-                        <option value="">Select Payment Method</option>
-                        <option value="credit">Credit Card</option>
-                        <option value="debit">Debit Card</option>
-                        <option value="paypal">PayPal</option>
-                        <option value="cash">Pay at Cashier</option>
-                    </select> */}
                     <div className="payment-icons">
                         <button className={paymentMethod === 'credit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('credit')}>
                         <i class="fa-solid fa-credit-card"></i> Credit Card
@@ -104,7 +97,9 @@ export const OrderSummary = () => {
                     </div>
                 </div>
                 <div className='order-finish'>
-                    <button onClick={actions.clearCart} className='button1'>Clear</button>
+                <Link to={`/restaurants/${restaurantId}/tables/${tableId}/menu`}>
+                    <button className="button1">Back to Menu</button>
+                </Link>
                     <button className='button1' onClick={handleFinishOrder}>Finish</button>
                 </div>
             </div>

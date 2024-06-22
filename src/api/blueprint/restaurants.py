@@ -165,8 +165,22 @@ def create_order(restaurant_id, table_id):
 
     return jsonify(order.serialize()), 201
 
+@restaurants_bp.route('/restaurants/<int:restaurant_id>/tables/<int:table_id>/orders/<int:order_id>', methods=['GET'])
+def get_order(restaurant_id, table_id, order_id):
+    order = Order.query.filter_by(id=order_id, restaurant_id=restaurant_id, table_id=table_id).first()
+    if order is None:
+        return jsonify({"error": "Order not found"}), 404
+
+    order_items = OrderItem.query.filter_by(order_id=order_id).all()
+    # items = [item.serialize() for item in order_items]
+
+    response = order.serialize()
+    # response['items'] = items
+
+    return jsonify(response), 200
+
 @restaurants_bp.route('/restaurants/<int:restaurant_id>/orders', methods=['GET'])
-def get_order(restaurant_id):
+def get_all_order(restaurant_id):
     orders = Order.query.filter_by(restaurant_id=restaurant_id).all()
     return jsonify([order.serialize() for order in orders]), 200
 
