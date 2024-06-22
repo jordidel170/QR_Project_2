@@ -8,7 +8,7 @@ import { dispatcherOrder } from "./dispatcherOrder";
 
 
 import signupDispatcher from "./dispatcherSignup";
-import newTableDispatcher from "./dispatcherTable";
+import dispatcherTable from "./dispatcherTable";
 import sesionsDispatcher from "./dispatcherSesions";
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -240,7 +240,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             createNewTable: async(table_number) => {
-                const data = await newTableDispatcher(table_number);
+                const data = await dispatcherTable.create_table(table_number);
+                return data;
+            },
+
+            delete_table: async(table_number) => {
+                const data = await dispatcherTable.delete_table(table_number)
                 return data;
             },
             createClient: async (name) => {

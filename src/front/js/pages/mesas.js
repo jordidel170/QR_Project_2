@@ -77,8 +77,12 @@ const Mesas = () => {
         }
     };
 
-    const eliminarMesa = (id) => {
-        setMesas(mesas.filter(mesa => mesa.id !== id));
+    const eliminarMesa = async(table_number) => {
+        await actions.delete_table(table_number)
+        const updatedTables = mesas.filter(mesa => console.log(mesa.id) !== id)
+       
+        setMesas(...mesas, updatedTables);
+        
     };
 
     const manejarSoltar = (e) => {
@@ -113,7 +117,7 @@ const Mesas = () => {
 
 
     useEffect(() => {
-        // Intenta cargar el estado inicial de las mesas desde localStorage al iniciar el componente
+        
         const mesasGuardadas = localStorage.getItem('mesas');
         const angulosGuardados = localStorage.getItem('angulosRotacion');
         const largoSalaGuardado = localStorage.getItem('largoSala');
@@ -132,7 +136,7 @@ const Mesas = () => {
       }, []);
       
       const guardarEstado = () => {
-        // Guarda el estado actual en localStorage
+    
         localStorage.setItem('mesas', JSON.stringify(mesas));
         localStorage.setItem('angulosRotacion', JSON.stringify(angulosRotacion));
         localStorage.setItem('largoSala', JSON.stringify(largoSala));
@@ -193,7 +197,7 @@ const Mesas = () => {
                                             <input
                                                 className='input-nombre-mesa'
                                                 type="text"
-                                                defaultValue={mesa.nombre}
+                                                defaultValue={mesa.table_number}
                                                 onBlur={(e) => actualizarNombreMesa(mesa.id, e.target.value)}
                                             />
                                             <button className='eliminar-mesa' onClick={() => eliminarMesa(mesa.id)} style={{ position: 'absolute', transform: 'translateX(-50%)', backgroundColor: 'red', color: 'white' }}>X</button>
