@@ -40,7 +40,7 @@ import CreateProduct from '../component/CreateProduct';
     };
 
   return (
-    <div>
+    <div className='containermenuview'>
       <div className="menu-container">
         <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory} setOpenModal={setOpenModal} selectedCategory={selectedCategory}/>
         <div className='menu-items'>
@@ -51,7 +51,7 @@ import CreateProduct from '../component/CreateProduct';
      { openModal ? <CreateProduct handleCloseModal={handleCloseModal} /> : <></> }
         </div>
       </div>
-    </div>
+     </div>
   );
 }
 

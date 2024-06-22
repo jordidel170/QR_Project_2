@@ -96,6 +96,7 @@ const CreateProduct = ({ handleCloseModal }) => {
             <label>
               Category:
               <select className="category-dropdown" name="category" onChange={handleChange}>
+                <option value="Select category">Select category</option>
                   {categoryName.map((name, index) => (<option key={index} value={newProductData.category} >{name}</option>))} </select>
             </label>
             <label>

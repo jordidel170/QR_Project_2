@@ -81,13 +81,6 @@ export const OrderSummary = () => {
 
                 <div className="payment-method">
                     <label htmlFor="payment">Payment Method:</label>
-                    {/* <select id="payment" value={paymentMethod} onChange={handlePaymentMethodChange}>
-                        <option value="">Select Payment Method</option>
-                        <option value="credit">Credit Card</option>
-                        <option value="debit">Debit Card</option>
-                        <option value="paypal">PayPal</option>
-                        <option value="cash">Pay at Cashier</option>
-                    </select> */}
                     <div className="payment-icons">
                         <button className={paymentMethod === 'credit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('credit')}>
                         <i class="fa-solid fa-credit-card"></i> Credit Card

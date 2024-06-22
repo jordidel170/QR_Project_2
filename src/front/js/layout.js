@@ -57,7 +57,7 @@ const Layout = () => {
 
 
     return (
-        <div>
+        <>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     {/* <Navbar /> */}
@@ -83,7 +83,7 @@ const Layout = () => {
                     {/* <Footer /> */}
                 </ScrollToTop>
             </BrowserRouter>
-        </div>
+          </>
     );
 
 };
