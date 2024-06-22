@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import "../../styles/mesas.css";
 import iconoMesas from "../../img/icono-mesa.png";
 import iconoCanto from "../../img/barraCantoTransp.png";
 import iconoBarra from "../../img/barraVertTransp.png";
 import suelo from "../../img/suelo506.png";
+import { Context } from '../store/appContext';
 
 const Mesas = () => {
     const [mesas, setMesas] = useState([]);
@@ -15,6 +16,7 @@ const Mesas = () => {
     const [anchoSala, setAnchoSala] = useState(15);
     const [tempLargoSala, setTempLargoSala] = useState('10');
     const [tempAnchoSala, setTempAnchoSala] = useState('15');
+    const {store, actions} = useContext(Context)
 
     const girarMesa = (idMesa) => {
         setAngulosRotacion((prevAngulos) => {
@@ -27,17 +29,21 @@ const Mesas = () => {
         });
     };
 
-    const agregarMesa = (icono) => {
+    
+    const agregarMesa = async(icono) => {
         const maxId = mesas.reduce((max, mesa) => Math.max(max, mesa.id), 0);
+       
         const nuevaMesa = {
             id: maxId + 1,
-            nombre: `${maxId + 1}`,
+            table_number: `${maxId + 1}`,
             posicion: { x: 0, y: 10 },
             icono: icono,
         };
+        await actions.createNewTable(nuevaMesa.table_number)
         setMesas([...mesas, nuevaMesa]);
     };
 
+    
     const moverMesa = (id, nuevaPosicion) => {
         setMesas(mesas.map(mesa => {
             if (mesa.id === id) {
@@ -168,7 +174,7 @@ const Mesas = () => {
                                         position: 'absolute',
                                         left: mesa.posicion.x,
                                         top: mesa.posicion.y,
-                                        zIndex: parseInt(mesa.nombre.replace(/\D/g, '')) || 1
+                                        zIndex: parseInt(mesa.table_number.replace(/\D/g, '')) || 1
                                     }}
                                     className="mesa-container"
                                 >

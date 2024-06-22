@@ -55,7 +55,7 @@ const onSave = async(updatedFormData) => {
       newProductData.image = imageUrl; 
     }
 
-await actions.uptadeProductById(productId, updatedFormData.name, updatedFormData.price, updatedFormData.description, imageUrl, updatedFormData.category)
+await actions.updateProductById(productId, updatedFormData.name, updatedFormData.price, updatedFormData.description, imageUrl, updatedFormData.category)
 
   setIsUpdated(true)
   setProductId(""),

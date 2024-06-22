@@ -8,6 +8,7 @@ import { dispatcherOrder } from "./dispatcherOrder";
 
 
 import signupDispatcher from "./dispatcherSignup";
+import newTableDispatcher from "./dispatcherTable";
 
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -223,7 +224,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return data;
             },
 
-            uptadeProductById: async(id, name, price, description, image, category) => {
+            updateProductById: async(id, name, price, description, image, category) => {
                 const data = await productDispatcher.put(id, name, price, description, image, category)
                 return data;
             },
@@ -235,6 +236,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             deleteProduct: async(id) => {
                 const data = await deleteProductDispatcher(id);
+                return data;
+            },
+
+            createNewTable: async(table_number) => {
+                const data = await newTableDispatcher(table_number);
                 return data;
             }
 		
