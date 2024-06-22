@@ -32,7 +32,7 @@ export const OrderSummary = () => {
 
         actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
         actions.clearCart();
-        navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`)
+        navigate(`/app/restaurants/${restaurantId}/tables/${tableId}/order-success`)
      
               
                 
@@ -97,7 +97,7 @@ export const OrderSummary = () => {
                     </div>
                 </div>
                 <div className='order-finish'>
-                <Link to={`/restaurants/${restaurantId}/tables/${tableId}/menu`}>
+                <Link to={`/app/restaurants/${restaurantId}/tables/${tableId}/menu`}>
                     <button className="button1">Back to Menu</button>
                 </Link>
                     <button className='button1' onClick={handleFinishOrder}>Finish</button>
