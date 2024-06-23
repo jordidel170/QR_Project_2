@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState} from 'react'
 import "../../styles/adminMenuView.css"
 import CategoriesButton from '../component/categoriesButton';
 import ProductsCard from '../component/ProductsCard';
 import EditMenuModal from '../component/EditMenuModal';
 import { Context } from '../store/appContext';
 import CreateProduct from '../component/CreateProduct';
+import Buttondashboard from '../component/Buttondashboard';
+import { Link } from 'react-router-dom';
 
 
   const adminMenuView = () => {
@@ -30,7 +32,7 @@ import CreateProduct from '../component/CreateProduct';
 
     useEffect( () => {
     fetchProduct()
-  
+  console.log(openModal)
     },[openModal, productId])
   
     const handleDeleteProduct = async (id) => {
@@ -48,7 +50,8 @@ import CreateProduct from '../component/CreateProduct';
         </div>
         <div className='editModalMenu'>
      {productId === "" ? <></> : <EditMenuModal filteredItems={filteredItems} productId={productId} setProductId={setProductId} /> }
-     { openModal ? <CreateProduct handleCloseModal={handleCloseModal} /> : <></> }
+     { openModal ? <CreateProduct handleCloseModal={handleCloseModal} setOpenModal={setOpenModal} /> : <></> }
+     
         </div>
       </div>
      </div>

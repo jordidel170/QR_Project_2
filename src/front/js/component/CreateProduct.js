@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
 
-const CreateProduct = ({ handleCloseModal }) => {
+const CreateProduct = ({ handleCloseModal, setOpenModal}) => {
   const { store, actions } = useContext(Context);
   const [newProductData, setNewProductData] = useState({});
   const categoryName = ["Starters", "Mains", "Desserts", "Drinks"];
@@ -63,8 +63,10 @@ const CreateProduct = ({ handleCloseModal }) => {
       imageUrl,
       newProductData.category
     );
-
-    handleCloseModal();
+      setTimeout( () => {
+        setOpenModal(false)
+      },800)
+    // handleCloseModal();
   };
 
   const handleSubmit = (event) => {

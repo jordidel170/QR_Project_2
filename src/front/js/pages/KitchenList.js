@@ -38,7 +38,7 @@ export const KitchenList = () => {
     }
   }, [store.orders]);
 
-  // Set up interval to update elapsed times
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setElapsedTimes((prevElapsedTimes) => {
@@ -51,12 +51,12 @@ export const KitchenList = () => {
         });
         return updatedElapsedTimes;
       });
-    }, 1000); // Update every second
+    }, 1000); 
 
     return () => clearInterval(interval);
   }, [store.orders]);
 
-  // Format time in MM:SS
+ 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;

@@ -63,6 +63,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     .then(response => response.json())
                     .then(data => {
                         setStore({ ...store, menu: data });
+                        
                     })
                     .catch(error => console.error('Error fetching menu:', error));
             },
@@ -100,7 +101,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             
                         const result = await response.json();
                         setStore({ ...store, orders: [...store.orders, result] });
-                        console.log('Order created successfully:', result);
+                        console.log('Order created successfully2:', result);
                     } catch (error) {
                         console.error('Error:', error);
                         // alert('Error creating order. Please try again.');

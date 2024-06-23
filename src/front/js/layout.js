@@ -32,6 +32,7 @@ import Caja from "./pages/caja";
 import App from "./component/app";
 import AdminMenuView from './pages/adminMenuView';
 import EditMenuModal from "./component/EditMenuModal";
+import Navbarglobal from "./component/navbarglobal";
 
 
 
@@ -62,6 +63,7 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     {/* <Navbar /> */}
+                    <Navbarglobal />
                     <Routes>
 
                         <Route element ={<Login/>} path="/app/login"/>

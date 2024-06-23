@@ -15,7 +15,7 @@ const Dashboard = () => {
     const redirectToLogin = () => {
 		actions.handleLogOut();
 		// logOut()
-		navigate("/app/login")
+		Navigate("/app/login")
 	}
     return (
         <>
