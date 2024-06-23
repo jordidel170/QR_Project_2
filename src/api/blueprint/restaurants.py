@@ -6,10 +6,18 @@ from api.modelUser import User, db, Restaurant, Table, Menu, Order, OrderItem
 restaurants_bp = Blueprint('restaurants', __name__)
 
 @restaurants_bp.route('/restaurants', methods=['GET'])
-def get_restaurants():
+def get_all_restaurants():
     restaurants = Restaurant.query.all()
     return jsonify([restaurant.serialize() for restaurant in restaurants]), 200
 
+@restaurants_bp.route('/restaurants/<int:restaurant_id>', methods=['GET'])
+def get_restaurant(restaurant_id):
+    restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
+    if restaurant:
+        return jsonify(restaurant.serialize()), 200
+    else:
+        return jsonify({'error': 'Restaurant not found'}), 404
+    
 @restaurants_bp.route('/restaurants', methods=['POST'])
 def add_restaurant():
     data = request.json
@@ -157,8 +165,22 @@ def create_order(restaurant_id, table_id):
 
     return jsonify(order.serialize()), 201
 
+@restaurants_bp.route('/restaurants/<int:restaurant_id>/tables/<int:table_id>/orders/<int:order_id>', methods=['GET'])
+def get_order(restaurant_id, table_id, order_id):
+    order = Order.query.filter_by(id=order_id, restaurant_id=restaurant_id, table_id=table_id).first()
+    if order is None:
+        return jsonify({"error": "Order not found"}), 404
+
+    order_items = OrderItem.query.filter_by(order_id=order_id).all()
+    # items = [item.serialize() for item in order_items]
+
+    response = order.serialize()
+    # response['items'] = items
+
+    return jsonify(response), 200
+
 @restaurants_bp.route('/restaurants/<int:restaurant_id>/orders', methods=['GET'])
-def get_order(restaurant_id):
+def get_all_order(restaurant_id):
     orders = Order.query.filter_by(restaurant_id=restaurant_id).all()
     return jsonify([order.serialize() for order in orders]), 200
 

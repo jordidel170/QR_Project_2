@@ -152,7 +152,7 @@ export const OrderSummary = () => {
       totalPrice
     );
     actions.clearCart();
-    navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`);
+    navigate(`/app/restaurants/${restaurantId}/tables/${tableId}/order-success`);
   };
   console.log("store.cart: ", store.cart);
 
@@ -217,47 +217,34 @@ export const OrderSummary = () => {
           ></textarea>
         </div>
 
-        <div className="payment-method">
-          <label htmlFor="payment">Payment Method:</label>
-          <div className="payment-icons">
-            <button
-              className={paymentMethod === "credit" ? "selected" : ""}
-              onClick={() => handlePaymentMethodChange("credit")}
-            >
-              <i class="fa-solid fa-credit-card"></i> Credit Card
-            </button>
-            <button
-              className={paymentMethod === "debit" ? "selected" : ""}
-              onClick={() => handlePaymentMethodChange("debit")}
-            >
-              <i class="fa-solid fa-building-columns"></i> Debit Card
-            </button>
-            <button
-              className={paymentMethod === "paypal" ? "selected" : ""}
-              onClick={() => handlePaymentMethodChange("paypal")}
-            >
-              <i class="fa-brands fa-paypal"></i> PayPal
-            </button>
-            <button
-              className={paymentMethod === "cash" ? "selected" : ""}
-              onClick={() => handlePaymentMethodChange("cash")}
-            >
-              <i class="fa-solid fa-money-bill"></i> Pay at Cashier
-            </button>
-          </div>
-        </div>
-        <div className="order-finish">
-          <button onClick={actions.clearCart} className="button1">
-            Clear
-          </button>
-          <button className="button1" onClick={handleFinishOrder}>
-            Finish
-          </button>
-        </div>
-      </div>
-      <Footer />
-    </>
-  );
+                <div className="payment-method">
+                    <label htmlFor="payment">Payment Method:</label>
+                    <div className="payment-icons">
+                        <button className={paymentMethod === 'credit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('credit')}>
+                        <i class="fa-solid fa-credit-card"></i> Credit Card
+                        </button>
+                        <button className={paymentMethod === 'debit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('debit')}>
+                        <i class="fa-solid fa-building-columns"></i> Debit Card
+                        </button>
+                        <button className={paymentMethod === 'paypal' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('paypal')}>
+                        <i class="fa-brands fa-paypal"></i> PayPal
+                        </button>
+                        <button className={paymentMethod === 'cash' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('cash')}>
+                        <i class="fa-solid fa-money-bill"></i> Pay at Cashier
+                        </button>
+                    </div>
+                </div>
+                <div className='order-finish'>
+                <Link to={`/app/restaurants/${restaurantId}/tables/${tableId}/menu`}>
+                    <button className="button1">Back to Menu</button>
+                </Link>
+                    <button className='button1' onClick={handleFinishOrder}>Finish</button>
+                </div>
+            </div>
+            <Footer />
+        </>
+    );
+
 };
 
 OrderSummary.propTypes = {

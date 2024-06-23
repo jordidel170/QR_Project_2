@@ -1,4 +1,8 @@
+
+import { IoRestaurantSharp } from "react-icons/io5";
+
 import deleteProductDispatcher from "./dispatcherDeleteProduct";
+
 import loginDispatcher from "./dispatcherLogin";
 
 import newProductDispatcher from "./dispatcherNewProduct";
@@ -19,6 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			register: null,
 			menu: [],
             cart: [],
+            restaurant: [],
             totalAmount: 0,
             orders: []
 		},
@@ -79,23 +84,45 @@ const getState = ({ getStore, getActions, setStore }) => {
                 };
         
                 try {
-                    const response = await fetch(`http://127.0.0.1:5000/app/sessions/${tableId}/products`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        CORS:'Access-Control-Allow-Origin',
-                        body: JSON.stringify(orderData)
-                    });
-        
-                    if (!response.ok) {
-                        throw new Error('Failed to create order');
+                    const responseSession = await fetch(`http://127.0.0.1:5000/app/sessions/${tableId}/products`, 
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            CORS:'Access-Control-Allow-Origin',
+                            body: JSON.stringify(orderData)
+                        });
+            
+                        if (!response.ok) {
+                            throw new Error('Failed to create order');
+                        }
+            
+                        const result = await response.json();
+                        setStore({ ...store, orders: [...store.orders, result] });
+                        console.log('Order created successfully:', result);
+                    } catch (error) {
+                        console.error('Error:', error);
+                        // alert('Error creating order. Please try again.');
                     }
-        
-                    const result = await response.json();
-                    setStore({ ...store, orders: [...store.orders, result] });
-                    console.log('Order created successfully:', result);
-                } catch (error) {
+                try {const response = await fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}/tables/${tableId}/orders`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    CORS:'Access-Control-Allow-Origin',
+                    body: JSON.stringify(orderData)
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to create order');
+                }
+    
+                const result = await response.json();
+                setStore({ ...store, orders: [...store.orders, result] });
+                console.log('Order created successfully:', result);
+            }
+                     catch (error) {
                     console.error('Error:', error);
                     // alert('Error creating order. Please try again.');
                 }
@@ -104,13 +131,20 @@ const getState = ({ getStore, getActions, setStore }) => {
             getOrder: async (restaurantId) => {
                 const data = await dispatcherOrder.get(restaurantId);
 				const store = getStore();
+                const ordersWithTimestamp = store.orders.map(order => ({
+                    ...order,
+                    timestamp: new Date().toISOString() 
+                  }));
+            
+                setStore({ orders: ordersWithTimestamp });
 				setStore({ ...store,orders: data}); 
 				console.log(data);
             },
 
+
             updateOrder: async (restaurantId, tableId, orderId, updatedOrderData) => {
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/restaurants/${restaurantId}/tables/${tableId}/orders/${orderId}`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}/tables/${tableId}/orders/${orderId}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
@@ -136,7 +170,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             deleteOrder: async (restaurantId, tableId, orderId) => {
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/restaurants/${restaurantId}/tables/${tableId}/orders/${orderId}`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}/tables/${tableId}/orders/${orderId}`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json'
@@ -157,6 +191,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                     // alert('Error deleting order. Please try again.');
                 }
             },
+
+            removeOrderFromList: (orderId) => {
+				const store = getStore();
+				const updatedOrders = store.orders.filter(order => order.id !== orderId);
+				setStore({ ...store, orders: updatedOrders });
+			},
        
             addToCart: (meal, quantity = 1) => {
                 const store = getStore()
@@ -210,13 +250,23 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ ...store, cart: [], totalAmount: 0 });
             },
 
+
+            getRestaurant: (restaurantId) => {
+                const store = getStore()
+                fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        setStore({ ...store, restaurant: data });
+                    })
+                    .catch(error => console.error('Error fetching menu:', error))},
+
             getProduct: async() => {
               const data = await productDispatcher.get();
             //   console.log(data)
                 // const store = getStore();
                 // setStore({...store, data})
             return data
-            }, 
+            },
 
             getProductById: async (id) => {
                 const data = await productDispatcher.getById(id)
@@ -277,7 +327,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return data;
               }
 		}
-	};
+	}
 };
+
 
 export default getState;

@@ -10,6 +10,7 @@ import { Menu } from "./pages/menu";
 import { OrderSummary } from "./pages/OrderSummary";
 import { OrderSuccess } from "./pages/OrderSuccess";
 import { KitchenList } from "./pages/KitchenList";
+import { GenerateQR } from "./pages/GenerateQR";
 import { AboutUs } from "./pages/AboutUs";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
@@ -76,7 +77,8 @@ const Layout = () => {
                         <Route element={<AboutUs />} path="/about-us" />
 
 
-                        <Route element={<KitchenList />} path="/restaurants/:restaurantId/orders"  />
+                        <Route element={<GenerateQR />} path="/generate-qr" />
+                        <Route element={<KitchenList />} path="app/restaurants/:restaurantId/orders"  />
 
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

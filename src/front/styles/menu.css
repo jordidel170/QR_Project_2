@@ -1,5 +1,6 @@
 body {
     background-image: none; 
+    background-color: white !important; 
 }
 .summary {
     text-align: center;
@@ -50,6 +51,7 @@ body {
     width: 90%;
     margin: 2rem auto;
     animation: meals-appear 1s ease-out forwards;
+    background-color: white;
   }
   
   .meals ul {
