@@ -7,11 +7,12 @@ const sesionsDispatcher = {
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-      }
+      },
+      console.log(response)
     );
 
     if (!response.ok) throw Error("There are no products");
-
+    
     if (response.status === 401) {
       throw "Invalid credentials";
     } else if (response.status === 400) {

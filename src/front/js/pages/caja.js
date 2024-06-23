@@ -27,7 +27,8 @@ const Caja = () => {
     const [angulosRotacion, setAngulosRotacion] = useState({});
     const [mostrarCarta, setMostrarCarta] = useState(false);
     const {store, actions} = useContext(Context)
-    const [activeSession, setActiveSession] = useState({"id_table":1, "products": [{"product_name":""}]})
+    // const [activeSession, setActiveSession] = useState({"id_table":1, "products": [{"product_name":""}]})
+    const[activeSession, setActiveSession] = useState({ id_table: 1, products: [] })
     const recuperarEstado = () => {
         const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
         const ancho = JSON.parse(localStorage.getItem('anchoSala')) || '600px';
@@ -97,11 +98,18 @@ const Caja = () => {
                                     <h2>Numero de Mesa: {activeSession.id_table}</h2>
                                     <h2>Productos:</h2>
                                     <ul>
-                                    {activeSession.products.map( (product) => {
+                                    {/* {activeSession.products.map( (product) => {
                                        
                                        return <li>{product.product_name} x {product.quantity}</li> 
                                         // console.log(product.product_name)
-                                    })}
+                                    })} */}
+                                      {activeSession.products && activeSession.products.length > 0 ? (
+                                        activeSession.products.map((product, index) => (
+                                            <li key={index}>{product.product_name} x {product.quantity}</li>
+                                        ))
+                                    ) : (
+                                        <li>No hay productos</li>
+                                    )}
                                     </ul>
                                    
                                     <h2></h2>

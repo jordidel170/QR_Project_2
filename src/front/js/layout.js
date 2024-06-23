@@ -80,7 +80,7 @@ const Layout = () => {
 
 
                         <Route element={<GenerateQR />} path="/generate-qr" />
-                        <Route element={<KitchenList />} path="app/restaurants/:restaurantId/orders"  />
+                        <Route element={<KitchenList />} path="/restaurants/:restaurantId/orders"  />
 
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

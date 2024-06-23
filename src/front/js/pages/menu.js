@@ -64,13 +64,13 @@ export const Menu = () => {
       return;
     } else if (!localStorage.getItem("sessionId")) {
       let clientId = localStorage.getItem("clientId");
-      const session = await actions.assingClient(tableId, clientId);
+      const session = await actions.assingClient(tableId, clientId); 
+      console.log(session)
       localStorage.setItem("sessionId", session.id_session);
     }
   };
   useEffect(() => {
     actions.getMenu();
-    console.log(actions.getMenu)
     createClient();
     assingClientToTable();
   }, [tableId, client]);

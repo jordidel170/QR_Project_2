@@ -96,7 +96,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         });
             
                         if (!response.ok) {
-                            throw new Error('Failed to create order');
+                            throw new Error('Failed to create session');
                         }
             
                         const result = await response.json();
@@ -303,8 +303,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const data = await sesionsDispatcher.create_client(name);
                 return data;
               },
-              assingClient: async (tableId, clientId) => {
-                const data = await sesionsDispatcher.assing_client(tableId, clientId);
+              assingClient: async (idTable, idClient) => {
+                const data = await sesionsDispatcher.assing_client(idTable, idClient);
                 console.log(data);
         
                 return data;

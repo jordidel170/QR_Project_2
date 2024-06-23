@@ -40,7 +40,7 @@ export const OrderSummary = () => {
       totalPrice
     );
     actions.clearCart();
-    navigate(`/app/restaurants/${restaurantId}/tables/${tableId}/order-success`);
+    navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`);
   };
   console.log("store.cart: ", store.cart);
 
