@@ -93,12 +93,12 @@ const sesionsDispatcher = {
     return await response.json();
   },
 
-get_session_active: async (tableId) => {
-  const response = await fetch(`http://127.0.0.1:5000/app/sessions/${tableId}/active`, {
+get_session_active: async (table_number) => {
+  const response = await fetch(`http://127.0.0.1:5000/app/sessions/${table_number}/active`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
-  return await response.json();
+  return  response.json();
 }
 };
 

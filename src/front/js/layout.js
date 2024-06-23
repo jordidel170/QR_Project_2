@@ -42,7 +42,7 @@ const ProtectedRoute = ({ children, role }) => {
     return <Navigate to="/app/login" />;
   }
   const decodedToken = jwtDecode(token);
-  console.log(decodedToken.roles);
+  // console.log(decodedToken.roles);
   if (role && decodedToken.roles !== role) {
     return <Navigate to="/app/home" />;
   }

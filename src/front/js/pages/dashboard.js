@@ -12,11 +12,8 @@ import { Context } from "../store/appContext";
 
 const Dashboard = () => {
     const {actions, store} = useContext(Context)
-    const redirectToLogin = () => {
-		actions.handleLogOut();
-		// logOut()
-		Navigate("/app/login")
-	}
+   
+    
     return (
         <>
             <section>
@@ -59,7 +56,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-                <button className="containerHome" onClick={() => redirectToLogin() }>Log out</button>
+                <button className="containerHome" onClick={() => actions.handleLogOut() }>Log out</button>
             </section>
            
 		

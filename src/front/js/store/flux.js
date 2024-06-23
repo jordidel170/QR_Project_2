@@ -322,8 +322,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return data;
               },
 
-              getActiveSessionTable: async(tableId) => {
-                const data = await sesionsDispatcher.get_session_active(tableId);
+              getActiveSessionTable: async(table_number) => {
+                const data = await sesionsDispatcher.get_session_active(table_number);
                 console.log("dato en flux getActiveSessionTable", data);
                 return data;
               }

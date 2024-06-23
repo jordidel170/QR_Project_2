@@ -36,7 +36,7 @@ const Caja = () => {
         const angulosGuardados = JSON.parse(localStorage.getItem('angulosRotacion')) || {};
 
 
-        console.log(mesas, angulosRotacion, largo, ancho);
+        // console.log(mesas, angulosRotacion, largo, ancho);
         setLargoSala(largo);
         setAnchoSala(ancho);
         setMesas(mesasGuardadas);
@@ -72,14 +72,14 @@ const Caja = () => {
         aplicarMedidas();
     }, [largoSala, anchoSala]);
 
-    const handleActiveSession = async(tableId) => {
-       const data = await actions.getActiveSessionTable(tableId)
+    const handleActiveSession = async(table_number) => {
+       const data = await actions.getActiveSessionTable(table_number)
     //    console.log(data)
       setActiveSession(data)
     }
     
     useEffect( () => {
-        console.log(activeSession)
+        // console.log(activeSession)
     }, [activeSession])
 
     return (
@@ -95,7 +95,7 @@ const Caja = () => {
                         <div className="ticket_table">
                             {
                                 <div>
-                                    <h2>Numero de Mesa: {activeSession.id_table}</h2>
+                                    <h2>Numero de Mesa: {activeSession.table_number}</h2>
                                     <h2>Productos:</h2>
                                     <ul>
                                     {/* {activeSession.products.map( (product) => {
@@ -130,7 +130,8 @@ const Caja = () => {
                 </div>
                 {!mostrarCarta ? (
                 <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
-                    {mesas.map((mesa) => (
+                   { console.log(mesas[8],"hola")}
+                    {mesas.map((mesa) => ( 
                         <div
                             key={mesa.id}
                             style={{
@@ -142,7 +143,7 @@ const Caja = () => {
                             className="mesa-container"
                         onClick={() => handleActiveSession(mesa.id)}>
                             <img
-                                src={activeSession.status === 'active' && mesa.id === activeSession.id_table ? mesagreen : mesa.icono}
+                                src={activeSession.status === 'active' && mesa.table_number == activeSession.table_number ? mesagreen : mesa.icono}
                                 alt="Mesa"
                                 style={{
                                     width: '60px',
