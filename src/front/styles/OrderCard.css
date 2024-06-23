@@ -1,0 +1,61 @@
+.order-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    width: 250px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px; 
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .order-id {
+    font-weight: bold;
+  }
+  
+  .done-indicator {
+    font-weight: bold;
+    color: green;
+  }
+  .courses {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .category {
+    margin-bottom: 8px;
+  }
+  
+  .category-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .course {
+    display: flex;
+    align-items: center;
+  }
+  
+  .course-name {
+    font-weight: bold;
+    padding: 0.5rem;
+  }
+  
+  .course-name.completed {
+    text-decoration: line-through;
+    color: #999;
+  }
+  
+  .course-time {
+    color: #999;
+  }
+  .order-card.done {
+    background-color: #e6ffe6;
+    border-color: #b3ffb3;
+  }

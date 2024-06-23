@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    /* background: url(https://img.freepik.com/free-photo/freshness-plate-seafood-sushi-avocado-cucumber-rice-nori-generated-by-artificial-intelligence_25030-65595.jpg?t=st=1717675532~exp=1717679132~hmac=645bbe4f7f007a22d38dd98aeba7be1474df03b5c22d348c5dc2d7fc14930980&w=1060) no-repeat; */
+    background: url(https://img.freepik.com/free-photo/happy-waiter-holding-plates-with-food-looking-camera-while-serving-guests-restaurant_637285-1707.jpg?t=st=1717841689~exp=1717845289~hmac=7ed9b0e68289f0cc453f21f8f4d9997e65fb41889eb7c741e926c116d32fb059&w=900) no-repeat;
+    /* background: url(https://img.freepik.com/free-photo/golden-cutlery-with-textile-plate-dark-background-top-view_1220-6607.jpg?t=st=1717841257~exp=1717844857~hmac=6bc0961ad656d2f7a1c4f60b7226e436ad40190427c1266fb024acd87762399e&w=900) no-repeat; */
+    /* background: url(https://img.freepik.com/free-photo/dinner-table-with-bunch-green-oil-bottle-garlic-spoon-mixed-color-table_140725-86332.jpg?t=st=1717841286~exp=1717844886~hmac=6f432b948dbafbe122e68f8cbba5e1d51d0880d1faa5b7d1acefa351eabcf63f&w=900) no-repeat; */
+    /* background: url(https://img.freepik.com/free-photo/high-angle-friends-reading-menu-restaurant_23-2150384795.jpg?t=st=1717842826~exp=1717846426~hmac=b5cb84759c98f65d9f19739db585df24c1411fa67b56f0bd085e3aa0410cf1a1&w=900) no-repeat; */
+    background-position: center;
+    background-size: cover;
+}
+
+.container-dashboard{
+    background: rgba(255, 255, 255, 0.4);
+    position: relative;
+    width: 600px;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, .6);
+    border-radius: 20px;
+    height: 600px;
+}
+
+
+.container-dashboard h1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15%;
+    font-size: 2.6rem;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+}
+
+.iconos-dashboard {
+    position: relative;
+    height: 43%;
+    font-weight: bold;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.icono {
+    flex: 1 1 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,0 +1,173 @@
+
+.kitchen-list {
+  /* width: 100%;
+  height: 100%; */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  /* padding: 16px; */
+  padding-left: 3rem;
+  padding-right: 1rem;
+}
+
+.order-container {
+  /* background-color: #f1edde; */
+  border: 1px solid orange;
+  /* padding: 10px; */
+  position: relative;
+  
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  flex-basis: calc(20% - 32px); */
+  margin: 10px;
+  width: 280px;
+  border-radius: 25px;
+  /* min-height: 300px; */
+}
+
+.order-items-list {
+  padding-left: 0px;
+  min-height: 250px; 
+}
+.order-header {
+  background-color: orange; 
+  padding: 10px;
+  padding-bottom: 0px;
+  border-radius: 15px;
+}
+.order-header-up {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  /* background-color: rgb(233, 161, 7); */
+}
+.order-header-below{
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 10px;
+
+}
+.order-items-list {
+  list-style: none;
+  padding: 1rem;
+  margin: 0;
+}
+.order-item {
+  display: flex;
+  
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.order-item label {
+  display: flex;
+  align-items: center;
+}
+
+.order-item.completed {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.order-item input[type='checkbox'] {
+  margin-right: 5px;
+}
+/* .completed {
+  width: 10rem;
+} */
+
+.done-button {
+  padding: 10px;
+  /* margin-bottom: 1px; */
+  border: 1px solid orange;
+  background-color:orange;
+}
+.done-button.done {
+  background-color: rgb(255, 77, 0);
+  fill: white; 
+}
+.order-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.order-container.order-old{
+  background-color: rgb(231, 119, 119);
+}
+
+.name-quantity {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+/* .kitchen-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.order-container {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 10px;
+  padding: 10px;
+  width: 200px;
+  position: relative;
+  background-color: #f9f9f9;
+}
+
+.order-container.order-old {
+  background-color: #f8d7da;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.order-header h5 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.order-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.order-item {
+  margin: 5px 0;
+}
+
+.order-item label {
+  display: flex;
+  align-items: center;
+}
+
+.order-item input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.done-button {
+  width: 100%;
+  padding: 5px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+}
+
+.done-button.done {
+  background-color: #6c757d;
+} */
+/* 
+.done-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+} */

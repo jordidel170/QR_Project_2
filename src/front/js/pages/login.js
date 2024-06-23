@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate, Outlet } from "react-router-dom"
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
+import { jwtDecode } from "jwt-decode";
 
 
 const Login = () => {
@@ -17,15 +18,48 @@ const Login = () => {
 	const [token, setToken] = useState()
 	const [isMounted, setIsMounted] = useState(true)
 	
-	const handleLogin = async () => {
-        await actions.getTokenLogin(email, password);
-        // Check token after login attempt
-		const localStoraged = localStorage.getItem("token")
-        if (localStoraged) {
-            navigate("/app/home");
-			setToken(localStoraged)
-        } 
-    };
+	const handleLogin = async (event) => {
+		event.preventDefault();
+		
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+		if (!email || !password) {
+			alert("Todos los campos son obligatorios.");
+		} else if (!emailRegex.test(email)) {
+			alert("El email es incorrecto.");
+		} else if (password.length < 8 || password.length > 12) {
+			alert("La contraseña debe tener entre 8 y 12 caracteres.");
+		} else {
+			await actions.getTokenLogin(email, password);
+			const token = store.token
+			console.log(store.token)
+			// Check token after login attempt
+			
+			const decodedToken = jwtDecode(token);
+			const localStoraged = localStorage.getItem(token)
+
+			switch(decodedToken.roles){
+				case "admin" : 
+				navigate("/app/dashboard");
+				setToken(localStoraged)
+				break
+				case "cocina": 
+				navigate("/app/kitchenview");
+				setToken(localStoraged)
+				break
+				case "Restaurante": 
+				navigate("/app/caja");
+				setToken(localStoraged)
+				break
+				case "mesa1": 
+				navigate("/app/restaurants/1/tables/1/menu");
+				setToken(localStoraged)
+				break
+
+			}      
+				
+		}
+	};
 
     // useEffect(() => {
     //     actions.syncTokenLocalStorage();
@@ -54,16 +88,16 @@ const Login = () => {
 				<div className="formulario inputlogin">
 					{/* {store.token && store.token != "" && store.token != undefined ? navigate("/app/login/home") :(  */}
 						
-					<form action="#">
+					<form action="#" method="POST">
 						<h1>Iniciar Sesión</h1>
 						
 							<div className="input-container">
 								<i className="fa-solid fa-envelope"></i>
-								<input type="email" value={email} onChange={(event) => { setEmail(event.target.value); }} required></input>
+								<input type="text, email" value={email} onChange={(event) => { setEmail(event.target.value); }} required></input>
 								<label for="Email">Email</label>
 							</div>
 
-								<div className="input-container">
+								<div className="input-container password">
 								<i className={`fa-solid ${showPassword ? 'fa-lock-open' : 'fa-lock'}`} onClick={togglePasswordVisibility}></i>
 								<input type={showPassword ? "text" : "password"}  value={password} onChange={(event) => { setPassword(event.target.value); }} required></input>
 									<label for="Contraseña">Contraseña</label>

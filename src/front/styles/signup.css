@@ -27,7 +27,7 @@ section{
     backdrop-filter: blur(15px);
     border: 2px solid rgba(255, 255, 255, .6);
     border-radius: 20px;
-    height: 700px;
+    height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,7 +42,7 @@ section{
 
 .input-container{
     position: relative;
-    margin: 30px 0;
+    margin: 23px 0;
     width: 300px;
     border-bottom: 2px solid #fff;
     cursor: default;
@@ -57,7 +57,7 @@ section{
     position: absolute;
     top: 50%;
     left: 5px;
-    transform: translateY(-50%);
+    transform: translateY(-25%);
     color: #fff;
     font-size: 1rem;
     pointer-events: none;
@@ -198,11 +198,15 @@ button:hover{
 
 .register-button a {
     font-weight: 700;
-    color: white;
+    color: lightgray;
 }
 
 .register-button a:hover{
-    color: black;
+    color: white;
+}
+
+.register-button p{
+    color: #fff;
 }
 
 .restaurant-dropdown {

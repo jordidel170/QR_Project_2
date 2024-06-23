@@ -1,10 +1,16 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
 
-from api.modelUser import db, User
+# from flask import Flask, request, jsonify, url_for, Blueprint
+# from .modelUser import db, Table, Restaurant, Menu
+
+import io
+import qrcode
+from flask import Flask, request, jsonify, url_for, Blueprint, send_file
+from api.modelUser import db, User, Table, Restaurant, Menu, Order, OrderItem
 from api.utils import generate_sitemap, APIException
+
 
 
 
@@ -21,4 +27,5 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
 

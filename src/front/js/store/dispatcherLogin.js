@@ -1,10 +1,6 @@
 import React from 'react'
 
 
-// Desde este dispatcher se hace la llamada fetch al (lo que debería ser) la base de datos, hace un request y a través del body se pasa la info a confirmar, 
-// si está confirmada regresa el token.      
-// Se le pasa el email y el password como argumento para indicar que es lo que va a recibir como parametro. 
-
 const loginDispatcher = async (email, password) => {
     const response = await fetch(`http://127.0.0.1:5000/app/login`, { 
          method: "POST",
@@ -27,7 +23,7 @@ const loginDispatcher = async (email, password) => {
     // Guarda el token en el LocalStorage
     // También deberías almacenar el usuario en la store utilizando la función setItem
     localStorage.setItem("token", data.token);
-    console.log(data)
+//     console.log(data.access_token)
     return data
 }
 
