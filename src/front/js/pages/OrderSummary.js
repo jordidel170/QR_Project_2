@@ -24,15 +24,28 @@ export const OrderSummary = () => {
     const handlePaymentMethodChange = (method) => {
         setPaymentMethod(method);
     };
-    const handleFinishOrder = () => {
+    const handleFinishOrder = async() => {
         if (!paymentMethod) {
             alert('Please choose your payment method!');
             return;
         }
 
-        actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
-        actions.clearCart();
-        navigate(`/app/restaurants/${restaurantId}/tables/${tableId}/order-success`)
+        try {
+            const orderResult = await actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
+        // console.log('Order result:', orderResult);
+        if (orderResult && orderResult.id) {
+            const orderId = orderResult.id;
+            console.log('Order ID:', orderId);
+            const invoiceResult = await actions.createInvoice(restaurantId, tableId, orderId);
+            actions.clearCart();
+            navigate(`/app/restaurants/${restaurantId}/tables/${tableId}/order-success`);
+        } else {
+            throw new Error('Order result is undefined or missing the order ID');
+        }
+        } catch (error) {
+            console.error('Error finishing order:', error);
+            alert('Error finishing order. Please try again.');
+        }
      
               
                 
