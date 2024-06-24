@@ -16,59 +16,61 @@ import dispatcherTable from "./dispatcherTable";
 import sesionsDispatcher from "./dispatcherSesions";
 
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-            product:[],
-			token: null,
-			register: null,
-			menu: [],
+    return {
+        store: {
+            product: [],
+            token: null,
+            register: null,
+            menu: [],
             cart: [],
             restaurant: [],
             totalAmount: 0,
             orders: []
-		},
-		actions: {
-		
-			
+        },
+        actions: {
+
+
             getTokenLogin: async (email, password) => {
-                const {access_token} = await loginDispatcher(email, password);
+                const { access_token } = await loginDispatcher(email, password);
                 if (access_token) {
                     localStorage.setItem("token", access_token);
-                    setStore({ token: access_token })}},
-			
-			syncTokenLocalStorage: () => {
-				const token = localStorage.getItem("token");
-					if (token) {
-					setStore({ token: token });
-						}
-					},
+                    setStore({ token: access_token })
+                }
+            },
 
-			handleLogOut: () => {
-				localStorage.removeItem("token")
-				console.log("Loging out")
-				const store = setStore()
-				setStore({...store, token: null})
-			},
-			
-			getUserRegister: async(restaurantName,firstName, LastName,email, password) => {
-				const data = await signupDispatcher(restaurantName,firstName, LastName, email,password);
-				console.log(data)
-				return data;
+            syncTokenLocalStorage: () => {
+                const token = localStorage.getItem("token");
+                if (token) {
+                    setStore({ token: token });
+                }
+            },
 
-			},
+            handleLogOut: () => {
+                localStorage.removeItem("token")
+                console.log("Loging out")
+                const store = setStore()
+                setStore({ ...store, token: null })
+            },
 
-			getMenu: () => {
+            getUserRegister: async (restaurantName, firstName, LastName, email, password) => {
+                const data = await signupDispatcher(restaurantName, firstName, LastName, email, password);
+                console.log(data)
+                return data;
+
+            },
+
+            getMenu: () => {
                 const store = getStore()
                 fetch(`http://127.0.0.1:5000/app/products`)
                     .then(response => response.json())
                     .then(data => {
                         setStore({ ...store, menu: data });
-                        
+
                     })
                     .catch(error => console.error('Error fetching menu:', error));
             },
 
-            createOrder: async(restaurantId, tableId, comment, paymentMethod, totalPrice) => {
+            createOrder: async (restaurantId, tableId, comment, paymentMethod, totalPrice) => {
                 const store = getStore()
                 const orderData = {
                     restaurant_id: restaurantId,
@@ -83,47 +85,48 @@ const getState = ({ getStore, getActions, setStore }) => {
                         price: meal.price,
                     }))
                 };
-        
+
                 try {
-                    const responseSession = await fetch(`http://127.0.0.1:5000/app/sessions/${tableId}/products`, 
+                    const responseSession = await fetch(`http://127.0.0.1:5000/app/sessions/${tableId}/products`,
                         {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            CORS:'Access-Control-Allow-Origin',
+                            CORS: 'Access-Control-Allow-Origin',
                             body: JSON.stringify(orderData)
                         });
-            
-                        if (!response.ok) {
-                            throw new Error('Failed to create session');
-                        }
-            
-                        const result = await response.json();
-                        setStore({ ...store, orders: [...store.orders, result] });
-                        console.log('Order created successfully2:', result);
-                    } catch (error) {
-                        console.error('Error:', error);
-                        // alert('Error creating order. Please try again.');
+
+                    if (!response.ok) {
+                        throw new Error('Failed to create session');
                     }
-                try {const response = await fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}/tables/${tableId}/orders`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    CORS:'Access-Control-Allow-Origin',
-                    body: JSON.stringify(orderData)
-                });
-    
-                if (!response.ok) {
-                    throw new Error('Failed to create order');
+
+                    const result = await response.json();
+                    setStore({ ...store, orders: [...store.orders, result] });
+                    console.log('Order created successfully2:', result);
+                } catch (error) {
+                    console.error('Error:', error);
+                    // alert('Error creating order. Please try again.');
                 }
-    
-                const result = await response.json();
-                setStore({ ...store, orders: [...store.orders, result] });
-                console.log('Order created successfully:', result);
-            }
-                     catch (error) {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}/tables/${tableId}/orders`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        CORS: 'Access-Control-Allow-Origin',
+                        body: JSON.stringify(orderData)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to create order');
+                    }
+
+                    const result = await response.json();
+                    setStore({ ...store, orders: [...store.orders, result] });
+                    console.log('Order created successfully:', result);
+                }
+                catch (error) {
                     console.error('Error:', error);
                     // alert('Error creating order. Please try again.');
                 }
@@ -131,15 +134,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             getOrder: async (restaurantId) => {
                 const data = await dispatcherOrder.get(restaurantId);
-				const store = getStore();
+                const store = getStore();
                 const ordersWithTimestamp = store.orders.map(order => ({
                     ...order,
-                    timestamp: new Date().toISOString() 
-                  }));
-            
+                    timestamp: new Date().toISOString()
+                }));
+
                 setStore({ orders: ordersWithTimestamp });
-				setStore({ ...store,orders: data}); 
-				console.log(data);
+                setStore({ ...store, orders: data });
+                console.log(data);
             },
 
 
@@ -150,14 +153,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        CORS:'Access-Control-Allow-Origin',
+                        CORS: 'Access-Control-Allow-Origin',
                         body: JSON.stringify(updatedOrderData)
                     });
-            
+
                     if (!response.ok) {
                         throw new Error('Failed to update order');
                     }
-            
+
                     const result = await response.json();
                     const store = getStore();
                     const updatedOrders = store.orders.map(order => order.id === orderId ? result : order);
@@ -176,13 +179,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        CORS:'Access-Control-Allow-Origin',
+                        CORS: 'Access-Control-Allow-Origin',
                     });
-            
+
                     if (!response.ok) {
                         throw new Error('Failed to delete order');
                     }
-            
+
                     const store = getStore();
                     const updatedOrders = store.orders.filter(order => order.id !== orderId);
                     setStore({ ...store, orders: updatedOrders });
@@ -194,11 +197,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             removeOrderFromList: (orderId) => {
-				const store = getStore();
-				const updatedOrders = store.orders.filter(order => order.id !== orderId);
-				setStore({ ...store, orders: updatedOrders });
-			},
-       
+                const store = getStore();
+                const updatedOrders = store.orders.filter(order => order.id !== orderId);
+                setStore({ ...store, orders: updatedOrders });
+            },
+
             addToCart: (meal, quantity = 1) => {
                 const store = getStore()
                 const existingItemIndex = store.cart.findIndex(item => item.id === meal.id);
@@ -209,7 +212,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({ ...store, cart: updatedCart });
                     console.log(store.cart)
                 } else {
-                    const updatedCart = [...store.cart, { ...meal, quantity}];
+                    const updatedCart = [...store.cart, { ...meal, quantity }];
                     setStore({ ...store, cart: updatedCart });
                     console.log(store.cart)
                 }
@@ -259,14 +262,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                     .then(data => {
                         setStore({ ...store, restaurant: data });
                     })
-                    .catch(error => console.error('Error fetching menu:', error))},
+                    .catch(error => console.error('Error fetching menu:', error))
+            },
 
-            getProduct: async() => {
-              const data = await productDispatcher.get();
-            //   console.log(data)
-                // const store = getStore();
-                // setStore({...store, data})
-            return data
+            getProduct: async () => {
+                const data = await productDispatcher.get();
+                return data
             },
 
             getProductById: async (id) => {
@@ -275,7 +276,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return data;
             },
 
-            updateProductById: async(id, name, price, description, image, category) => {
+            updateProductById: async (id, name, price, description, image, category) => {
                 const data = await productDispatcher.put(id, name, price, description, image, category)
                 return data;
             },
@@ -285,50 +286,57 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return data;
             },
 
-            deleteProduct: async(id) => {
+            deleteProduct: async (id) => {
                 const data = await deleteProductDispatcher(id);
                 return data;
             },
 
-            createNewTable: async(table_number) => {
+            createNewTable: async (table_number) => {
                 const data = await dispatcherTable.create_table(table_number);
                 return data;
             },
 
-            delete_table: async(table_number) => {
+            delete_table: async (table_number) => {
                 const data = await dispatcherTable.delete_table(table_number)
                 return data;
             },
             createClient: async (name) => {
                 const data = await sesionsDispatcher.create_client(name);
                 return data;
-              },
-              assingClient: async (idTable, idClient) => {
+            },
+            assingClient: async (idTable, idClient) => {
                 const data = await sesionsDispatcher.assing_client(idTable, idClient);
                 console.log(data);
-        
+
                 return data;
-              },
-              getSessions: async () => {
+            },
+            getSessions: async () => {
                 const data = await sesionsDispatcher.get();
                 return data;
-              },
-              addProductToTable: async (tableId, items) => {
+            },
+
+            addProductToTable: async (tableId, items) => {
                 const data = await sesionsDispatcher.add_product_to_session(
-                  tableId,
-                  items
+                    tableId,
+                    items
                 );
                 console.log("dato en flux addProductToTable: ", data);
                 return data;
-              },
+            },
 
-              getActiveSessionTable: async(table_number) => {
+            getActiveSessionTable: async (table_number) => {
                 const data = await sesionsDispatcher.get_session_active(table_number);
                 console.log("dato en flux getActiveSessionTable", data);
                 return data;
-              }
-		}
-	}
+            },
+
+            getActiveSessionList: async () => {
+                const data = await sesionsDispatcher.getActiveSessions();
+                console.log("dato en flux getAllActiveSessions", data);
+                return data;
+            }
+        }
+    }
 };
 
 

@@ -69,7 +69,7 @@ const sesionsDispatcher = {
     // console.log(data)
     return data;
   },
-  get: async () => {
+  getActiveSessions: async () => {
     const response = await fetch(`http://127.0.0.1:5000/app/sessions`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
