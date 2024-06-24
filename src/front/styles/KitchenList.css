@@ -8,21 +8,22 @@
   /* padding: 16px; */
   padding-left: 3rem;
   padding-right: 1rem;
+  background-color: rgb(58, 53, 53);
 }
 
 .order-container {
   /* background-color: #f1edde; */
-  border: 1px solid orange;
+  /* border: 1px solid orange; */
   /* padding: 10px; */
   position: relative;
-  
+  background-color: white;
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   flex-basis: calc(20% - 32px); */
   margin: 10px;
   width: 280px;
-  border-radius: 25px;
+  border-radius: 5px;
   /* min-height: 300px; */
 }
 
@@ -31,22 +32,19 @@
   min-height: 250px; 
 }
 .order-header {
-  background-color: orange; 
+  background-color: #ed4e14; 
   padding: 10px;
   padding-bottom: 0px;
-  border-radius: 15px;
+  border-radius: 5px;
 }
 .order-header-up {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
-  /* background-color: rgb(233, 161, 7); */
 }
 .order-header-below{
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 10px;
-
+  margin: auto;
+  width: 29%;
 }
 .order-items-list {
   list-style: none;
@@ -73,15 +71,11 @@
 .order-item input[type='checkbox'] {
   margin-right: 5px;
 }
-/* .completed {
-  width: 10rem;
-} */
 
 .done-button {
   padding: 10px;
-  /* margin-bottom: 1px; */
-  border: 1px solid orange;
-  background-color:orange;
+  background-color: #ed4e14; 
+  margin-bottom: 12px;
 }
 .done-button.done {
   background-color: rgb(255, 77, 0);
