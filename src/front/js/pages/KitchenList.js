@@ -38,7 +38,7 @@ export const KitchenList = () => {
     }
   }, [store.orders]);
 
-  // Set up interval to update elapsed times
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setElapsedTimes((prevElapsedTimes) => {
@@ -51,12 +51,12 @@ export const KitchenList = () => {
         });
         return updatedElapsedTimes;
       });
-    }, 1000); // Update every second
+    }, 1000); 
 
     return () => clearInterval(interval);
   }, [store.orders]);
 
-  // Format time in MM:SS
+ 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
@@ -135,7 +135,7 @@ export const KitchenList = () => {
             </div>
             <ul className="order-items-list">
               {order.order_items.map((item) => (
-                <li key={item.id} className={`order-item ${completedItems[order.id][item.id] ? 'completed' : ''}`}>
+                <li key={item.id} className={`order-item ${completedItems[order.id]?.[item.id] ? 'completed' : ''}`}>
                   <div className='name-quantity'>
                   <span><b>{item.quantity}</b></span>
                   <span>{item.name}</span>
@@ -144,7 +144,7 @@ export const KitchenList = () => {
                   <label>
                     <input
                       type="checkbox"
-                      checked={completedItems[order.id][item.id] || false}
+                      checked={completedItems[order.id]?.[item.id] || false}
                       onChange={() => toggleItemCompleted(order.id, item.id)}
                     />
                     
