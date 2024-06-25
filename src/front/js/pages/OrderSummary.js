@@ -34,8 +34,9 @@ export const OrderSummary = () => {
         }
 
         try {
+            actions.addProductToTable(tableId, store.cart);
             const orderResult = await actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
-        // console.log('Order result:', orderResult);
+        console.log('Order result:', orderResult);
         if (orderResult && orderResult.id) {
             const orderId = orderResult.id;
             console.log('Order ID:', orderId);
@@ -70,47 +71,6 @@ export const OrderSummary = () => {
                 <>
                     <button className='trash-icon' onClick={() => actions.removeItem(meal.id)}>
                     <i className="fa-solid fa-trash fa-xs"></i>
-
-//   const handlePaymentMethodChange = (method) => {
-//     setPaymentMethod(method);
-//   };
-//   const handleFinishOrder = () => {
-//     if (!paymentMethod) {
-//       alert("Please choose your payment method!");
-//       return;
-//     }
-//     actions.addProductToTable(tableId, store.cart);
-//     actions.createOrder(
-//       restaurantId,
-//       tableId,
-//       comment,
-//       paymentMethod,
-//       totalPrice
-//     );
-//     actions.clearCart();
-//     navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`);
-//   };
-//   console.log("store.cart: ", store.cart);
-
-//   return (
-//     <>
-//       <Navbar />
-//       <div className="order-summary">
-//         <h2>Order Summary</h2>
-//         <ul>
-//           {store.cart.map((meal, index) => (
-//             <li key={index}>
-//               <div>{meal.name}</div>
-//               <div>x {meal.quantity}</div>
-//               <div className="butt">
-//                 {meal.quantity === 1 ? (
-//                   <>
-//                     <button
-//                       className="trash-icon"
-//                       onClick={() => actions.removeItem(meal.id)}
-//                     >
-//                       <i className="fa-solid fa-trash fa-xs"></i>
-
                     </button>
                     <button
                       className="butt1"
