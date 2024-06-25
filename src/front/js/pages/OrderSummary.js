@@ -42,7 +42,7 @@ export const OrderSummary = () => {
             console.log('Order ID:', orderId);
             const invoiceResult = await actions.createInvoice(restaurantId, tableId, orderId);
             actions.clearCart();
-            navigate(`/app/restaurants/${restaurantId}/tables/${tableId}/order-success`);
+            navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`);
         } else {
             throw new Error('Order result is undefined or missing the order ID');
         }
