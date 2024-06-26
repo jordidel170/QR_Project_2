@@ -35,7 +35,7 @@ import EditMenuModal from "./component/EditMenuModal";
 
 import { Invoice } from "./pages/Invoice";
 
-import Navbarglobal from "./component/Navbarglobal";
+import Navbarglobal from "./component/navbarglobal";
 
 
 

@@ -285,9 +285,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             getProduct: async () => {
                 const data = await productDispatcher.get();
-                //   console.log(data)
-                // const store = getStore();
-                // setStore({...store, data})
                 return data
             },
 
@@ -391,7 +388,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const data = await sesionsDispatcher.getActiveSessions();
                 console.log("dato en flux getAllActiveSessions", data);
                 return data;
-            }
+            },
+
+            
         }
     }
     

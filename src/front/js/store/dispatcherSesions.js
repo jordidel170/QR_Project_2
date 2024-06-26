@@ -12,7 +12,7 @@ const sesionsDispatcher = {
     );
 
     if (!response.ok) throw Error("There are no products");
-    
+
     if (response.status === 401) {
       throw "Invalid credentials";
     } else if (response.status === 400) {
@@ -93,13 +93,27 @@ const sesionsDispatcher = {
     return await response.json();
   },
 
-get_session_active: async (table_number) => {
-  const response = await fetch(`http://127.0.0.1:5000/app/sessions/${table_number}/active`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
-  return  response.json();
-}
+  get_session_active: async (table_number) => {
+    const response = await fetch(
+      `http://127.0.0.1:5000/app/sessions/${table_number}/active`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    return response.json();
+  },
+
+  close_session: async (tableId) => {
+    const reqBody = {
+      table_number: table_number,
+    };
+    const response = await fetch(`http://127.0.0.1:5000/app/sessions/${tableId}/close`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reqBody)
+    })
+  }
 };
 
 export default sesionsDispatcher;
