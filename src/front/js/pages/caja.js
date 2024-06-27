@@ -16,7 +16,7 @@ import iconoEliminar from "../../img/eliminar.png";
 import iconoDash from "../../img/dash.png";
 import suelo from "../../img/suelo506.png";
 import { Context } from "../store/appContext";
-import mesagreen from "../../img/mesagreen.png"
+import Mesa from "../component/Mesa";
 
 
 
@@ -29,6 +29,7 @@ const Caja = () => {
     const { store, actions } = useContext(Context)
     const [activeSession, setActiveSession] = useState({ id_table: 1, products: [] })
     const [loading, setLoading] = useState(true)
+    const [selectedTable, setSelectedTable] = useState(null)
     const recuperarEstado = () => {
         const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
         const ancho = JSON.parse(localStorage.getItem('anchoSala')) || '600px';
@@ -150,29 +151,30 @@ const Caja = () => {
                 {!mostrarCarta ? (
                     <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
                         {mesas.map((mesa) => (
-                            <div
-                                key={mesa.id}
-                                style={{
-                                    color: 'white',
-                                    position: 'absolute',
-                                    left: `${mesa.posicion.x}px`,
-                                    top: `${mesa.posicion.y}px`,
-                                    visibility: loading ? 'hidden' : 'visible'
-                                }}
-                                className="mesa-container"
-                                onClick={() => handleActiveSession(mesa.table_number)}>
-                                <img
-                                    src={mesa.isActive ? mesagreen : mesa.icono}
-                                    alt="Mesa"
-                                    style={{
-                                        width: '60px',
-                                        height: '60px',
-                                        transform: `rotate(${angulosRotacion[mesa.id] || 0}deg)`,
-                                        transition: 'transform 0.3s ease-in-out'
-                                    }}
-                                />
-                                <div className="numeroMesa">{mesa.table_number}</div>
-                            </div>
+                            <Mesa key={mesa.id} mesa={mesa} isSelected={selectedTable == mesa.table_number} onClick={() => handleActiveSession(mesa.table_number)} angulo={angulosRotacion[mesa.id]}/>
+                            // <div
+                            //     key={mesa.id}
+                            //     style={{
+                            //         color: 'white',
+                            //         position: 'absolute',
+                            //         left: `${mesa.posicion.x}px`,
+                            //         top: `${mesa.posicion.y}px`,
+                            //         visibility: loading ? 'hidden' : 'visible'
+                            //     }}
+                            //     className="mesa-container"
+                            //     onClick={() => handleActiveSession(mesa.table_number)}>
+                            //     <img
+                            //         src={mesa.isActive ? mesagreen : mesa.icono}
+                            //         alt="Mesa"
+                            //         style={{
+                            //             width: '60px',
+                            //             height: '60px',
+                            //             transform: `rotate(${angulosRotacion[mesa.id] || 0}deg)`,
+                            //             transition: 'transform 0.3s ease-in-out'
+                            //         }}
+                            //     />
+                            //     <div className="numeroMesa">{mesa.table_number}</div>
+                            // </div>
 
                         ))}
                     </div>
