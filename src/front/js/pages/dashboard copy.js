@@ -1,10 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-
 import { Navigate } from "react-router-dom";
-
-import { useNavigate } from "react-router-dom";
-
 import "../../styles/dashboard.css";
 import mesasImage from '../../img/mesas.png';
 import menu from "../../img/menu.png";
@@ -12,22 +8,12 @@ import factura from "../../img/factura.png";
 import ajustes from "../../img/ajustes.png";
 import pantone from "../../img/pantone.png";
 import cajero from "../../img/cajero.png";
-
-import iconoExit from "../../img/exit.png";
 import { Context } from "../store/appContext";
 
-
-
 const Dashboard = () => {
-    const { actions } = useContext(Context);
-    const navigate = useNavigate()
-    const redirectToLogin = () => {
-        actions.handleLogOut();
-        // logOut()
-        navigate("/app/login")
-    }
-
-
+    const {actions, store} = useContext(Context)
+   
+    
     return (
         <>
             <section>
@@ -42,15 +28,13 @@ const Dashboard = () => {
                         </div>
                         <div className="icono">
                             <Link to="../app/caja">
-                                <img src={cajero} alt="Caja" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
+                            <img src={cajero} alt="Caja" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
                             </Link>
                             <p>Caja</p>
                         </div>
                         <div className="icono">
                             <Link to="../app/adminmenu">
-
-                                <img src={menu} alt="Carta" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
-
+                            <img src={menu} alt="Carta" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
                             </Link>
                             <p>Carta</p>
                         </div>
@@ -61,23 +45,18 @@ const Dashboard = () => {
                             <p>Configuración</p>
                         </div>
                         <div className="icono">
-
-                        <Link to="../app/generate-qr">
+                            <Link to ="../restaurants/1/tables/1/menu">
                             <img src={pantone} alt="Estilos" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
                             </Link>
-                            <p>Creación QR</p>
-
+                            <p>Estilos</p>
                         </div>
                         <div className="icono">
                             <img src={factura} alt="Facturacion" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
                             <p>Facturación</p>
                         </div>
                     </div>
-                    <button className="containerHome" onClick={() => redirectToLogin()}><pre> Log out    </pre><img src={iconoExit} alt="Atrás" style={{ width: '30px', height: '30px' }} /></button>
                 </div>
-
-
-
+                <button className="containerHome" onClick={() => actions.handleLogOut() }>Log out</button>
             </section>
            
 		

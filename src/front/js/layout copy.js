@@ -23,7 +23,7 @@ import Mesas from "./pages/mesas"
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Signup from "./pages/signup";
-import { Sidebar } from "./component/sidebar";
+
 
 import Dashboard from "./pages/dashboard";
 import Caja from "./pages/caja";
@@ -34,7 +34,7 @@ import EditMenuModal from "./component/EditMenuModal";
 
 import { Invoice } from "./pages/Invoice";
 
-// import Navbarglobal from "./component/navbarglobal";
+import Navbarglobal from "./component/navbarglobal";
 
 
 
@@ -63,11 +63,10 @@ const Layout = () => {
 
     return (
         <>
-            {/* <BrowserRouter basename={basename}> */}
+            <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     {/* <Navbar /> */}
-                    {/* <Navbarglobal /> */}
-                    {location.pathname !== "/app/login" && location.pathname !== "/app/signup" && !location.pathname.includes("/app/restaurants/") && <Sidebar />}
+                    <Navbarglobal />
                     <Routes>
 
                         <Route element ={<Login/>} path="/app/login"/>
@@ -94,20 +93,10 @@ const Layout = () => {
                     
                     {/* <Footer /> */}
                 </ScrollToTop>
-            {/* </BrowserRouter> */}
+            </BrowserRouter>
           </>
     );
 
 };
 
-const AppWrapper = () => {
-  const basename = process.env.BASENAME || "";
-  return (
-    <BrowserRouter basename={basename}>
-      <Layout />
-    </BrowserRouter>
-  );
-
-};
-
-export default injectContext(AppWrapper);
+export default injectContext(Layout);
