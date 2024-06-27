@@ -101,7 +101,7 @@ const Caja = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             handleActiveSessionList();
-        }, 30000); 
+        }, 3000000); 
 
         return () => clearInterval(interval);
     }, []);

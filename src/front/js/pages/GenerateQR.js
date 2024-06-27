@@ -11,7 +11,7 @@ export const GenerateQR = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch(`${process.env.BACKEND_URL}/api/restaurants/${restaurantId}/tables/${tableId}/generate_qr`, {
+            const response = await fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}/tables/${tableId}/generate_qr`, {
                 method: 'GET',
                
             });
