@@ -12,8 +12,8 @@ const Navbarglobal = () => {
     <>
     <div className='containernavbarglobal'>
         <button onClick={() => Navigate("/app/dashboard")}>Dashboard</button>
-        <button onClick={() => Navigate("/restaurants/1/tables/9/menu")}>Menu Client</button>
-        <button onClick={() => Navigate("/restaurants/1/orders")}>KitchenList</button>
+        <button onClick={() => Navigate("/restaurants/1/tables/8/menu")}>Menu Client</button>
+        <button onClick={() => Navigate("/app/restaurants/1/orders")}>KitchenList</button>
         <button onClick={() => Navigate("/app/caja")}>Caja</button>
         
     </div>

@@ -12,7 +12,7 @@ export const KitchenList = () => {
 
   useEffect(() => {
     if (restaurantId) {
-      actions.getOrder(restaurantId);
+      actions.getPendingOrderList(restaurantId)
     }
   }, [restaurantId]);
 
@@ -61,7 +61,7 @@ export const KitchenList = () => {
     return () => clearInterval(interval);
   }, [store.orders]);
 
-  // Format time in MM:SS
+ 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
@@ -92,6 +92,7 @@ export const KitchenList = () => {
     setCompletedItems((prevCompletedItems) => {
       const updatedCompletedItems = { ...prevCompletedItems };
       delete updatedCompletedItems[orderId];
+      actions.updateOrderStatus(restaurantId, orderId)
       return updatedCompletedItems;
   });
   setElapsedTimes((prevElapsedTimes) => {
@@ -174,7 +175,6 @@ const toggleExpandOrder = (orderId) => {
             >
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
             </button>
-         
           </div>
         );
       })}

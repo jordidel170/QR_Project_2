@@ -390,6 +390,23 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return data;
             },
 
+            getPendingOrderList: async (restaurantId) => {
+                const data = await dispatcherOrder.getPendingOrderList(restaurantId);
+                const store = getStore();
+                const ordersWithTimestamp = store.orders.map(order => ({
+                    ...order,
+                    timestamp: new Date().toISOString()
+                }));
+                setStore({ orders: ordersWithTimestamp });
+                setStore({ ...store, orders: data });
+                console.log("dato en flux getPendingOrderList", data);
+            },
+
+            updateOrderStatus: async (restaurantId, orderId) => {
+                const data = await dispatcherOrder.updateOrderStatus(restaurantId, orderId);
+                return data;
+            }
+
             
         }
     }
