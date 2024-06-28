@@ -22,7 +22,7 @@ section{
 }
 
 .container-dashboard{
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(5, 3, 3, 0.212);
     position: relative;
     width: 600px;
     backdrop-filter: blur(15px);

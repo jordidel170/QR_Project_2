@@ -1,23 +1,16 @@
-
-import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate, Outlet } from "react-router-dom"
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
-import { jwtDecode } from "jwt-decode";
-
+import {jwtDecode} from "jwt-decode";
 
 const Login = () => {
 	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-
 	const [showPassword, setShowPassword] = useState(false);
-	// const [checkboxChecked, setCheckboxChecked] = useState(false)
 	const navigate = useNavigate();
-	const [token, setToken] = useState()
-	const [isMounted, setIsMounted] = useState(true)
-	
+
 	const handleLogin = async (event) => {
 		event.preventDefault();
 		
@@ -30,48 +23,37 @@ const Login = () => {
 		} else if (password.length < 8 || password.length > 12) {
 			alert("La contraseña debe tener entre 8 y 12 caracteres.");
 		} else {
-			await actions.getTokenLogin(email, password);
-			const token = store.token
-			console.log(store.token)
-			// Check token after login attempt
-			
-			const decodedToken = jwtDecode(token);
-			const localStoraged = localStorage.getItem(token)
+			try {
+				await actions.getTokenLogin(email, password);
+				const token = store.token;
 
-			switch(decodedToken.roles){
-				case "admin" : 
-				navigate("/app/dashboard");
-				setToken(localStoraged)
-				break
-				case "cocina": 
-				navigate("/app/kitchenview");
-				setToken(localStoraged)
-				break
-				case "Restaurante": 
-				navigate("/app/caja");
-				setToken(localStoraged)
-				break
-				case "mesa1": 
-				navigate("/app/restaurants/1/tables/1/menu");
-				setToken(localStoraged)
-				break
+				if (!token) throw new Error("Token no recibido");
 
-			}      
-				
+				const decodedToken = jwtDecode(token);
+				localStorage.setItem("token", token);
+
+				switch(decodedToken.roles) {
+					case "admin": 
+						navigate("/app/dashboard");
+						break;
+					case "cocina": 
+						navigate("/app/kitchenview");
+						break;
+					case "Restaurante": 
+						navigate("/app/caja");
+						break;
+					case "mesa1": 
+						navigate("/app/restaurants/1/tables/1/menu");
+						break;
+					default:
+						throw new Error("Rol no reconocido");
+				}
+			} catch (error) {
+				alert("Usuario o contraseña incorrectos.");
+				console.error("Login error:", error);
+			}   
 		}
 	};
-
-    // useEffect(() => {
-    //     actions.syncTokenLocalStorage();
-    //     if (localStorage.getItem("token")) {
-    //         navigate("/app/login/home");
-	// 		console.log("if")
-    //     }
-		
-	// 	return () => {
-	// 		setIsMounted(false)
-	// 	}
-    // }, []);
 
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
@@ -80,59 +62,44 @@ const Login = () => {
 	const handleSectionCreateAccount = () => {
 		navigate("/app/signup")
 	}
-	
+
 	return (
-		<>
 		<section>
 			<div className="container-login">
 				<div className="formulario inputlogin">
-					{/* {store.token && store.token != "" && store.token != undefined ? navigate("/app/login/home") :(  */}
-						
 					<form action="#" method="POST">
-						<h1>Iniciar Sesión</h1>
-						
-							<div className="input-container">
-								<i className="fa-solid fa-envelope"></i>
-								<input type="text, email" value={email} onChange={(event) => { setEmail(event.target.value); }} required></input>
-								<label for="Email">Email</label>
-							</div>
-
-								<div className="input-container password">
-								<i className={`fa-solid ${showPassword ? 'fa-lock-open' : 'fa-lock'}`} onClick={togglePasswordVisibility}></i>
-								<input type={showPassword ? "text" : "password"}  value={password} onChange={(event) => { setPassword(event.target.value); }} required></input>
-									<label for="Contraseña">Contraseña</label>
-								</div>
-
-								<div className="olvidar">
-									<label for="forgotPassword">
-										<input type="checkbox"/> Recordar 
-										{/* <a href="#">Olvidé la contraseña</a> */}
-									</label>
-								</div>
-						</form>
-
-						<div>
-							<button className="r6" onClick={handleLogin}>Acceder</button>
-
-							<div className="registrar">
-								<p>No tienes cuenta? </p>
-								<button onClick={handleSectionCreateAccount}>Crea una Cuenta</button>
-							</div>
+						<h1>Login</h1>
+						<div className="input-container">
+							<i className="fa-solid fa-envelope"></i>
+							<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required></input>
+							<label htmlFor="Email">Email</label>
 						</div>
+						<div className="input-container password">
+							<i className={`fa-solid ${showPassword ? 'fa-lock-open' : 'fa-lock'}`} onClick={togglePasswordVisibility}></i>
+							<input type={showPassword ? "text" : "password"} value={password} onChange={(event) => setPassword(event.target.value)} required></input>
+							<label htmlFor="Contraseña">Password</label>
+						</div>
+						<div className="olvidar">
+							<label htmlFor="forgotPassword">
+								<input type="checkbox"/> Remember me
+							</label>
+						</div>
+						<button className="r6" onClick={handleLogin}>Access</button>
+					</form>
+					<div>
 						
-					
-					
+						<div className="registrar">
+							<p>Not have an account ?</p>
+							<button onClick={handleSectionCreateAccount}>Create an account</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
-	
-
-		</>
-		
-		
 	);
-
 };
-export default Login
+
+export default Login;
+
 
 

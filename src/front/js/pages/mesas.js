@@ -144,19 +144,21 @@ const Mesas = () => {
         localStorage.setItem('tempLargoSala', JSON.stringify(tempLargoSala));
         localStorage.setItem('tempAnchoSala', JSON.stringify(tempAnchoSala));
         localStorage.setItem('nombreSalon', nombreSalon);
-        alert('Guardado con éxito');
+        alert('Saved successfully.');
       };
 
     return (
         <>
+        
             <section>
+                    <h1 className='section-mesas-tittle'>Tables</h1>
                 <div className='principal'>
                     <div className='container-mesas1'>
-                        <h3>Agregar Mesa</h3>
+                        <h3>Add Tables</h3>
                         <img src={iconoMesas} alt="Agregar Mesa" onClick={() => agregarMesa(iconoMesas)} style={{ cursor: 'pointer', width: '50px', height: '50px' }} />
                         <img src={iconoBarra} alt="Agregar Mesa" onClick={() => agregarMesa(iconoBarra)} style={{ cursor: 'pointer', width: '50px', height: '50px' }} />
                         <img src={iconoCanto} alt="Agregar Mesa" onClick={() => agregarMesa(iconoCanto)} style={{ cursor: 'pointer', width: '50px', height: '50px' }} />
-                        <button className='editar' onClick={() => setModoEdicion(!modoEdicion)}>Editar elementos</button>
+                        <button className='editar' onClick={() => setModoEdicion(!modoEdicion)}>Edit elements</button>
                     </div>
                     <div className='top-bottom-container'>
                         <h3>{nombreSalon}</h3>
@@ -211,14 +213,14 @@ const Mesas = () => {
                         </div>
                     </div>
                     <div className='container-mesas'>
-                        <h3>Editar<br />Salón</h3>
+                        <h3>Edit<br />Room</h3>
                         <div className='sala-container'>
-                            <p className='titulos'>Nombre<br /> del salón</p>
+                            <p className='titulos'>Name<br /> of Room</p>
                             <input className='nombre-sala' type="text" value={nombreSalon} onChange={(e) => setNombreSalon(e.target.value)} placeholder="Nombre" />
                         </div>
-                        <h3>Tamaño</h3>
+                        <h3>Size</h3>
                         <div className='sala-container'>
-                            <p className='titulos'>Largo m</p>
+                            <p className='titulos'>Height</p>
                             <input
                                 type="number"
                                 className='nombre-sala'
@@ -229,7 +231,7 @@ const Mesas = () => {
                                 }}
                                 placeholder="Largo"
                             />
-                            <p className='titulos'>Ancho m</p>
+                            <p className='titulos'>Width</p>
                             <input
                                 type="number"
                                 className='nombre-sala'
@@ -240,13 +242,14 @@ const Mesas = () => {
                                 }}
                                 placeholder="Ancho"
                             />
-                            <button className='guardar' onClick={guardarEstado}>Guardar</button>
-                            <Link to="../app/dashboard" className='link-boton-dash'>
-                            <button className='salir'>Salir</button>
-                            </Link>
+                            <button className='guardar' onClick={guardarEstado}>Save</button>
+                            {/* <Link to="../app/dashboard" className='link-boton-dash'>
+                            <button className='salir'>Exit</button>
+                            </Link> */}
                         </div>
                     </div>
                 </div>
+                
             </section>
         </>
     );

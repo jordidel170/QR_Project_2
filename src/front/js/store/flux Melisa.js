@@ -37,15 +37,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
             getTokenLogin: async (email, password) => {
-                try {
-                    const { access_token } = await loginDispatcher(email, password);
-                    if (access_token) {
-                        localStorage.setItem("token", access_token);
-                        setStore({ token: access_token });
-                    }
-                } catch (error) {
-                    console.error("Error during login:", error);
-                    throw new Error("Error during login");
+                const { access_token } = await loginDispatcher(email, password);
+                if (access_token) {
+                    localStorage.setItem("token", access_token);
+                    setStore({ token: access_token })
                 }
             },
 

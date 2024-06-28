@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import mesagreen from "../../img/mesagreen.png"
 import mesaYellow from "../../img/mesaYellow.png"
 
+
+
 const Mesa = ({ mesa, onClick, angulo }) => {
     // Agrega un estado para rastrear si la mesa está seleccionada
     const [isSelected, setIsSelected] = useState(false);

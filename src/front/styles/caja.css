@@ -22,6 +22,7 @@ section {
 }
 
 .container-ticket {
+    margin-left: 6%;
     margin-right: 10px;
     background: rgba(255, 255, 255, 0.4);
     position: relative;
@@ -31,6 +32,14 @@ section {
     border: 2px solid rgba(255, 255, 255, .6);
     border-radius: 20px;
 }
+
+.img-resplandor {
+    box-shadow: 0 0 8px 5px yellow;
+}
+
+/* .mesa-container img:active{
+    box-shadow: 0 0 8px 5px yellow;
+} */
 
 .container-caja-mesas {
     background: rgba(255, 255, 255, 0.4);
@@ -42,7 +51,13 @@ section {
     /* height: 600px; */
 }
 
-
+.ticket-view{
+    margin: 2px;
+    padding: 5px;
+    border: 2px solid rgb(122, 122, 122);
+    border-radius: 6px;
+    height: 385px;
+}
 .container-caja-mesas h1 {
     display: flex;
     justify-content: center;
@@ -79,7 +94,7 @@ section {
 .botones {
 
     margin-left: 1px;
-    height: 20%;
+    height: 19.5%;
     /* border: 1px solid black; */
     flex: 1 1 100%;
     display: flex;
@@ -94,11 +109,12 @@ section {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    height: 8.5%;
 }
 
 .boton-atras {
-    width: 48.5%;
-    border-radius: 6px 18px 6px 6px;
+    width: 99%;
+    border-radius: 18px 18px 6px 6px;
     border: 0 solid transparent;
     background-color: lightblue;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);

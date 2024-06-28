@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import "../../styles/GenerateQR.css";
 
 export const GenerateQR = () => {
     const [restaurantId, setRestaurantId] = useState('');
@@ -29,11 +29,14 @@ export const GenerateQR = () => {
     };
 
     return (
-        <div>
+        
+        <section className='section-qr'>
+            <h1 className='section-mesas-tittle'>QR codes</h1>
+            <div className='container-qr'>
             <h1>Generate QR Code</h1>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>
+                <div className='inputs-qr'>
+                    <label className='label-qr'>
                         Restaurant ID:
                         <input 
                             type="text" 
@@ -43,8 +46,8 @@ export const GenerateQR = () => {
                         />
                     </label>
                 </div>
-                <div>
-                    <label>
+                <div className='inputs-qr'>
+                    <label className='label-qr'>
                         Table ID:
                         <input 
                             type="text" 
@@ -54,14 +57,15 @@ export const GenerateQR = () => {
                         />
                     </label>
                 </div>
-                <button type="submit">Generate QR Code</button>
+                <button className='btn-qr' type="submit">Generate QR Code</button>
             </form>
             {qrCodeUrl && (
-                <div>
+                <div className='qr-space'>
                     <h2>QR Code:</h2>
                     <img src={qrCodeUrl} alt="QR Code" />
                 </div>
             )}
         </div>
+        </section>
     );
 };

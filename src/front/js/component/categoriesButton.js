@@ -3,8 +3,9 @@ import React from 'react';
 const CategoriesButton = ({ categoryName, selectedCategory, setSelectedCategory, setOpenModal }) => {
   return (
     <>
+    
       <div className="menu-header">
-        <h1>Menu</h1>
+        
         <button className='createproduct' onClick={() => { setOpenModal(true) }}>Create New Product</button>
       </div>
       <div className="menu-categories">

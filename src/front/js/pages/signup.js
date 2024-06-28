@@ -77,13 +77,13 @@ const Signup = () => {
                             <div className="dots"></div>
                             <div className="dots"></div>
                             <div className="dots"></div>
-                            <span className="text-loading">Cargando...</span>
+                            <span className="text-loading">Loading...</span>
                         </div>
                     </div>
                 ) : registerStatus === "ok" ? (
                     <div className="container2">
                         <div className="content">
-                            <h1>USUARIO REGISTRADO CON ÉXITO!</h1>
+                            <h1>REGISTERED USER SUCCESSFULLY!</h1>
                         </div>
                     </div>
                 ) : (
@@ -105,12 +105,12 @@ const Signup = () => {
                                 <div className="input-container">
                                     <i className="fa-solid fa-user"></i>
                                     <input type="text" value={firstName} onChange={(event) => { setFirstName(event.target.value); }} required />
-                                    <label htmlFor="#">Nombre</label>
+                                    <label htmlFor="#">Name</label>
                                 </div>
                                 <div className="input-container">
                                     <i className="fa-regular fa-user"></i>
                                     <input type="text" value={lastName} onChange={(event) => { setLastName(event.target.value); }} required />
-                                    <label htmlFor="#">Apellidos</label>
+                                    <label htmlFor="#">Last name</label>
                                 </div>
                                 <div className="input-container">
                                     <i className="fa-solid fa-envelope"></i>
@@ -120,12 +120,12 @@ const Signup = () => {
                                 <div className="input-container password">
                                     <i className={`fa-solid ${showPassword ? 'fa-lock-open' : 'fa-lock'}`} onClick={togglePasswordVisibility}></i>
                                     <input type={showPassword ? "text" : "password"} value={password} onChange={(event) => { setPassword(event.target.value); }} required />
-                                    <label htmlFor="Contraseña">Contraseña</label>
+                                    <label htmlFor="Contraseña">Password</label>
                                 </div>
                             </form>
                             <div className="register-button">
-                                <button className="r6" onClick={handleSubmit}>Registro</button>
-                                <p>Ya tienes una cuenta? <Link to="/app/login">Inicia Sesión</Link></p>
+                                <button className="r6" onClick={handleSubmit}>Register</button>
+                                <p>You have an account?&nbsp; <Link to="/app/login"> Login</Link></p>
                             </div>
                         </div>
                     </div>

@@ -44,6 +44,7 @@ const adminMenuView = () => {
 
   return (
     <section className='section-menu'>
+<h1 className='section-mesas-tittle'>Menu</h1>
       <div className='main-container'>
         <div className="menu-container">
           <CategoriesButton categoryName={categoryName} setSelectedCategory={setSelectedCategory} setOpenModal={setOpenModal} selectedCategory={selectedCategory} />

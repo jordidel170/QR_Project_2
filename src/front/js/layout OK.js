@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-import jwtDecode from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 import { Navigate } from "react-router-dom";
 
 import { Home } from "./pages/home";
@@ -31,6 +31,7 @@ import App from "./component/app";
 import AdminMenuView from "./pages/adminMenuView";
 import EditMenuModal from "./component/EditMenuModal";
 import { RiSideBarFill } from "react-icons/ri";
+import { Invoice } from "./pages/Invoice";
 
 const ProtectedRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");
@@ -60,17 +61,17 @@ const Layout = () => {
         <Routes>
           <Route element={<Login />} path="/app/login" />
           <Route element={<Signup />} path="/app/signup" />
-          <Route element={<Dashboard />} path="/app/dashboard" />
-          <Route element={<Caja />} path="/app/caja" />
-          <Route element={<Mesas />} path="/app/mesas" />
-          <Route element={<ProtectedRoute role="user"> <Home /> </ProtectedRoute>} path="app/home" />
-          <Route element={<Menu />} path="app/restaurants/:restaurantId/tables/:tableId/menu" />
-          <Route element={<OrderSummary />} path="app/restaurants/:restaurantId/tables/:tableId/order-summary" />
-          <Route element={<OrderSuccess />} path="app/restaurants/:restaurantId/tables/:tableId/order-success" />
-          <Route element={<AboutUs />} path="/about-us" />
-          <Route element={<AdminMenuView />} path="/app/adminmenu" />
-          <Route element={<GenerateQR />} path="/app/generate-qr" />
-          <Route element={<KitchenList />} path="app/restaurants/:restaurantId/orders" />
+          <Route element={<ProtectedRoute role="admin"><Dashboard /></ProtectedRoute>} path="/app/dashboard" />
+          <Route element={<ProtectedRoute role="admin"><Caja /></ProtectedRoute>} path="/app/caja" />
+          <Route element={<ProtectedRoute role="admin"><Mesas /></ProtectedRoute>} path="/app/mesas" />
+          <Route element={<ProtectedRoute role="user"><Home /></ProtectedRoute>} path="/app/home" />
+          <Route element={<ProtectedRoute role="user"><Menu /></ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/menu" />
+          <Route element={<ProtectedRoute role="user"><OrderSummary /></ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
+          <Route element={<ProtectedRoute role="user"><OrderSuccess /></ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-success" />
+          <Route element={<AboutUs />} path="/app/about-us" />
+          <Route element={<ProtectedRoute role="admin"><AdminMenuView /></ProtectedRoute>} path="/app/adminmenu" />
+          <Route element={<ProtectedRoute role="admin"><GenerateQR /></ProtectedRoute>} path="/app/generate-qr" />
+          <Route element={<ProtectedRoute role="admin"><KitchenList /></ProtectedRoute>} path="/restaurants/:restaurantId/orders" />
           <Route element={<h1>Not found!</h1>} />
         </Routes>
       </ScrollToTop>
@@ -88,3 +89,4 @@ const AppWrapper = () => {
 };
 
 export default injectContext(AppWrapper);
+

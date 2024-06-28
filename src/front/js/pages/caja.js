@@ -57,6 +57,10 @@ const Caja = () => {
         setMostrarCarta(false);
     };
 
+    const abrirCaja = () => {
+        alert("Cash Box Opened!");
+      }
+
     useEffect(() => {
         const fetchData = async () => {
             recuperarEstado();
@@ -112,25 +116,26 @@ const Caja = () => {
     return (
         <>
             <section>
+            <h1 className='section-mesas-tittle'>Cash</h1>
                 <div className="container-ticket">
                     <div className="botones-arriba">
-                        <button onClick={irADashboard} className="boton-dash"><img src={iconoDash} alt="Atrás" style={{ width: '30px', height: '30px' }} /> Dashboard</button>
-                        <button className="boton-atras" onClick={manejarClickAtras}><img src={iconoAtras} alt="Atrás" style={{ width: '20px', height: '20px' }} /> Atrás</button>
+                        {/* <button onClick={irADashboard} className="boton-dash"><img src={iconoDash} alt="Atrás" style={{ width: '30px', height: '30px' }} /> Dashboard</button> */}
+                        <button className="boton-atras" onClick={manejarClickAtras}><img src={iconoAtras} alt="Atrás" style={{ width: '20px', height: '20px' }} /> Back</button>
 
                     </div>
                     <div className="ticket">
                         <div className="ticket_table">
                             {
-                                <div>
-                                    <h2>Numero de Mesa: {activeSession.table_number}</h2>
-                                    <h2>Productos:</h2>
+                                <div className="ticket-view">
+                                    <h5> Table number: {activeSession.table_number}</h5>
+                                    <h5> Items: ✍</h5>
                                     <ul>
                                         {activeSession.products && activeSession.products.length > 0 ? (
                                             activeSession.products.map((product, index) => (
                                                 <li key={index}>{product.product_name} x {product.quantity}</li>
                                             ))
                                         ) : (
-                                            <li>No hay productos</li>
+                                            <li>Empty.</li>
                                         )}
                                     </ul>
 
@@ -140,10 +145,10 @@ const Caja = () => {
                         </div>
                     </div>
                     <div className="botones">
-                        <button className="boton-abrir-caja">Abrir caja<img src={iconoLlave} alt="Atrás" style={{ width: '35px', height: '35px' }} /> </button>
-                        <button className="boton-pagar" >Pagar <br></br><img src={iconoPagar} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
-                        <button className="boton-anadir" onClick={manejarClickAnadir}>Añadir <img src={iconoAnadir} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
-                        <button className="boton-eliminar">Quitar <img src={iconoEliminar} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
+                        <button onClick={abrirCaja} className="boton-abrir-caja">Open Cash<img src={iconoLlave} alt="Atrás" style={{ width: '35px', height: '35px' }} /> </button>
+                        <button className="boton-pagar" >Pay <br></br><img src={iconoPagar} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
+                        <button className="boton-anadir" onClick={manejarClickAnadir}>Add <img src={iconoAnadir} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
+                        <button className="boton-eliminar">Delete <img src={iconoEliminar} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
 
 
                     </div>
