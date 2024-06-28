@@ -36,7 +36,7 @@ export const Sidebar = () => {
 		
 		</Link>
 		{/* <button className="side settings-btn">Settings<img src={iconoAjustes} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button> */}
-		<button className={`side settings-btn ${location.pathname === "/app/settings" ? "active" : ""}`}>Settings<img src={iconoAjustes} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button>
+		<button className={`side settings-btn ${location.pathname === "/app/settings" ? "active" : ""}`}>Kitchen<img src={iconoAjustes} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button>
 		
 		<Link to="../app/generate-qr" className="link-no-decoration">
 		{/* <button className="side qr-btn">QR Codes<img src={iconoQR} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button> */}

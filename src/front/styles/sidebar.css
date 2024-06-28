@@ -22,8 +22,9 @@
 }
 
 .side {
+  backdrop-filter: blur(15px);
   text-shadow: -1px 1px 14px rgba(0,0,0,1);
-  color: rgb(255, 255, 255);
+  color: rgb(255, 253, 253);
   margin: 2% 0 2% 0;
   border-radius: 0 20px 20px 0;
   padding: 4%;
@@ -48,39 +49,72 @@
 .logout-btn {}
 
 .cash-btn {
-  background: rgb(18, 255, 0);
-  background: linear-gradient(90deg, rgba(18, 255, 0, 1) 0%, rgba(31, 255, 0, 1) 0%, rgba(251, 251, 251, 1) 100%);
+  
+  border-top: 2px solid rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(90, 90, 90);
+  background: rgba(255, 255, 255, 0.70);
+  background: linear-gradient(to right, rgba(239,231,0,0) 0%,rgba(11, 150, 1, 0.91) 50%,rgba(11, 150, 1,1) 55%,rgba(11, 150, 1,1) 61%,rgba(239,231,0,0) 68%);
+  
+  /* background: linear-gradient(90deg, rgba(18, 255, 0, 1) 0%, rgba(31, 255, 0, 1) 0%, rgba(251, 251, 251, 1) 100%); */
 }
 
 .tables-btn{
+  border-top: 2px solid rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(90, 90, 90);
   background: rgb(18,255,0);
-background: linear-gradient(90deg, rgba(18,255,0,1) 0%, rgba(0,215,255,1) 0%, rgba(251,251,251,1) 100%);
+  background: linear-gradient(to right, rgba(239,231,0,0) 0%,rgba(239,231,0,0.91) 50%,rgba(239,231,0,1) 55%,rgba(239,231,0,1) 61%,rgba(239,231,0,0) 68%);
+/* background: linear-gradient(90deg, rgba(18,255,0,1) 0%, rgba(0,215,255,1) 0%, rgba(251,251,251,1) 100%); */
+
 }
 
 .menu-btn{
+  /* background: rgb(18,255,0);
+background: linear-gradient(90deg, rgba(18,255,0,1) 0%, rgba(0,22,255,1) 0%, rgba(251,251,251,1) 100%); */
+border-top: 2px solid rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(90, 90, 90);
   background: rgb(18,255,0);
-background: linear-gradient(90deg, rgba(18,255,0,1) 0%, rgba(0,22,255,1) 0%, rgba(251,251,251,1) 100%);
+  background: linear-gradient(to right, rgba(239,231,0,0) 0%,rgba(0,22,255, 0.91) 50%,rgba(0,22,255,1) 55%,rgba(0,22,255,1) 61%,rgba(239,231,0,0) 68%);
 }
 
 .settings-btn{
+  /* background: rgb(18,255,0);
+  background: linear-gradient(90deg, rgba(18,255,0,1) 0%, rgb(145, 2, 255) 0%, rgba(251,251,251,1) 100%); */
+  border-top: 2px solid rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(90, 90, 90);
   background: rgb(18,255,0);
-  background: linear-gradient(90deg, rgba(18,255,0,1) 0%, rgba(145,0,255,1) 0%, rgba(251,251,251,1) 100%);
+  background: linear-gradient(to right, rgba(239,231,0,0) 0%,rgba(145, 2, 255, 0.91) 50%,rgba(145, 2, 255,1) 55%,rgba(145, 2, 255,1) 61%,rgba(239,231,0,0) 68%);
 }
 
 .qr-btn{
+  /* background: rgb(181, 209, 179);
+  background: linear-gradient(90deg, rgba(18,255,0,1) 0%, rgba(255,0,254,1) 0%, rgba(251,251,251,1) 100%); */
+  border-top: 2px solid rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(90, 90, 90);
   background: rgb(18,255,0);
-  background: linear-gradient(90deg, rgba(18,255,0,1) 0%, rgba(255,0,254,1) 0%, rgba(251,251,251,1) 100%);
+  background: linear-gradient(to right, rgba(239,231,0,0) 0%,rgba(0, 161, 148, 0.91) 50%,rgba(0, 161, 148,1) 55%,rgba(0, 161, 148,1) 61%,rgba(239,231,0,0) 68%);
 }
 .billing-btn{
-  background: rgb(18,255,0);
-background: linear-gradient(90deg, rgba(18,255,0,1) 0%, rgba(255,0,86,1) 0%, rgba(251,251,251,1) 100%);
+  /* background: rgb(18,255,0);
+background: linear-gradient(90deg, rgba(18,255,0,1) 0%, rgba(255,0,86,1) 0%, rgba(251,251,251,1) 100%); */
+border-top: 2px solid rgb(0, 0, 0);
+border-bottom: 2px solid rgb(90, 90, 90);
+background: rgb(18,255,0);
+background: linear-gradient(to right, rgba(239,231,0,0) 0%,rgba(196, 0, 65, 0.91) 50%,rgba(196, 0, 65,1) 55%,rgba(196, 0, 65,1) 61%,rgba(239,231,0,0) 68%);
 }
 .about-btn{
-  background: rgb(18,255,0);
-background: linear-gradient(90deg, rgba(18,255,0,1) 0%, rgba(255,128,0,1) 0%, rgba(251,251,251,1) 100%);
+  /* background: rgb(18,255,0);
+background: linear-gradient(90deg, rgba(18,255,0,1) 0%, rgba(255,128,0,1) 0%, rgba(251,251,251,1) 100%); */
+border-top: 2px solid rgb(0, 0, 0);
+border-bottom: 2px solid rgb(90, 90, 90);
+background: rgb(18,255,0);
+background: linear-gradient(to right, rgba(239,231,0,0) 0%,rgba(212, 107, 1, 0.91) 50%,rgba(212, 107, 1,1) 55%,rgba(212, 107, 1,1) 61%,rgba(239,231,0,0) 68%);
   }
 
 .logout-btn{
-  background: rgb(0,0,0);
-  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(255,0,0,1) 100%, rgba(0,0,0,1) 100%);
+  /* background: rgb(0,0,0);
+  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(255,0,0,1) 100%, rgba(0,0,0,1) 100%); */
+  border-top: 2px solid rgb(0, 0, 0);
+border-bottom: 2px solid rgb(90, 90, 90);
+background: rgb(18,255,0);
+background: linear-gradient(to right, rgba(12, 12, 0, 0.76) 0%,rgba(170, 0, 0, 0.91) 50%,rgb(165, 0, 0) 55%,rgb(141, 0, 0) 61%,rgba(239,231,0,0) 68%);
 }
