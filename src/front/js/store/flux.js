@@ -352,8 +352,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const store = getStore();
                 setStore({ orders: [...store.orders, newOrder] });
             },
-            createNewTable: async (table_number, position_x, position_y) => {
-                const data = await dispatcherTable.create_table(table_number, position_x, position_y);
+            createNewTable: async (table_number, position_x, position_y, icon) => {
+                const data = await dispatcherTable.create_table(table_number, position_x, position_y,icon);
                 return data;
             },
     

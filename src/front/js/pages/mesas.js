@@ -92,6 +92,7 @@ const Mesas = () => {
             x: e.clientX - contenedor.left - ajusteX,
             y: e.clientY - contenedor.top - ajusteY
         };
+        console.log(id)
         moverMesa(parseInt(id), nuevaPosicion);
     };
 
@@ -161,7 +162,7 @@ const Mesas = () => {
                                     className="mesa-container"
                                 >
                                     <img
-                                        src={iconoMesas}
+                                        src={mesa.icon}
                                         alt="Mesa"
                                         style={{
                                             width: '60px',

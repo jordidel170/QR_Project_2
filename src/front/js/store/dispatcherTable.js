@@ -2,18 +2,12 @@ import react from 'react'
 
 
 const dispatcherTable = {
- create_table: async (newTable) => {
-    // const requestBody = {
-    //    "table_number": table_number,
-    //    "position_x": position_x,
-    //    "position_y": position_y
-
-    // }
+ create_table: async (new_table) => {
     const response = await fetch(`http://127.0.0.1:5000/app/tables`, { 
          method: "POST",
          headers: { "Content-Type": "application/json" },
          CORS:'Access-Control-Allow-Origin',
-         body: JSON.stringify(newTable) 
+         body: JSON.stringify({"table_number":new_table.table_number, "position_x":new_table.position_x, "position_y":new_table.position_y, "icono":new_table.icono}) 
     })
     console.log(response)
     if(!response.ok) throw Error("table_number is required", 400)
@@ -75,7 +69,6 @@ const dispatcherTable = {
     return data;
  }, 
 
- 
 
 }   
 
