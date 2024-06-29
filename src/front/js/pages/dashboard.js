@@ -12,6 +12,7 @@ import factura from "../../img/factura.png";
 import ajustes from "../../img/ajustes.png";
 import pantone from "../../img/pantone.png";
 import cajero from "../../img/cajero.png";
+import cocinaColor from "../../img/cocina-color.png";
 
 import iconoExit from "../../img/exit.png";
 import { Context } from "../store/appContext";
@@ -38,13 +39,13 @@ const Dashboard = () => {
                             <Link to="../app/mesas">
                                 <img src={mesasImage} alt="Mesas" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
                             </Link>
-                            <p>Mesas</p>
+                            <p>Tables</p>
                         </div>
                         <div className="icono">
                             <Link to="../app/caja">
                                 <img src={cajero} alt="Caja" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
                             </Link>
-                            <p>Caja</p>
+                            <p>Cash</p>
                         </div>
                         <div className="icono">
                             <Link to="../app/adminmenu">
@@ -52,25 +53,27 @@ const Dashboard = () => {
                                 <img src={menu} alt="Carta" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
 
                             </Link>
-                            <p>Carta</p>
+                            <p>Menu</p>
                         </div>
                     </div>
                     <div className="iconos-dashboard">
                         <div className="icono">
-                            <img src={ajustes} alt="Configuracion" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
-                            <p>Configuración</p>
+                        <Link to="../app/restaurants/1/orders">
+                            <img src={cocinaColor} alt="Configuracion" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
+                           </Link> 
+                            <p>Kitchen</p>
                         </div>
                         <div className="icono">
 
                         <Link to="../app/generate-qr">
                             <img src={pantone} alt="Estilos" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
                             </Link>
-                            <p>Creación QR</p>
+                            <p>QR Codes</p>
 
                         </div>
                         <div className="icono">
                             <img src={factura} alt="Facturacion" style={{ cursor: 'pointer', width: '100px', height: '100px' }} />
-                            <p>Facturación</p>
+                            <p>Billing</p>
                         </div>
                     </div>
                     <button className="containerHome" onClick={() => redirectToLogin()}><pre> Log out    </pre><img src={iconoExit} alt="Atrás" style={{ width: '30px', height: '30px' }} /></button>

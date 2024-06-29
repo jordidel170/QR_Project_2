@@ -109,7 +109,9 @@ const toggleExpandOrder = (orderId) => {
 };
 
   return (
+    
     <div className="kitchen-list">
+      
       {store.orders.map((order) => {
         const isOrderCompleted = toggleOrderCompleted(order.id);
         const elapsedTime = elapsedTimes[order.id] || 0;
@@ -179,5 +181,6 @@ const toggleExpandOrder = (orderId) => {
         );
       })}
     </div>
+    
   );
 };

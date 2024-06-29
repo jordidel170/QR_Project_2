@@ -21,10 +21,23 @@ const MenuItem = ({ meal }) => (
   </li>
 );
 
+
+
 const MenuCategory = ({ category, meals, collapseOthers, isCollapsed }) => {
   const toggleCollapsed = () => {
     collapseOthers(category);
+    setTimeout(() => {
+      // Aquí, queremos mantener la posición actual en x, y mover en y.
+      // Usamos un valor negativo para subir, pero no vamos del todo arriba, sino 300px abajo del inicio.
+      const scrollPosition = window.scrollY = 250;
+      window.scrollTo({
+        top: scrollPosition, // Mover a la posición calculada.
+        behavior: 'smooth' // Opcional: Añade un efecto de transición suave.
+      });
+    }, 100); // Ajusta este tiempo si es necesario.
   };
+
+  
 
   return (
     <div className="menu-category">

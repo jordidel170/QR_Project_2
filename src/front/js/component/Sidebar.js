@@ -11,6 +11,7 @@ import iconoMenu from "../../img/menu_dash.png";
 import iconoBilling from "../../img/billing-dash.png";
 import iconoTable from "../../img/table1.png";
 import iconoAbout from "../../img/about.png";
+import iconoCocinaBlack from "../../img/cocina-negro.png";
 
 export const Sidebar = () => {
 	const { actions } = useContext(Context);
@@ -33,11 +34,11 @@ export const Sidebar = () => {
 		<Link to="../app/adminmenu" className="link-no-decoration">
 		{/* <button className="side menu-btn">Menu<img src={iconoMenu} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button> */}
 		<button className={`side menu-btn ${location.pathname === "/app/adminmenu" ? "active" : ""}`}>Menu<img src={iconoMenu} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button>
-		
 		</Link>
+		<Link to="../app/restaurants/1/orders" className="link-no-decoration">
 		{/* <button className="side settings-btn">Settings<img src={iconoAjustes} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button> */}
-		<button className={`side settings-btn ${location.pathname === "/app/settings" ? "active" : ""}`}>Kitchen<img src={iconoAjustes} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button>
-		
+		<button className={`side settings-btn ${location.pathname === "/app/restaurants/1/orders" ? "active" : ""}`}>Kitchen<img src={iconoCocinaBlack} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button>
+		</Link>
 		<Link to="../app/generate-qr" className="link-no-decoration">
 		{/* <button className="side qr-btn">QR Codes<img src={iconoQR} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button> */}
 		<button className={`side qr-btn ${location.pathname === "/app/generate-qr" ? "active" : ""}`}>QR Codes<img src={iconoQR} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button>

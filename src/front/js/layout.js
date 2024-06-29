@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation, matchPath } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import {jwtDecode} from "jwt-decode";
@@ -34,6 +34,7 @@ import { Invoice } from "./pages/Invoice";
 import { Sidebar } from "./component/sidebar";
 import Navbarglobal from "./component/navbarglobal";
 
+
 const ProtectedRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -46,6 +47,25 @@ const ProtectedRoute = ({ children, role }) => {
   }
   return children;
 };
+
+const SidebarController = () => {
+    const location = useLocation();
+    const pathsToShowSidebar = [
+      "/app/caja",
+      "/app/mesas",
+      "/app/adminmenu",
+      "/app/about-us",
+      "/app/generate-qr",
+      "/app/restaurants/:restaurantId/orders"
+    ];
+  
+    const showSidebar = pathsToShowSidebar.some(path =>
+      matchPath(path, location.pathname)
+    );
+  
+    return showSidebar ? <Sidebar /> : null;
+  };
+
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
@@ -68,9 +88,9 @@ const Layout = () => {
           <Route element={<ProtectedRoute role="admin"><OrderSummary /></ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
           <Route element={<ProtectedRoute role="admin"><OrderSuccess /></ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-success" />
           <Route element={<AboutUs />} path="/app/about-us" />
-          <Route element={<GenerateQR />} path="/app/generate-qr" />
-          <Route element={<KitchenList />} path="/app/restaurants/:restaurantId/orders" />
-          <Route element={<Invoice />} path="/app/restaurants/:restaurantId/tables/:tableId/invoices/:invoiceId" />
+          <Route element={<ProtectedRoute role="admin"><GenerateQR /></ProtectedRoute>} path="/app/generate-qr" />
+          <Route element={<ProtectedRoute role="admin"><KitchenList /></ProtectedRoute>} path="/app/restaurants/:restaurantId/orders" />
+          <Route element={<ProtectedRoute role="admin"><Invoice /></ProtectedRoute>} path="/app/restaurants/:restaurantId/tables/:tableId/invoices/:invoiceId" />
           <Route element={<h1>Not found!</h1>} />
         </Routes>
         <SidebarController />
@@ -79,20 +99,5 @@ const Layout = () => {
   );
 };
 
-const SidebarController = () => {
-  const location = useLocation();
-  const showSidebar = [
-    "/app/caja",
-    "/app/mesas",
-    "/app/adminmenu",
-    "/app/about-us",
-    "/app/generate-qr"
-  ].includes(location.pathname);
-
-  return showSidebar ? <Sidebar /> : null;
-};
 
 export default injectContext(Layout);
-
-
-

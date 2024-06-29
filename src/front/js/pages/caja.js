@@ -19,7 +19,6 @@ import { Context } from "../store/appContext";
 import Mesa from "../component/Mesa";
 
 
-
 const Caja = () => {
     const [largoSala, setLargoSala] = useState('600px');
     const [anchoSala, setAnchoSala] = useState('600px');
@@ -30,12 +29,15 @@ const Caja = () => {
     const [activeSession, setActiveSession] = useState({ id_table: 1, products: [] })
     const [loading, setLoading] = useState(true)
     const [selectedTable, setSelectedTable] = useState(null)
+    const [mesaSeleccionada, setMesaSeleccionada] = useState(null);
+
+    const navigate = useNavigate();
+
     const recuperarEstado = () => {
         const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
         const ancho = JSON.parse(localStorage.getItem('anchoSala')) || '600px';
         const mesasGuardadas = JSON.parse(localStorage.getItem('mesas')) || [];
         const angulosGuardados = JSON.parse(localStorage.getItem('angulosRotacion')) || {};
-
 
         setLargoSala(largo);
         setAnchoSala(ancho);
@@ -43,7 +45,7 @@ const Caja = () => {
         setAngulosRotacion(angulosGuardados);
     };
 
-    const navigate = useNavigate();
+    
 
     const irADashboard = () => {
         navigate('../app/dashboard');
@@ -59,13 +61,13 @@ const Caja = () => {
 
     const abrirCaja = () => {
         alert("Cash Box Opened!");
-      }
+    }
 
     useEffect(() => {
         const fetchData = async () => {
             recuperarEstado();
             await handleActiveSessionList();
-            setLoading(false); 
+            setLoading(false);
         };
 
         fetchData();
@@ -89,7 +91,7 @@ const Caja = () => {
 
     const handleActiveSessionList = async () => {
         const dataSessionList = await actions.getActiveSessionList();
-        setMesas(prevMesas => 
+        setMesas(prevMesas =>
             prevMesas.map((mesa) => {
                 const isActive = dataSessionList.some(session => session.status == 'active' && session.table_number == mesa.table_number);
                 return { ...mesa, isActive };
@@ -97,26 +99,43 @@ const Caja = () => {
         );
     };
 
-
-
-    useEffect(() => {
-    }, [activeSession])
-
     
+
+    const handleMesaClick = (id) => {
+        setMesaSeleccionada(id);
+    };
+
+    const handleDeselect = () => {
+        setSelectedTable(null);
+        setMesaSeleccionada(null);
+    };
+
+    const handleClickOutside = (event) => {
+        // Verifica si el clic fue fuera de las mesas
+        if (!event.target.closest('.mesa-container')) {
+            handleDeselect(); // Deselecciona la última mesa seleccionada
+        }
+    };
+
     useEffect(() => {
         const interval = setInterval(() => {
             handleActiveSessionList();
-        }, 3000000); 
+        }, 3000000);
 
         return () => clearInterval(interval);
     }, []);
 
-   
+    React.useEffect(() => {
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
     return (
         <>
             <section>
-            <h1 className='section-mesas-tittle'>Cash</h1>
+                <h1 className='section-mesas-tittle'>Cash</h1>
                 <div className="container-ticket">
                     <div className="botones-arriba">
                         {/* <button onClick={irADashboard} className="boton-dash"><img src={iconoDash} alt="Atrás" style={{ width: '30px', height: '30px' }} /> Dashboard</button> */}
@@ -153,36 +172,31 @@ const Caja = () => {
 
                     </div>
                 </div>
-                {!mostrarCarta ? (
-                    <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
-                        {mesas.map((mesa) => (
-                            <Mesa key={mesa.id} mesa={mesa} isSelected={selectedTable == mesa.table_number} onClick={() => handleActiveSession(mesa.table_number)} angulo={angulosRotacion[mesa.id]}/>
-                            // <div
-                            //     key={mesa.id}
-                            //     style={{
-                            //         color: 'white',
-                            //         position: 'absolute',
-                            //         left: `${mesa.posicion.x}px`,
-                            //         top: `${mesa.posicion.y}px`,
-                            //         visibility: loading ? 'hidden' : 'visible'
-                            //     }}
-                            //     className="mesa-container"
-                            //     onClick={() => handleActiveSession(mesa.table_number)}>
-                            //     <img
-                            //         src={mesa.isActive ? mesagreen : mesa.icono}
-                            //         alt="Mesa"
-                            //         style={{
-                            //             width: '60px',
-                            //             height: '60px',
-                            //             transform: `rotate(${angulosRotacion[mesa.id] || 0}deg)`,
-                            //             transition: 'transform 0.3s ease-in-out'
-                            //         }}
-                            //     />
-                            //     <div className="numeroMesa">{mesa.table_number}</div>
-                            // </div>
 
-                        ))}
-                    </div>
+
+                {!mostrarCarta ? (
+                    
+                        
+
+                        <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
+                            <div className="loader" style={{ visibility: loading ? 'visible' : 'hidden' }}><span>Loading tables status</span>
+                            <div class="progress"></div>
+                        </div>
+                            {mesas.map((mesa) => (
+                                <Mesa
+                                    key={mesa.id}
+                                    mesa={mesa}
+                                    isSelected={selectedTable === mesa.table_number || mesaSeleccionada === mesa.id}
+                                    onDeselect={handleDeselect}
+                                    onClick={() => { 
+                                        handleActiveSession(mesa.table_number); 
+                                        handleMesaClick(mesa.id); 
+                                    }}
+                                    angulo={angulosRotacion[mesa.id]}
+                                />
+                            ))}
+                        </div>
+                    
                 ) : (
                     <div className="carta-caja">
                         <h1>Carta</h1>
@@ -194,6 +208,7 @@ const Caja = () => {
 };
 
 export default Caja;
+
 
 
 

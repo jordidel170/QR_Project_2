@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
-import mesagreen from "../../img/mesagreen.png"
-import mesaYellow from "../../img/mesaYellow.png"
+import React from 'react';
+import mesagreen from "../../img/mesagreen.png";
 
-const Mesa = ({ mesa, onClick, angulo }) => {
-    // Agrega un estado para rastrear si la mesa está seleccionada
-    const [isSelected, setIsSelected] = useState(false);
+const Mesa = ({ mesa, onClick, angulo, isSelected, onDeselect }) => {
 
-    // Determina qué imagen mostrar basado en si la mesa está seleccionada
-    const mesaImage = isSelected ? mesaYellow : (mesa.isActive ? mesagreen : mesa.icono);
-
-    // Actualiza el manejador de clics para cambiar el estado de isSelected
-    const handleClick = (e) => {
-        onClick(e); // Llama a la función onClick proporcionada como prop si es necesario
-        setIsSelected(!isSelected); // Cambia el estado de isSelected
+    const handleClick = () => {
+        if (isSelected) {
+            onDeselect(); // Llama a la función para deseleccionar la mesa
+        } else {
+            onClick(); // Llama a la función para seleccionar la mesa
+        }
     };
+
     return (
         <div
             style={{
@@ -27,10 +24,9 @@ const Mesa = ({ mesa, onClick, angulo }) => {
             onClick={handleClick}
         >
             <img
-                
-                src={mesaImage}
+                src={mesa.icono}
                 alt="Mesa"
-                
+                className={` ${isSelected ? 'img-resplandor' : ''} ${mesa.isActive ? 'filtros-mesa' : ''}`}
                 style={{
                     width: '60px',
                     height: '60px',
@@ -44,3 +40,4 @@ const Mesa = ({ mesa, onClick, angulo }) => {
 };
 
 export default Mesa;
+

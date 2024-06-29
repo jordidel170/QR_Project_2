@@ -33,17 +33,34 @@ section {
     border-radius: 20px;
 }
 
-.img-resplandor {
-    box-shadow: 0 0 8px 5px yellow;
+.filtros-mesa{
+    
+    filter: brightness(150%) sepia(0%) saturate(1000%) hue-rotate(100deg);
 }
 
-/* .mesa-container img:active{
-    box-shadow: 0 0 8px 5px yellow;
-} */
+.img-resplandor {
+    /* box-shadow: 0 0 8px 5px yellow; */
+    /* filter: hue-rotate(90deg); */
+    filter: brightness(145%) sepia(0%) saturate(1000%) hue-rotate(355deg) drop-shadow(0px 0px 15px rgb(163, 0, 0));
+    
+    /* filter:  */
+    /* background-color: #f9fd00;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    transform: scale(1.05); */
+    /* filter: grayscale(100%); */
+}
+
+
+
+
 
 .container-caja-mesas {
+    user-select: none;
     background: rgba(255, 255, 255, 0.4);
     position: relative;
+    /* width: auto;
+    height: auto; */
     /* width: 600px; */
     backdrop-filter: blur(15px);
     border: 2px solid rgba(255, 255, 255, .6);
@@ -283,6 +300,59 @@ section {
     text-align: center;
     font-weight: bold;
 }
+
+/* .loader{
+    transform: translateX(50%);
+    padding: 10px;
+    position: absolute;
+    top: -25px;
+    width: 50%;
+    height: 20px;
+   border: 1px solid #000000;
+} */
+.loader {
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 25px;
+    background: #dfdfdf;
+    border-radius: 10px;
+    margin: 0 auto;
+    overflow: hidden;
+
+    transform: translateX(10%);
+    padding: 10px;
+    position: absolute;
+    top: -30px;
+   border: 1px solid #000000;
+  }
+
+  .loader span{
+    top: 10px;
+    right: 10px;
+  }
+  .progress {
+    position: absolute;
+    top: 2%;
+    left: 0;
+    bottom: 0;
+    height: 30px;
+    width: 50%;
+    /* background: linear-gradient(to right, rgba(30,87,153,0) 0%,rgba(30,87,153,0.8) 15%,rgba(30,87,153,1) 19%,rgba(30,87,153,1) 20%,rgba(41,137,216,1) 50%,rgba(30,87,153,1) 80%,rgba(30,87,153,1) 81%,rgba(30,87,153,0.8) 85%,rgba(30,87,153,0) 100%); */
+    background: linear-gradient(to right, rgba(3,219,0,0) 0%,rgba(3,219,0,0.8) 15%,rgba(3,219,0,1) 19%,rgba(3,219,0,1) 20%,rgba(0,255,0,1) 50%,rgba(3,219,0,1) 80%,rgba(3,219,0,1) 81%,rgba(3,219,0,0.8) 85%,rgba(3,219,0,0) 100%);
+    animation: slide 1.4s infinite;
+  }
+  @keyframes slide {
+    from {
+      left: -50%;
+    }
+    to {
+      left: 100%;
+    }
+  }
+
+
 
 @media (min-width: 768px) and (max-width: 1300px) {
     .container-ticket{

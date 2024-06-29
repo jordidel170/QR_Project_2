@@ -89,8 +89,8 @@ const Mesas = () => {
         e.preventDefault();
         const contenedor = e.target.getBoundingClientRect();
         const id = e.dataTransfer.getData("text/plain");
-        const ajusteX = 46;
-        const ajusteY = 46;
+        const ajusteX = 26;
+        const ajusteY = 26;
         const nuevaPosicion = {
             x: e.clientX - contenedor.left - ajusteX,
             y: e.clientY - contenedor.top - ajusteY
