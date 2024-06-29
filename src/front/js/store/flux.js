@@ -351,8 +351,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const store = getStore();
                 setStore({ orders: [...store.orders, newOrder] });
             },
-            createNewTable: async (table_number) => {
-                const data = await dispatcherTable.create_table(table_number);
+            createNewTable: async (table_number, position_x, position_y) => {
+                const data = await dispatcherTable.create_table(table_number, position_x, position_y);
                 return data;
             },
     
@@ -360,6 +360,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const data = await dispatcherTable.delete_table(table_number)
                 return data;
             },
+
+            getTableList: async () => {
+                const data = await dispatcherTable.getTableList()
+                return data;
+            },
+
+            updateTablePosition: async(id, position) => {
+                const data = await dispatcherTable.updateTablePosition(id, position)
+                return data;
+            },
+
             createClient: async (name) => {
                 const data = await sesionsDispatcher.create_client(name);
                 return data;
@@ -410,7 +421,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             updateOrderStatus: async (restaurantId, orderId) => {
                 const data = await dispatcherOrder.updateOrderStatus(restaurantId, orderId);
                 return data;
-            }
+            },
+
+
 
             
         }

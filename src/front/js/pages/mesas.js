@@ -30,29 +30,29 @@ const Mesas = () => {
     };
 
     
-    const agregarMesa = async(icono) => {
+    const agregarMesa = async(iconoMesas) => {
         const maxId = mesas.reduce((max, mesa) => Math.max(max, mesa.id), 0);
        
         const nuevaMesa = {
             id: maxId + 1,
             table_number: `${maxId + 1}`,
-            posicion: { x: 0, y: 10 },
-            icono: icono,
+            position_x: 0,
+            position_y: 10,
+            icono: iconoMesas,
         };
-        await actions.createNewTable(nuevaMesa.table_number)
+        await actions.createNewTable(nuevaMesa)
         setMesas([...mesas, nuevaMesa]);
     };
-
-    
-    const moverMesa = (id, nuevaPosicion) => {
-        setMesas(mesas.map(mesa => {
-            if (mesa.id === id) {
-                return { ...mesa, posicion: nuevaPosicion };
+ 
+    const moverMesa = async (id, nuevaPosicion) => {
+        const mesa = mesas.find(mesa => mesa.id === id);
+        if (mesa) {
+            const response = await actions.updateTablePosition(id, nuevaPosicion);
+            if (response) {
+                setMesas(mesas.map(mesa => mesa.id === id ? { ...mesa, position_x: nuevaPosicion.x, position_y: nuevaPosicion.y } : mesa));
             }
-            return mesa;
-        }));
+        }
     };
-
     const iniciarArrastre = (e, id) => {
         e.dataTransfer.setData("text/plain", id);
         e.dataTransfer.setDragImage(e.target, 25, 25);
@@ -79,9 +79,9 @@ const Mesas = () => {
 
     const eliminarMesa = async(table_number) => {
         await actions.delete_table(table_number)
-        const updatedTables = mesas.filter(mesa => console.log(mesa.id) !== id)
+        setMesas(mesas.filter(mesa => mesa.table_number !== table_number))
        
-        setMesas(...mesas, updatedTables);
+
         
     };
 
@@ -118,24 +118,32 @@ const Mesas = () => {
 
     useEffect(() => {
         
-        const mesasGuardadas = localStorage.getItem('mesas');
-        const angulosGuardados = localStorage.getItem('angulosRotacion');
-        const largoSalaGuardado = localStorage.getItem('largoSala');
-        const anchoSalaGuardado = localStorage.getItem('anchoSala');
-        const tempLargoSalaGuardado = localStorage.getItem('tempLargoSala');
-        const tempAnchoSalaGuardado = localStorage.getItem('tempAnchoSala');
-        const nombreSalonGuardado = localStorage.getItem('nombreSalon');
+    //     const mesasGuardadas = localStorage.getItem('mesas');
+    //     const angulosGuardados = localStorage.getItem('angulosRotacion');
+    //     const largoSalaGuardado = localStorage.getItem('largoSala');
+    //     const anchoSalaGuardado = localStorage.getItem('anchoSala');
+    //     const tempLargoSalaGuardado = localStorage.getItem('tempLargoSala');
+    //     const tempAnchoSalaGuardado = localStorage.getItem('tempAnchoSala');
+    //     const nombreSalonGuardado = localStorage.getItem('nombreSalon');
       
-        if (mesasGuardadas) setMesas(JSON.parse(mesasGuardadas));
-        if (angulosGuardados) setAngulosRotacion(JSON.parse(angulosGuardados));
-        if (largoSalaGuardado) setLargoSala(JSON.parse(largoSalaGuardado));
-        if (anchoSalaGuardado) setAnchoSala(JSON.parse(anchoSalaGuardado));
-        if (tempLargoSalaGuardado) setTempLargoSala(JSON.parse(tempLargoSalaGuardado));
-        if (tempAnchoSalaGuardado) setTempAnchoSala(JSON.parse(tempAnchoSalaGuardado));
-        if (nombreSalonGuardado) setNombreSalon(nombreSalonGuardado);
-      }, []);
+    //     if (mesasGuardadas) setMesas(JSON.parse(mesasGuardadas));
+    //     if (angulosGuardados) setAngulosRotacion(JSON.parse(angulosGuardados));
+    //     if (largoSalaGuardado) setLargoSala(JSON.parse(largoSalaGuardado));
+    //     if (anchoSalaGuardado) setAnchoSala(JSON.parse(anchoSalaGuardado));
+    //     if (tempLargoSalaGuardado) setTempLargoSala(JSON.parse(tempLargoSalaGuardado));
+    //     if (tempAnchoSalaGuardado) setTempAnchoSala(JSON.parse(tempAnchoSalaGuardado));
+    //     if (nombreSalonGuardado) setNombreSalon(nombreSalonGuardado);
+    //   }, []);
+      const fetchTables = async () => {
+        const tables = await actions.getTableList();
+        setMesas(tables);
+      }
+
+      fetchTables();
       
-      const guardarEstado = () => {
+    }, []);
+
+    const guardarEstado = () => {
     
         localStorage.setItem('mesas', JSON.stringify(mesas));
         localStorage.setItem('angulosRotacion', JSON.stringify(angulosRotacion));
@@ -146,7 +154,6 @@ const Mesas = () => {
         localStorage.setItem('nombreSalon', nombreSalon);
         alert('Saved successfully.');
       };
-
     return (
         <>
         
@@ -178,9 +185,9 @@ const Mesas = () => {
                                         cursor: 'grab',
                                         color: 'white',
                                         position: 'absolute',
-                                        left: mesa.posicion.x,
-                                        top: mesa.posicion.y,
-                                        zIndex: parseInt(mesa.table_number.replace(/\D/g, '')) || 1
+                                        left: mesa.position_x,
+                                        top: mesa.position_y,
+                                        zIndex: parseInt(mesa.table_number.toString().replace(/\D/g, '')) || 1
                                     }}
                                     className="mesa-container"
                                 >
@@ -243,9 +250,6 @@ const Mesas = () => {
                                 placeholder="Ancho"
                             />
                             <button className='guardar' onClick={guardarEstado}>Save</button>
-                            {/* <Link to="../app/dashboard" className='link-boton-dash'>
-                            <button className='salir'>Exit</button>
-                            </Link> */}
                         </div>
                     </div>
                 </div>
