@@ -30,7 +30,7 @@ const Mesas = () => {
     };
 
     
-    const agregarMesa = async(iconoMesas) => {
+    const agregarMesa = async(icono) => {
         const maxId = mesas.reduce((max, mesa) => Math.max(max, mesa.id), 0);
        
         const nuevaMesa = {
@@ -38,7 +38,7 @@ const Mesas = () => {
             table_number: `${maxId + 1}`,
             position_x: 0,
             position_y: 10,
-            icono: iconoMesas,
+            icono: icono,
         };
         await actions.createNewTable(nuevaMesa)
         setMesas([...mesas, nuevaMesa]);
@@ -80,9 +80,6 @@ const Mesas = () => {
     const eliminarMesa = async(table_number) => {
         await actions.delete_table(table_number)
         setMesas(mesas.filter(mesa => mesa.table_number !== table_number))
-       
-
-        
     };
 
     const manejarSoltar = (e) => {
@@ -116,44 +113,17 @@ const Mesas = () => {
     }, [largoSala, anchoSala]);
 
 
-    useEffect(() => {
-        
-    //     const mesasGuardadas = localStorage.getItem('mesas');
-    //     const angulosGuardados = localStorage.getItem('angulosRotacion');
-    //     const largoSalaGuardado = localStorage.getItem('largoSala');
-    //     const anchoSalaGuardado = localStorage.getItem('anchoSala');
-    //     const tempLargoSalaGuardado = localStorage.getItem('tempLargoSala');
-    //     const tempAnchoSalaGuardado = localStorage.getItem('tempAnchoSala');
-    //     const nombreSalonGuardado = localStorage.getItem('nombreSalon');
-      
-    //     if (mesasGuardadas) setMesas(JSON.parse(mesasGuardadas));
-    //     if (angulosGuardados) setAngulosRotacion(JSON.parse(angulosGuardados));
-    //     if (largoSalaGuardado) setLargoSala(JSON.parse(largoSalaGuardado));
-    //     if (anchoSalaGuardado) setAnchoSala(JSON.parse(anchoSalaGuardado));
-    //     if (tempLargoSalaGuardado) setTempLargoSala(JSON.parse(tempLargoSalaGuardado));
-    //     if (tempAnchoSalaGuardado) setTempAnchoSala(JSON.parse(tempAnchoSalaGuardado));
-    //     if (nombreSalonGuardado) setNombreSalon(nombreSalonGuardado);
-    //   }, []);
-      const fetchTables = async () => {
+    const fetchTables = async () => {
         const tables = await actions.getTableList();
+        console.log(tables)
         setMesas(tables);
+        
       }
 
+    useEffect(() => {
       fetchTables();
       
     }, []);
-
-    const guardarEstado = () => {
-    
-        localStorage.setItem('mesas', JSON.stringify(mesas));
-        localStorage.setItem('angulosRotacion', JSON.stringify(angulosRotacion));
-        localStorage.setItem('largoSala', JSON.stringify(largoSala));
-        localStorage.setItem('anchoSala', JSON.stringify(anchoSala));
-        localStorage.setItem('tempLargoSala', JSON.stringify(tempLargoSala));
-        localStorage.setItem('tempAnchoSala', JSON.stringify(tempAnchoSala));
-        localStorage.setItem('nombreSalon', nombreSalon);
-        alert('Saved successfully.');
-      };
     return (
         <>
         
@@ -209,7 +179,7 @@ const Mesas = () => {
                                                 defaultValue={mesa.table_number}
                                                 onBlur={(e) => actualizarNombreMesa(mesa.id, e.target.value)}
                                             />
-                                            <button className='eliminar-mesa' onClick={() => eliminarMesa(mesa.id)} style={{ position: 'absolute', transform: 'translateX(-50%)', backgroundColor: 'red', color: 'white' }}>X</button>
+                                            <button className='eliminar-mesa' onClick={() => eliminarMesa(mesa.table_number)} style={{ position: 'absolute', transform: 'translateX(-50%)', backgroundColor: 'red', color: 'white' }}>X</button>
                                             <button className='girar-mesa' onClick={() => girarMesa(mesa.id)} style={{ position: 'absolute', transform: 'translateX(-50%)', bottom: '-20px' }}>⭮</button>
                                         </>
                                     ) : (
@@ -249,7 +219,7 @@ const Mesas = () => {
                                 }}
                                 placeholder="Ancho"
                             />
-                            <button className='guardar' onClick={guardarEstado}>Save</button>
+                            <button className='guardar' onClick={ () =>{fetchTables(); alert("Tables saved succesfully!")}}>Save</button>
                         </div>
                     </div>
                 </div>

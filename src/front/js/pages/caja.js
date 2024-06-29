@@ -31,25 +31,23 @@ const Caja = () => {
     const { store, actions } = useContext(Context)
     const [activeSession, setActiveSession] = useState({ id_table: 1, products: [] })
     const [loading, setLoading] = useState(true)
-    const [selectedTable, setSelectedTable] = useState(null)
-    const recuperarEstado = () => {
+    const [tableList, setTableList] = useState([])
+    
+    const recuperarEstado = async() => {
         const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
         const ancho = JSON.parse(localStorage.getItem('anchoSala')) || '600px';
-        const mesasGuardadas = JSON.parse(localStorage.getItem('mesas')) || [];
         const angulosGuardados = JSON.parse(localStorage.getItem('angulosRotacion')) || {};
-
+        const data = await actions.getTableList()
+        setTableList(data) 
 
         setLargoSala(largo);
         setAnchoSala(ancho);
-        setMesas(mesasGuardadas);
+   
         setAngulosRotacion(angulosGuardados);
     };
 
-    const navigate = useNavigate();
+   
 
-    const irADashboard = () => {
-        navigate('../app/dashboard');
-    };
 
     const manejarClickAnadir = () => {
         setMostrarCarta(true);
@@ -69,7 +67,7 @@ const Caja = () => {
             await handleActiveSessionList();
             setLoading(false); 
         };
-
+console.log(store.tableList)
         fetchData();
     }, []);
 
@@ -157,7 +155,7 @@ const Caja = () => {
                 </div>
                 {!mostrarCarta ? (
                     <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
-                        {mesas.map((mesa) => (
+                        {tableList.map((mesa) => (
                             // <Mesa key={mesa.id} mesa={mesa} isSelected={selectedTable == mesa.table_number} onClick={() => handleActiveSession(mesa.table_number)} angulo={angulosRotacion[mesa.id]}/>
                             <div
                                 key={mesa.id}

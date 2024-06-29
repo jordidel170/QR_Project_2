@@ -31,7 +31,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             restaurant: [],
             totalAmount: 0,
             orders: [],
-            invoices: []
+            invoices: [],
+            tableList: []
         },
         actions: {
 
@@ -363,6 +364,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             getTableList: async () => {
                 const data = await dispatcherTable.getTableList()
+                const store = getStore()
+                setStore({ tableList: [...store.tableList, data]})
                 return data;
             },
 

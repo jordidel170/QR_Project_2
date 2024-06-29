@@ -23,11 +23,11 @@ const dispatcherTable = {
     
     return data
 }, 
- delete_table: async(table_id) => {
-    const response = await fetch(`http://127.0.0.1:5000/app/tables/${table_id}`, {
+ delete_table: async(table_number) => {
+    const response = await fetch(`http://127.0.0.1:5000/app/tables/${table_number}`, {
         method: 'DELETE',
         headers: { "Content-Type": "application/json" },
-        CORS:'Access-Control-Allow-Origin',
+        CORS:'Access-Control-Allow-Origin'
     })
     console.log(response)
     if(!response.ok) throw Error ("No se ha podido eliminar la mesa")
