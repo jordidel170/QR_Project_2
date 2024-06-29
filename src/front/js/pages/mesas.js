@@ -95,10 +95,9 @@ const Mesas = () => {
         moverMesa(parseInt(id), nuevaPosicion);
     };
 
-    const actualizarNombreMesa = (id, nuevoNombre) => {
-        setMesas(mesasPrevias => mesasPrevias.map(mesa =>
-            mesa.id === id ? { ...mesa, nombre: nuevoNombre } : mesa
-        ));
+    const actualizarNombreMesa = async(id, nuevoNombre) => {
+       await actions.updateTableNumber(id, nuevoNombre)
+       
     };
 
     useEffect(() => {
@@ -162,7 +161,7 @@ const Mesas = () => {
                                     className="mesa-container"
                                 >
                                     <img
-                                        src={mesa.icono}
+                                        src={iconoMesas}
                                         alt="Mesa"
                                         style={{
                                             width: '60px',

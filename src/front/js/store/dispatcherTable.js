@@ -60,7 +60,22 @@ const dispatcherTable = {
     
         const data = await response.json();
     return data;
- }
+ }, 
+
+ updateTableNumber: async (id, table_number) => {
+    const response = await fetch(`http://127.0.0.1:5000/app/tables/${id}/update/number`, {
+        method: 'PATCH',
+        headers: {"Content-Type": "application/json"},
+        CORS:'Access-Control-Allow-Origin',
+        body: JSON.stringify({ table_number: table_number })
+    });
+    if(!response.ok) throw Error("Error updating table positions")
+    
+        const data = await response.json();
+    return data;
+ }, 
+
+ 
 
 }   
 

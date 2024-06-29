@@ -18,7 +18,7 @@ import suelo from "../../img/suelo506.png";
 import { Context } from "../store/appContext";
 import Mesa from "../component/Mesa";
 import mesagreen from "../../img/mesagreen.png"
-// import mesaYellow from "../../img/mesaYellow.png"
+
 
 
 
@@ -169,7 +169,7 @@ console.log(store.tableList)
                                 className="mesa-container"
                                 onClick={() => handleActiveSession(mesa.table_number)}>
                                 <img
-                                    src={mesa.isActive ? mesagreen : mesa.icono}
+                                    src={mesa.isActive ? mesagreen : iconoMesas}
                                     alt="Mesa"
                                     style={{
                                         width: '60px',

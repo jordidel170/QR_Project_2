@@ -374,6 +374,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return data;
             },
 
+            updateTableNumber: async(id, table_number) => {
+                const data = await dispatcherTable.updateTableNumber(id, table_number)
+                return data;
+            },
+
             createClient: async (name) => {
                 const data = await sesionsDispatcher.create_client(name);
                 return data;
