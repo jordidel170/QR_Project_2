@@ -31,8 +31,8 @@ import AdminMenuView from './pages/adminMenuView';
 import EditMenuModal from "./component/EditMenuModal";
 
 import { Invoice } from "./pages/Invoice";
-import { Sidebar } from "./component/sidebar";
-import Navbarglobal from "./component/navbarglobal";
+import { Sidebar } from "./component/Sidebar";
+// import Navbarglobal from "./component/navbarglobal";
 
 const ProtectedRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");

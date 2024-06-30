@@ -41,7 +41,7 @@ export const OrderSummary = () => {
             const orderId = orderResult.id;
             console.log('Order ID:', orderId);
             const invoiceResult = await actions.createInvoice(restaurantId, tableId, orderId);
-            actions.clearCart();
+            // actions.clearCart();
             navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`);
         } else {
             throw new Error('Order result is undefined or missing the order ID');
@@ -117,7 +117,7 @@ export const OrderSummary = () => {
                 <div className="payment-method">
                     <label htmlFor="payment">Payment Method:</label>
                     <div className="payment-icons">
-                        <button className={paymentMethod === 'credit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('credit')}>
+                        {/* <button className={paymentMethod === 'credit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('credit')}>
                         <i class="fa-solid fa-credit-card"></i> Credit Card
                         </button>
                         <button className={paymentMethod === 'debit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('debit')}>
@@ -125,7 +125,7 @@ export const OrderSummary = () => {
                         </button>
                         <button className={paymentMethod === 'paypal' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('paypal')}>
                         <i class="fa-brands fa-paypal"></i> PayPal
-                        </button>
+                        </button> */}
                         <button className={paymentMethod === 'cash' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('cash')}>
                         <i class="fa-solid fa-money-bill"></i> Pay at Cashier
                         </button>

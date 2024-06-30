@@ -6,7 +6,7 @@ const dispatcherTable = {
     const requestBody = {
        "table_number": table_number
     }
-    const response = await fetch(`http://127.0.0.1:5000/app/tables`, { 
+    const response = await fetch(`${process.env.BACKEND_URL}/app/tables`, { 
          method: "POST",
          headers: { "Content-Type": "application/json" },
          CORS:'Access-Control-Allow-Origin',

@@ -92,7 +92,7 @@ def upgrade():
     # )
   
 def downgrade():
-    op.drop_table('invoice')
+    # op.drop_table('invoice')
     op.drop_table('order_item')
     op.drop_table('order')
     # op.drop_table('user')

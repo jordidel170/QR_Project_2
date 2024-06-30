@@ -72,7 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             getMenu: () => {
                 const store = getStore()
-                fetch(`http://127.0.0.1:5000/app/products`)
+                fetch(`${process.env.BACKEND_URL}/app/products`)
                     .then(response => response.json())
                     .then(data => {
                         setStore({ ...store, menu: data });
@@ -98,7 +98,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 };
 
                 try {
-                    const responseSession = await fetch(`http://127.0.0.1:5000/app/sessions/${tableId}/products`,
+                    const responseSession = await fetch(`${process.env.BACKEND_URL}/app/sessions/${tableId}/products`,
                         {
                             method: 'POST',
                             headers: {
