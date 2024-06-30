@@ -41,7 +41,7 @@ export const Sidebar = () => {
 		</Link>
 		<Link to="../app/generate-qr" className="link-no-decoration">
 		{/* <button className="side qr-btn">QR Codes<img src={iconoQR} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button> */}
-		<button className={`side qr-btn ${location.pathname === "/app/generate-qr" ? "active" : ""}`}>QR Codes<img src={iconoQR} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button>
+		<button className={`side qr-btn ${location.pathname === "/app/generate-qr" ? "active" : ""}`}>QR Code<img src={iconoQR} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button>
 
 		</Link>
 		{/* <button className="side billing-btn">Billing<img src={iconoBilling} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button>	 */}

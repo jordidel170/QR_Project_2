@@ -120,7 +120,9 @@ const Caja = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             handleActiveSessionList();
-        }, 3000000);
+        }, 3000);
+
+        // OJO, TIEMPO DE ACTUALIZAR
 
         return () => clearInterval(interval);
     }, []);
