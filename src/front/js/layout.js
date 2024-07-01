@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes, useLocation, matchPath } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation, matchPath, Redirect } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import {jwtDecode} from "jwt-decode";
@@ -66,7 +66,7 @@ const SidebarController = () => {
       "/app/restaurants/:restaurantId/orders"
     ];
   
-    const showSidebar = pathsToShowSidebar.some(path =>
+    const showSidebar = pathsToShowSidebar.some((path) =>
       matchPath(path, location.pathname)
     );
   
@@ -89,9 +89,11 @@ const Layout = () => {
     <BrowserRouter basename={basename}>
       <ScrollToTop>
         <Routes>
+        
           <Route element={<Login />} path="/app/login" />
           <Route element={<Signup />} path="/app/signup" />
           <Route element={<Home />} path="/app/home" />
+          <Route path="/" element={<Navigate to="/app/caja" />} />
           <Route element={<ProtectedRoute role="admin"><Caja /></ProtectedRoute>} path="/app/caja" />
           <Route element={<ProtectedRoute role="admin"><Dashboard /></ProtectedRoute>} path="/app/dashboard" />
           <Route element={<ProtectedRoute role="admin"><Mesas /></ProtectedRoute>} path="/app/mesas" />
