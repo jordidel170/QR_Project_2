@@ -35,36 +35,31 @@ const Caja = () => {
     const [selectedTable, setSelectedTable] = useState(null)
     const [mesaSeleccionada, setMesaSeleccionada] = useState(null);
     const [productPrices, setProductPrices] = useState([]);
-    const [paidAmount, setPaidAmount] = useState(0); // Estado para manejar la cantidad pagada
-    const totalToPay = activeSession.products.reduce((acc, product) => acc + (product.price * product.quantity), 0); // Calcula el total a pagar
+    const [paidAmount, setPaidAmount] = useState(0);
+    const totalToPay = activeSession.products.reduce((acc, product) => acc + (product.price * product.quantity), 0);
     const navigate = useNavigate();
     const payInputRef = useRef(null);
-    
-
-    const recuperarEstado = () => {
+    const [isSessionClosed, setIsSessionClosed] = useState(false)
     const [tableList, setTableList] = useState([])
-    
-    const recuperarEstado = async() => {
+
+    const recuperarEstado = async () => {
         const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
         const ancho = JSON.parse(localStorage.getItem('anchoSala')) || '600px';
         const angulosGuardados = JSON.parse(localStorage.getItem('angulosRotacion')) || {};
-        const data = await actions.getTableList()
-        setTableList(data) 
-
         setLargoSala(largo);
         setAnchoSala(ancho);
-   
+        const data = await actions.getTableList()
+        setTableList(data)
+       
+       
         setAngulosRotacion(angulosGuardados);
     };
 
-    const irADashboard = () => {
-        navigate('../app/dashboard');
-    };
 
     const manejarClickAnadir = () => {
         setMostrarCarta(true);
         setMostrarCalculadora(false);
-        resetPaidAmount(); 
+        resetPaidAmount();
     };
 
     const manejarClickAtras = () => {
@@ -94,18 +89,18 @@ const Caja = () => {
     };
 
     const handlePaidAmountChange = (event) => {
-        const value = parseFloat(event.target.value); // Convierte el valor del input a número
-        if (!isNaN(value)) { // Verifica si el valor es un número
-            setPaidAmount(value); // Actualiza el estado con el nuevo valor
+        const value = parseFloat(event.target.value);
+        if (!isNaN(value)) {
+            setPaidAmount(value);
         } else {
-            setPaidAmount(0); // Resetea el estado si el valor no es un número
+            setPaidAmount(0);
         }
     };
 
     const resetPaidAmount = () => {
-        setPaidAmount(0); // Resetea el monto pagado
+        setPaidAmount(0);
         if (payInputRef.current) {
-            payInputRef.current.value = ""; // Borra el contenido del input
+            payInputRef.current.value = "";
         }
     };
 
@@ -118,7 +113,7 @@ const Caja = () => {
             await handleActiveSessionList();
             setLoading(false);
         };
-console.log(store.tableList)
+        console.log(store.tableList)
         fetchData();
     }, []);
 
@@ -145,9 +140,9 @@ console.log(store.tableList)
             setActiveSession({ table_number: table_number, products: [] });
             return;
         }
-    
-        
-        // Combina los productos en la sesión con sus precios correspondientes
+
+
+
         const productsWithPrices = data.products.map(product => {
             const productDetails = productPrices.find(p => p.id === product.id_product);
             return {
@@ -179,6 +174,12 @@ console.log(store.tableList)
         );
     };
 
+    const handleCloseSession = async (table_number) => {
+        const closedSession = await actions.closeActiveSession(table_number)
+        console.log(closedSession)
+        setIsSessionClosed(true)
+    }
+
     const handleMesaClick = (id) => {
         setMesaSeleccionada(id);
     };
@@ -189,36 +190,35 @@ console.log(store.tableList)
     };
 
     const handleClickOutside = (event) => {
-        // Verifica si el clic fue fuera de las mesas
+
         if (!event.target.closest('.mesa-container')) {
-            handleDeselect(); // Deselecciona la última mesa seleccionada
+            handleDeselect();
         }
     };
 
     const handleKeyPress = (key) => {
-        if (key === '⌫') { // Si la tecla es la flecha de borrar
-            // Elimina el último carácter
+        if (key === '⌫') {
+
             payInputRef.current.value = payInputRef.current.value.slice(0, -1);
-        } else { // Para cualquier otro botón, añade el carácter al final
+        } else {
             payInputRef.current.value += key;
         }
-    
-        // Actualiza el estado de paidAmount
+
+
         handlePaidAmountChange({ target: { value: payInputRef.current.value } });
     };
 
-const formattedChange = (change) => {
-    // Verificar si el cambio es menor que cero y cercano a cero
-    if (change < 0 && change > -0.005) {
-        return "0.00"; // Mostrar como 0.00 en lugar de -0.00
-    }
-    return change.toFixed(2); // Formatear el cambio a dos decimales en cualquier otro caso
-};
+    const formattedChange = (change) => {
+        if (change < 0 && change > -0.005) {
+            return "0.00";
+        }
+        return change.toFixed(2);
+    };
 
     useEffect(() => {
         const interval = setInterval(() => {
             handleActiveSessionList();
-        }, 3000);
+        }, 300000);
 
         // OJO, TIEMPO DE ACTUALIZAR
 
@@ -243,7 +243,6 @@ const formattedChange = (change) => {
                 <h1 className='section-mesas-tittle'>Cash</h1>
                 <div className="container-ticket">
                     <div className="botones-arriba">
-                        {/* <button onClick={irADashboard} className="boton-dash"><img src={iconoDash} alt="Atrás" style={{ width: '30px', height: '30px' }} /> Dashboard</button> */}
                         <button className="boton-atras" onClick={manejarClickAtras}><img src={iconoAtras} alt="Atrás" style={{ width: '20px', height: '20px' }} /> Back</button>
 
                     </div>
@@ -255,19 +254,21 @@ const formattedChange = (change) => {
                                     <h5> Table number: <strong> {activeSession.table_number}</strong></h5>
                                     {/* <h5> Items: ✍</h5> */}
                                     {/* <ul> */}
-                                    {activeSession.products && activeSession.products.length > 0 ? (
-                                        activeSession.products.map((product, index) => (
-                                            <div className="div-product" key={index}>
-                                                <div className="product--name">{product.product_name}</div>
-                                                <div className="product-qty">{product.quantity}</div>
-                                                {/* <div className="product-price">${product.price ? product.price.toFixed(2) : "0.00"}</div> */}
-                                                <div className="product-total"><div className="divisa"> $</div>{(product.price * product.quantity).toFixed(2)}</div>
-                                            </div>
 
-                                        ))
-                                    ) : (
+                                    {isSessionClosed || activeSession.products && activeSession.products.length > 0 ? (
+                                        <>
+                                            {activeSession.products.map((product, index) => (
+                                                <div className="div-product" key={index}>
+                                                    <div className="product--name">{product.product_name}</div>
+                                                    <div className="product-qty">{product.quantity}</div>
+                                                    {/* <div className="product-price">${product.price ? product.price.toFixed(2) : "0.00"}</div> */}
+                                                    <div className="product-total"><div className="divisa"> $</div>{(product.price * product.quantity).toFixed(2)}</div>
+                                                </div>))}
+                                            <button onClick={() => handleCloseSession(activeSession.table_number)}>Close Session</button>
+                                        </>
+                                        ) : (
                                         <div className="empty-table-message">▶ Empty table ◀</div>
-                                    )}
+                                        )}
                                     {/* </ul> */}
                                 </div>
                             }
@@ -289,7 +290,7 @@ const formattedChange = (change) => {
 
                     </div>
                 </div>
-                
+
 
                 {!mostrarCarta && !mostrarCalculadora ? (
 
@@ -299,7 +300,7 @@ const formattedChange = (change) => {
                         <div className="loader" style={{ visibility: loading ? 'visible' : 'hidden' }}><span>Loading tables status</span>
                             <div className="progress"></div>
                         </div>
-                        {mesas.map((mesa) => (
+                        {tableList.map((mesa) => (
                             <Mesa
                                 key={mesa.id}
                                 mesa={mesa}
@@ -308,7 +309,6 @@ const formattedChange = (change) => {
                                 onClick={() => {
                                     handleActiveSession(mesa.table_number);
                                     handleMesaClick(mesa.id);
-                                    
                                 }}
                                 angulo={angulosRotacion[mesa.id]}
                             />
@@ -321,7 +321,6 @@ const formattedChange = (change) => {
                 ) : (
                     <div className="container-calculadora">
                         <div className="calculadora">
-                            {/* <h1>Calculadora</h1> */}
                             <div className="calculadora-total">
                                 <div className="to-pay">
                                     <h2>To Pay:</h2>
@@ -335,7 +334,7 @@ const formattedChange = (change) => {
                                     <h2>Paid:</h2>
                                     <div className="dollar-group">
 
-                                        <input className="pay-input" type="text" onChange={handlePaidAmountChange} ref={payInputRef}/>
+                                        <input className="pay-input" type="text" onChange={handlePaidAmountChange} ref={payInputRef} />
                                     </div>
                                 </div>
                                 <div className="teclado">
@@ -357,7 +356,7 @@ const formattedChange = (change) => {
         </>
     );
 };
-};
+
 
 export default Caja;
 
