@@ -33,8 +33,8 @@ const Caja = () => {
     const [selectedTable, setSelectedTable] = useState(null);
     const [mesaSeleccionada, setMesaSeleccionada] = useState(null);
     const [productPrices, setProductPrices] = useState([]);
-    const [paidAmount, setPaidAmount] = useState(0); // Estado para manejar la cantidad pagada
-    const totalToPay = activeSession.products.reduce((acc, product) => acc + (product.price * product.quantity), 0); // Calcula el total a pagar
+    const [paidAmount, setPaidAmount] = useState(0);
+    const totalToPay = activeSession.products.reduce((acc, product) => acc + (product.price * product.quantity), 0);
     const navigate = useNavigate();
     const payInputRef = useRef(null);
     const [mostrarModal, setMostrarModal] = useState(false);
@@ -53,23 +53,23 @@ const Caja = () => {
         setAngulosRotacion(angulosGuardados);
     };
 
-    const irADashboard = () => {
-        navigate('../app/dashboard');
-    };
-
     const abrirModal = () => {
         setModalVisible(true);
         setMostrarModal(true);
     };
 
     const cerrarModal = () => {
-        setModalVisible(false); // Iniciar la animación de desvanecimiento
+        setModalVisible(false);
         setTimeout(() => {
-            setMostrarModal(false); // Después de que la animación se complete, ocultar el modal completamente
-        }, 500); // Debe coincidir con la duración de la animación CSS
+            setMostrarModal(false);
+        }, 500);
     };
 
     const manejarClickAtrasConModal = () => {
+        if (totalToPay === 0) {
+            return;
+        }
+    
         manejarClickAtras();
         abrirModal();
     };
@@ -107,19 +107,19 @@ const Caja = () => {
     };
 
     const handlePaidAmountChange = (event) => {
-        const value = parseFloat(event.target.value); // Convierte el valor del input a número
-        if (!isNaN(value)) { // Verifica si el valor es un número
-            setPaidAmount(value); // Actualiza el estado con el nuevo valor
+        const value = parseFloat(event.target.value);
+        if (!isNaN(value)) {
+            setPaidAmount(value);
         } else {
-            setPaidAmount(0); // Resetea el estado si el valor no es un número
+            setPaidAmount(0);
         }
         
     };
 
     const resetPaidAmount = () => {
-        setPaidAmount(0); // Resetea el monto pagado
+        setPaidAmount(0);
         if (payInputRef.current) {
-            payInputRef.current.value = ""; // Borra el contenido del input
+            payInputRef.current.value = "";
         }
     };
 
@@ -134,7 +134,6 @@ const Caja = () => {
             return;
         }
         
-        // Combina los productos en la sesión con sus precios correspondientes
         const productsWithPrices = data.products.map(product => {
             const productDetails = productPrices.find(p => p.id === product.id_product);
             return {
@@ -198,19 +197,23 @@ const formattedChange = (change) => {
 };
 
 const manejarClickCash = () => {
+    if (totalToPay === 0) {
+        return;
+    }
+
     if (paidAmount < totalToPay) {
-        setModalInsufficientPaymentVisible(true); // Mostrar el modal de pago insuficiente
+        setModalInsufficientPaymentVisible(true);
     } else {
-        setModalInsufficientPaymentVisible(false); // Ocultar el modal de pago insuficiente si el pago es suficiente
-        abrirModal();  // Abre el modal principal si el pago es suficiente
+        setModalInsufficientPaymentVisible(false);
+        abrirModal();
     }
 
     if (change >= 0) {
-        setMostrarCalculadora(false); // Ocultar la calculadora si el cambio es >= 0
-        setMostrarCarta(false); // Asegurarse de que también se oculta la carta si estaba visible
-        handleDeselect(); // Deseleccionar mesa si está seleccionada
+        setMostrarCalculadora(false);
+        setMostrarCarta(false);
+        handleDeselect();
     } else {
-        setMostrarCalculadora(true); // Mostrar la calculadora si el cambio es < 0
+        setMostrarCalculadora(true);
     }
 };
 
@@ -269,7 +272,6 @@ useEffect(() => {
     }, [mostrarCalculadora]);
 
     useEffect(() => {
-        // Oculta el modal de pago insuficiente si el cambio es >= 0
         if (change >= 0) {
             setModalInsufficientPaymentVisible(false);
         }
@@ -277,20 +279,17 @@ useEffect(() => {
 
     useEffect(() => {
         const handleCloseModal = (event) => {
-            // Verifica si el clic fue fuera del modal o si se pulsó cualquier tecla
             if (
                 modalInsufficientPaymentVisible &&
                 (event.type === 'click' || event.type === 'keydown')
             ) {
-                setModalInsufficientPaymentVisible(false); // Cierra el modal
+                setModalInsufficientPaymentVisible(false);
             }
         };
 
-        // Agrega los listeners para clics y teclas
         document.addEventListener('click', handleCloseModal);
         document.addEventListener('keydown', handleCloseModal);
 
-        // Limpia los listeners al desmontar el componente
         return () => {
             document.removeEventListener('click', handleCloseModal);
             document.removeEventListener('keydown', handleCloseModal);
@@ -303,7 +302,6 @@ useEffect(() => {
                 <h1 className='section-mesas-tittle'>Cash</h1>
                 <div className="container-ticket">
                     <div className="botones-arriba">
-                        {/* <button onClick={irADashboard} className="boton-dash"><img src={iconoDash} alt="Atrás" style={{ width: '30px', height: '30px' }} /> Dashboard</button> */}
                         <button className="boton-atras" onClick={manejarClickAtras}><img src={iconoAtras} alt="Atrás" style={{ width: '20px', height: '20px' }} /> Back</button>
                     </div>
                     <div className="ticket">
@@ -400,12 +398,12 @@ useEffect(() => {
                 {mostrarModal && (
                 <div className={`modal-cash ${mostrarModal ? 'fade-in' : 'fade-out'}`}>
                     <h3>Ticket invoiced.</h3>
-                    {/* Aquí puedes colocar contenido adicional del modal principal */}
+                    
                     
                 </div>
             )}
 
-            {/* Modal de pago insuficiente */}
+            
             {modalInsufficientPaymentVisible && (
                 <div className="modal-insufficient-payment">
                     <h3>Insufficient Payment</h3>
