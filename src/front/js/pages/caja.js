@@ -19,6 +19,8 @@ import iconoDash from "../../img/dash.png";
 import suelo from "../../img/suelo506.png";
 import { Context } from "../store/appContext";
 import Mesa from "../component/Mesa";
+import mesagreen from "../../img/mesagreen.png"
+
 
 const Caja = () => {
     const [largoSala, setLargoSala] = useState('600px');
@@ -40,14 +42,18 @@ const Caja = () => {
     
 
     const recuperarEstado = () => {
+    const [tableList, setTableList] = useState([])
+    
+    const recuperarEstado = async() => {
         const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
         const ancho = JSON.parse(localStorage.getItem('anchoSala')) || '600px';
-        const mesasGuardadas = JSON.parse(localStorage.getItem('mesas')) || [];
         const angulosGuardados = JSON.parse(localStorage.getItem('angulosRotacion')) || {};
+        const data = await actions.getTableList()
+        setTableList(data) 
 
         setLargoSala(largo);
         setAnchoSala(ancho);
-        setMesas(mesasGuardadas);
+   
         setAngulosRotacion(angulosGuardados);
     };
 
@@ -112,7 +118,7 @@ const Caja = () => {
             await handleActiveSessionList();
             setLoading(false);
         };
-
+console.log(store.tableList)
         fetchData();
     }, []);
 
@@ -283,7 +289,7 @@ const formattedChange = (change) => {
 
                     </div>
                 </div>
-
+                
 
                 {!mostrarCarta && !mostrarCalculadora ? (
 
@@ -350,6 +356,7 @@ const formattedChange = (change) => {
             </section>
         </>
     );
+};
 };
 
 export default Caja;
