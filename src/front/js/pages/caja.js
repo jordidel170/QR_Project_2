@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/caja.css";
 import mesasImage from '../../img/mesas.png';
@@ -13,11 +13,12 @@ import iconoLlave from "../../img/llave.png";
 import iconoPagar from "../../img/pagar.png";
 import iconoAnadir from "../../img/anadir.png";
 import iconoEliminar from "../../img/eliminar.png";
+import iconoCard from "../../img/card1.png";
+import iconoMoney from "../../img/money1.png";
 import iconoDash from "../../img/dash.png";
 import suelo from "../../img/suelo506.png";
 import { Context } from "../store/appContext";
 import Mesa from "../component/Mesa";
-
 
 const Caja = () => {
     const [largoSala, setLargoSala] = useState('600px');
@@ -25,13 +26,18 @@ const Caja = () => {
     const [mesas, setMesas] = useState([]);
     const [angulosRotacion, setAngulosRotacion] = useState({});
     const [mostrarCarta, setMostrarCarta] = useState(false);
+    const [mostrarCalculadora, setMostrarCalculadora] = useState(false);
     const { store, actions } = useContext(Context)
     const [activeSession, setActiveSession] = useState({ id_table: 1, products: [] })
     const [loading, setLoading] = useState(true)
     const [selectedTable, setSelectedTable] = useState(null)
     const [mesaSeleccionada, setMesaSeleccionada] = useState(null);
-
+    const [productPrices, setProductPrices] = useState([]);
+    const [paidAmount, setPaidAmount] = useState(0); // Estado para manejar la cantidad pagada
+    const totalToPay = activeSession.products.reduce((acc, product) => acc + (product.price * product.quantity), 0); // Calcula el total a pagar
     const navigate = useNavigate();
+    const payInputRef = useRef(null);
+    
 
     const recuperarEstado = () => {
         const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
@@ -45,27 +51,64 @@ const Caja = () => {
         setAngulosRotacion(angulosGuardados);
     };
 
-    
-
     const irADashboard = () => {
         navigate('../app/dashboard');
     };
 
     const manejarClickAnadir = () => {
         setMostrarCarta(true);
+        setMostrarCalculadora(false);
+        resetPaidAmount(); 
     };
 
     const manejarClickAtras = () => {
         setMostrarCarta(false);
+        setMostrarCalculadora(false);
+        resetPaidAmount();
+    };
+
+    const manejarClickPagar = () => {
+        setMostrarCalculadora(true);
+        setMostrarCarta(false);
+        resetPaidAmount();
     };
 
     const abrirCaja = () => {
         alert("Cash Box Opened!");
-    }
+    };
+
+    const fetchProductPrices = async () => {
+        try {
+            const response = await fetch('http://127.0.0.1:5000/app/products');
+            const data = await response.json();
+            setProductPrices(data);
+        } catch (error) {
+            console.error("Error fetching product prices:", error);
+        }
+    };
+
+    const handlePaidAmountChange = (event) => {
+        const value = parseFloat(event.target.value); // Convierte el valor del input a número
+        if (!isNaN(value)) { // Verifica si el valor es un número
+            setPaidAmount(value); // Actualiza el estado con el nuevo valor
+        } else {
+            setPaidAmount(0); // Resetea el estado si el valor no es un número
+        }
+    };
+
+    const resetPaidAmount = () => {
+        setPaidAmount(0); // Resetea el monto pagado
+        if (payInputRef.current) {
+            payInputRef.current.value = ""; // Borra el contenido del input
+        }
+    };
+
+    const change = paidAmount - totalToPay;
 
     useEffect(() => {
         const fetchData = async () => {
             recuperarEstado();
+            await fetchProductPrices();
             await handleActiveSessionList();
             setLoading(false);
         };
@@ -84,10 +127,41 @@ const Caja = () => {
         aplicarMedidas();
     }, [largoSala, anchoSala]);
 
+    // const handleActiveSession = async (table_number) => {
+    //     const data = await actions.getActiveSessionTable(table_number);
+    //     if (!data.products || !Array.isArray(data.products)) {
+    //         setActiveSession({ id_table: table_number, products: [] });
+    //         return;
+    //     }
     const handleActiveSession = async (table_number) => {
-        const data = await actions.getActiveSessionTable(table_number)
-        setActiveSession(data)
-    }
+        const data = await actions.getActiveSessionTable(table_number);
+        if (!data.products || !Array.isArray(data.products)) {
+            setActiveSession({ table_number: table_number, products: [] });
+            return;
+        }
+    
+        
+        // Combina los productos en la sesión con sus precios correspondientes
+        const productsWithPrices = data.products.map(product => {
+            const productDetails = productPrices.find(p => p.id === product.id_product);
+            return {
+                ...product,
+                price: productDetails ? productDetails.price : null
+            };
+        });
+
+        const groupedProducts = productsWithPrices.reduce((acc, product) => {
+            if (!acc[product.id_product]) {
+                acc[product.id_product] = { ...product };
+            } else {
+                acc[product.id_product].quantity += product.quantity;
+            }
+            return acc;
+        }, {});
+
+        // setActiveSession({ ...data, products: Object.values(groupedProducts) });
+        setActiveSession({ table_number: table_number, products: Object.values(groupedProducts) });
+    };
 
     const handleActiveSessionList = async () => {
         const dataSessionList = await actions.getActiveSessionList();
@@ -98,8 +172,6 @@ const Caja = () => {
             })
         );
     };
-
-    
 
     const handleMesaClick = (id) => {
         setMesaSeleccionada(id);
@@ -117,6 +189,26 @@ const Caja = () => {
         }
     };
 
+    const handleKeyPress = (key) => {
+        if (key === '⌫') { // Si la tecla es la flecha de borrar
+            // Elimina el último carácter
+            payInputRef.current.value = payInputRef.current.value.slice(0, -1);
+        } else { // Para cualquier otro botón, añade el carácter al final
+            payInputRef.current.value += key;
+        }
+    
+        // Actualiza el estado de paidAmount
+        handlePaidAmountChange({ target: { value: payInputRef.current.value } });
+    };
+
+const formattedChange = (change) => {
+    // Verificar si el cambio es menor que cero y cercano a cero
+    if (change < 0 && change > -0.005) {
+        return "0.00"; // Mostrar como 0.00 en lugar de -0.00
+    }
+    return change.toFixed(2); // Formatear el cambio a dos decimales en cualquier otro caso
+};
+
     useEffect(() => {
         const interval = setInterval(() => {
             handleActiveSessionList();
@@ -127,12 +219,17 @@ const Caja = () => {
         return () => clearInterval(interval);
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.addEventListener('click', handleClickOutside);
         return () => {
             document.removeEventListener('click', handleClickOutside);
         };
     }, []);
+    useEffect(() => {
+        if (mostrarCalculadora && payInputRef.current) {
+            payInputRef.current.focus();
+        }
+    }, [mostrarCalculadora]);
 
     return (
         <>
@@ -148,26 +245,38 @@ const Caja = () => {
                         <div className="ticket_table">
                             {
                                 <div className="ticket-view">
-                                    <h5> Table number: {activeSession.table_number}</h5>
-                                    <h5> Items: ✍</h5>
-                                    <ul>
-                                        {activeSession.products && activeSession.products.length > 0 ? (
-                                            activeSession.products.map((product, index) => (
-                                                <li key={index}>{product.product_name} x {product.quantity}</li>
-                                            ))
-                                        ) : (
-                                            <li>Empty.</li>
-                                        )}
-                                    </ul>
 
-                                    <h2></h2>
+                                    <h5> Table number: <strong> {activeSession.table_number}</strong></h5>
+                                    {/* <h5> Items: ✍</h5> */}
+                                    {/* <ul> */}
+                                    {activeSession.products && activeSession.products.length > 0 ? (
+                                        activeSession.products.map((product, index) => (
+                                            <div className="div-product" key={index}>
+                                                <div className="product--name">{product.product_name}</div>
+                                                <div className="product-qty">{product.quantity}</div>
+                                                {/* <div className="product-price">${product.price ? product.price.toFixed(2) : "0.00"}</div> */}
+                                                <div className="product-total"><div className="divisa"> $</div>{(product.price * product.quantity).toFixed(2)}</div>
+                                            </div>
+
+                                        ))
+                                    ) : (
+                                        <div className="empty-table-message">▶ Empty table ◀</div>
+                                    )}
+                                    {/* </ul> */}
                                 </div>
                             }
+                            <h2></h2>
+                            <div className="total--price">
+                                <div className="total--price-tittle">Total:</div>
+                                <div className="total--price-amount">${totalToPay.toFixed(2)}</div>
+                            </div>
+
+
                         </div>
                     </div>
                     <div className="botones">
-                        <button onClick={abrirCaja} className="boton-abrir-caja">Open Cash<img src={iconoLlave} alt="Atrás" style={{ width: '35px', height: '35px' }} /> </button>
-                        <button className="boton-pagar" >Pay <br></br><img src={iconoPagar} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
+                        <button onClick={abrirCaja} className="boton-abrir-caja">Open Cash<img src={iconoLlave} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
+                        <button className="boton-pagar" onClick={manejarClickPagar}>Pay <br /><img src={iconoPagar} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
                         <button className="boton-anadir" onClick={manejarClickAnadir}>Add <img src={iconoAnadir} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
                         <button className="boton-eliminar">Delete <img src={iconoEliminar} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
 
@@ -176,32 +285,66 @@ const Caja = () => {
                 </div>
 
 
-                {!mostrarCarta ? (
-                    
-                        
+                {!mostrarCarta && !mostrarCalculadora ? (
 
-                        <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
-                            <div className="loader" style={{ visibility: loading ? 'visible' : 'hidden' }}><span>Loading tables status</span>
-                            <div class="progress"></div>
+
+
+                    <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
+                        <div className="loader" style={{ visibility: loading ? 'visible' : 'hidden' }}><span>Loading tables status</span>
+                            <div className="progress"></div>
                         </div>
-                            {mesas.map((mesa) => (
-                                <Mesa
-                                    key={mesa.id}
-                                    mesa={mesa}
-                                    isSelected={selectedTable === mesa.table_number || mesaSeleccionada === mesa.id}
-                                    onDeselect={handleDeselect}
-                                    onClick={() => { 
-                                        handleActiveSession(mesa.table_number); 
-                                        handleMesaClick(mesa.id); 
-                                    }}
-                                    angulo={angulosRotacion[mesa.id]}
-                                />
-                            ))}
-                        </div>
-                    
-                ) : (
+                        {mesas.map((mesa) => (
+                            <Mesa
+                                key={mesa.id}
+                                mesa={mesa}
+                                isSelected={selectedTable === mesa.table_number || mesaSeleccionada === mesa.id}
+                                onDeselect={handleDeselect}
+                                onClick={() => {
+                                    handleActiveSession(mesa.table_number);
+                                    handleMesaClick(mesa.id);
+                                    
+                                }}
+                                angulo={angulosRotacion[mesa.id]}
+                            />
+                        ))}
+                    </div>
+                ) : mostrarCarta ? (
                     <div className="carta-caja">
                         <h1>Carta</h1>
+                    </div>
+                ) : (
+                    <div className="container-calculadora">
+                        <div className="calculadora">
+                            {/* <h1>Calculadora</h1> */}
+                            <div className="calculadora-total">
+                                <div className="to-pay">
+                                    <h2>To Pay:</h2>
+                                    <h3>{activeSession.products.reduce((acc, product) => acc + (product.price * product.quantity), 0).toFixed(2)}</h3>
+                                </div>
+                                <div className={`to-change ${change < -0.001 ? 'negative' : ''}`}>
+                                    <h2>Change:</h2>
+                                    <h3>{formattedChange(change)}</h3>
+                                </div>
+                                <div className="to-paid">
+                                    <h2>Paid:</h2>
+                                    <div className="dollar-group">
+
+                                        <input className="pay-input" type="text" onChange={handlePaidAmountChange} ref={payInputRef}/>
+                                    </div>
+                                </div>
+                                <div className="teclado">
+                                    {['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '⌫'].map((key) => (
+                                        <button key={key} className="teclado-btn" onClick={() => handleKeyPress(key)}>
+                                            {key}
+                                        </button>
+                                    ))}
+                                </div>
+                                <div className="botones-pagar">
+                                    <button className="boton-cash">Cash <br /><img src={iconoMoney} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
+                                    <button className="boton-card">Credit Card <br /><img src={iconoCard} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )}
             </section>

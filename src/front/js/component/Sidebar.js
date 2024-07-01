@@ -45,7 +45,7 @@ export const Sidebar = () => {
 
 		</Link>
 		{/* <button className="side billing-btn">Billing<img src={iconoBilling} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button>	 */}
-		<button className={`side billing-btn ${location.pathname === "/app/billing" ? "active" : ""}`}>Billing<img src={iconoBilling} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button>
+		{/* <button className={`side billing-btn ${location.pathname === "/app/billing" ? "active" : ""}`}>Billing<img src={iconoBilling} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button> */}
 		
 		<Link to="../app/about-us" className="link-no-decoration">
 		{/* <button className="side about-btn">AboutUs<img src={iconoAbout} alt="Atrás" style={{ width: '30px', height: '30px' , marginLeft: '5px'}} /></button> */}
