@@ -98,9 +98,9 @@ const Layout = () => {
           <Route element={<ProtectedRoute role="admin"><Dashboard /></ProtectedRoute>} path="/app/dashboard" />
           <Route element={<ProtectedRoute role="admin"><Mesas /></ProtectedRoute>} path="/app/mesas" />
           <Route element={<ProtectedRoute role="admin"><AdminMenuView /></ProtectedRoute>} path="/app/adminmenu" />
-          <Route element={<ProtectedRoute role="admin"><Menu /></ProtectedRoute>} path="/app/generate-qr/app/restaurants/:restaurantId/tables/:tableId/menu" />
-          <Route element={<ProtectedRoute role="admin"><OrderSummary /></ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
-          <Route element={<ProtectedRoute role="admin"><OrderSuccess /></ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-success" />
+          <Route element={<Menu />} path="/app/generate-qr/app/restaurants/:restaurantId/tables/:tableId/menu" />
+          <Route element={<OrderSummary />} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
+          <Route element={<OrderSuccess />} path="/restaurants/:restaurantId/tables/:tableId/order-success" />
           <Route element={<AboutUs />} path="/app/about-us" />
           <Route element={<ProtectedRoute role="admin"><GenerateQR /></ProtectedRoute>} path="/app/generate-qr" />
           {/* <Route element={<ProtectedRoute role="admin"><KitchenList /></ProtectedRoute>} path="/app/restaurants/:restaurantId/orders" /> */}

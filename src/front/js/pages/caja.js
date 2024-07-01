@@ -39,6 +39,7 @@ const Caja = () => {
     const payInputRef = useRef(null);
     const [mostrarModal, setMostrarModal] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalInsufficientPaymentVisible, setModalInsufficientPaymentVisible] = useState(false);
 
     const recuperarEstado = () => {
         const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
@@ -112,6 +113,7 @@ const Caja = () => {
         } else {
             setPaidAmount(0); // Resetea el estado si el valor no es un número
         }
+        
     };
 
     const resetPaidAmount = () => {
@@ -195,6 +197,23 @@ const formattedChange = (change) => {
     return change.toFixed(2);
 };
 
+const manejarClickCash = () => {
+    if (paidAmount < totalToPay) {
+        setModalInsufficientPaymentVisible(true); // Mostrar el modal de pago insuficiente
+    } else {
+        setModalInsufficientPaymentVisible(false); // Ocultar el modal de pago insuficiente si el pago es suficiente
+        abrirModal();  // Abre el modal principal si el pago es suficiente
+    }
+
+    if (change >= 0) {
+        setMostrarCalculadora(false); // Ocultar la calculadora si el cambio es >= 0
+        setMostrarCarta(false); // Asegurarse de que también se oculta la carta si estaba visible
+        handleDeselect(); // Deseleccionar mesa si está seleccionada
+    } else {
+        setMostrarCalculadora(true); // Mostrar la calculadora si el cambio es < 0
+    }
+};
+
 useEffect(() => {
     const fetchData = async () => {
         recuperarEstado();
@@ -248,6 +267,35 @@ useEffect(() => {
             payInputRef.current.focus();
         }
     }, [mostrarCalculadora]);
+
+    useEffect(() => {
+        // Oculta el modal de pago insuficiente si el cambio es >= 0
+        if (change >= 0) {
+            setModalInsufficientPaymentVisible(false);
+        }
+    }, [change]);
+
+    useEffect(() => {
+        const handleCloseModal = (event) => {
+            // Verifica si el clic fue fuera del modal o si se pulsó cualquier tecla
+            if (
+                modalInsufficientPaymentVisible &&
+                (event.type === 'click' || event.type === 'keydown')
+            ) {
+                setModalInsufficientPaymentVisible(false); // Cierra el modal
+            }
+        };
+
+        // Agrega los listeners para clics y teclas
+        document.addEventListener('click', handleCloseModal);
+        document.addEventListener('keydown', handleCloseModal);
+
+        // Limpia los listeners al desmontar el componente
+        return () => {
+            document.removeEventListener('click', handleCloseModal);
+            document.removeEventListener('keydown', handleCloseModal);
+        };
+    }, [modalInsufficientPaymentVisible]);
 
     return (
         <>
@@ -327,7 +375,7 @@ useEffect(() => {
                                 <div className="to-paid">
                                     <h2>Paid:</h2>
                                     <div className="dollar-group">
-                                        <input className="pay-input" type="text" onChange={handlePaidAmountChange} ref={payInputRef}/>
+                                        <input className="pay-input" type="text" onChange={handlePaidAmountChange} ref={payInputRef} />
                                     </div>
                                 </div>
                                 <div className="teclado">
@@ -338,7 +386,10 @@ useEffect(() => {
                                     ))}
                                 </div>
                                 <div className="botones-pagar">
-                                    <button className="boton-cash" onClick={manejarClickAtrasConModal}>Cash <br /><img src={iconoMoney} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
+                                <button className="boton-cash" onClick={manejarClickCash}>
+                                        Cash <br />
+                                        <img src={iconoMoney} alt="Atrás" style={{ width: '50px', height: '50px' }} />
+                                    </button>
                                     <button className="boton-card" onClick={manejarClickAtrasConModal}>Credit Card <br /><img src={iconoCard} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
                                 </div>
                                 
@@ -347,13 +398,21 @@ useEffect(() => {
                     </div>
                 )}
                 {mostrarModal && (
-                    
-                <div className={`modal-cash ${!modalVisible ? 'fade-out' : ''}`}>
+                <div className={`modal-cash ${mostrarModal ? 'fade-in' : 'fade-out'}`}>
                     <h3>Ticket invoiced.</h3>
-                    
+                    {/* Aquí puedes colocar contenido adicional del modal principal */}
                     
                 </div>
             )}
+
+            {/* Modal de pago insuficiente */}
+            {modalInsufficientPaymentVisible && (
+                <div className="modal-insufficient-payment">
+                    <h3>Insufficient Payment</h3>
+                    <p>Please pay the full amount before proceeding.</p>
+                    
+                </div>
+                )}
                 
             </section>
             
