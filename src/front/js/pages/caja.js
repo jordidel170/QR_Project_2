@@ -27,17 +27,18 @@ const Caja = () => {
     const [angulosRotacion, setAngulosRotacion] = useState({});
     const [mostrarCarta, setMostrarCarta] = useState(false);
     const [mostrarCalculadora, setMostrarCalculadora] = useState(false);
-    const { store, actions } = useContext(Context)
-    const [activeSession, setActiveSession] = useState({ id_table: 1, products: [] })
-    const [loading, setLoading] = useState(true)
-    const [selectedTable, setSelectedTable] = useState(null)
+    const { store, actions } = useContext(Context);
+    const [activeSession, setActiveSession] = useState({ id_table: 1, products: [] });
+    const [loading, setLoading] = useState(true);
+    const [selectedTable, setSelectedTable] = useState(null);
     const [mesaSeleccionada, setMesaSeleccionada] = useState(null);
     const [productPrices, setProductPrices] = useState([]);
     const [paidAmount, setPaidAmount] = useState(0); // Estado para manejar la cantidad pagada
     const totalToPay = activeSession.products.reduce((acc, product) => acc + (product.price * product.quantity), 0); // Calcula el total a pagar
     const navigate = useNavigate();
     const payInputRef = useRef(null);
-    
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const recuperarEstado = () => {
         const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
@@ -53,6 +54,23 @@ const Caja = () => {
 
     const irADashboard = () => {
         navigate('../app/dashboard');
+    };
+
+    const abrirModal = () => {
+        setModalVisible(true);
+        setMostrarModal(true);
+    };
+
+    const cerrarModal = () => {
+        setModalVisible(false); // Iniciar la animación de desvanecimiento
+        setTimeout(() => {
+            setMostrarModal(false); // Después de que la animación se complete, ocultar el modal completamente
+        }, 500); // Debe coincidir con la duración de la animación CSS
+    };
+
+    const manejarClickAtrasConModal = () => {
+        manejarClickAtras();
+        abrirModal();
     };
 
     const manejarClickAnadir = () => {
@@ -105,41 +123,14 @@ const Caja = () => {
 
     const change = paidAmount - totalToPay;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            recuperarEstado();
-            await fetchProductPrices();
-            await handleActiveSessionList();
-            setLoading(false);
-        };
+    
 
-        fetchData();
-    }, []);
-
-    useEffect(() => {
-        const aplicarMedidas = () => {
-            const contenedorMesas = document.querySelector('.container-caja-mesas');
-            if (contenedorMesas) {
-                contenedorMesas.style.height = `${largoSala * 55}px`;
-                contenedorMesas.style.width = `${anchoSala * 55}px`;
-            }
-        };
-        aplicarMedidas();
-    }, [largoSala, anchoSala]);
-
-    // const handleActiveSession = async (table_number) => {
-    //     const data = await actions.getActiveSessionTable(table_number);
-    //     if (!data.products || !Array.isArray(data.products)) {
-    //         setActiveSession({ id_table: table_number, products: [] });
-    //         return;
-    //     }
     const handleActiveSession = async (table_number) => {
         const data = await actions.getActiveSessionTable(table_number);
         if (!data.products || !Array.isArray(data.products)) {
             setActiveSession({ table_number: table_number, products: [] });
             return;
         }
-    
         
         // Combina los productos en la sesión con sus precios correspondientes
         const productsWithPrices = data.products.map(product => {
@@ -159,7 +150,6 @@ const Caja = () => {
             return acc;
         }, {});
 
-        // setActiveSession({ ...data, products: Object.values(groupedProducts) });
         setActiveSession({ table_number: table_number, products: Object.values(groupedProducts) });
     };
 
@@ -183,38 +173,65 @@ const Caja = () => {
     };
 
     const handleClickOutside = (event) => {
-        // Verifica si el clic fue fuera de las mesas
         if (!event.target.closest('.mesa-container')) {
-            handleDeselect(); // Deselecciona la última mesa seleccionada
+            handleDeselect(); 
         }
     };
 
     const handleKeyPress = (key) => {
-        if (key === '⌫') { // Si la tecla es la flecha de borrar
-            // Elimina el último carácter
+        if (key === '⌫') {
             payInputRef.current.value = payInputRef.current.value.slice(0, -1);
-        } else { // Para cualquier otro botón, añade el carácter al final
+        } else {
             payInputRef.current.value += key;
         }
-    
-        // Actualiza el estado de paidAmount
+        
         handlePaidAmountChange({ target: { value: payInputRef.current.value } });
     };
 
 const formattedChange = (change) => {
-    // Verificar si el cambio es menor que cero y cercano a cero
     if (change < 0 && change > -0.005) {
-        return "0.00"; // Mostrar como 0.00 en lugar de -0.00
+        return "0.00";
     }
-    return change.toFixed(2); // Formatear el cambio a dos decimales en cualquier otro caso
+    return change.toFixed(2);
 };
+
+useEffect(() => {
+    const fetchData = async () => {
+        recuperarEstado();
+        await fetchProductPrices();
+        await handleActiveSessionList();
+        setLoading(false);
+    };
+
+    fetchData();
+}, []);
+
+useEffect(() => {
+    const aplicarMedidas = () => {
+        const contenedorMesas = document.querySelector('.container-caja-mesas');
+        if (contenedorMesas) {
+            contenedorMesas.style.height = `${largoSala * 55}px`;
+            contenedorMesas.style.width = `${anchoSala * 55}px`;
+        }
+    };
+    aplicarMedidas();
+}, [largoSala, anchoSala]);
+
+useEffect(() => {
+    let temporizador;
+    if (mostrarModal) {
+        temporizador = setTimeout(() => {
+            cerrarModal();
+        }, 1200); // TIEMPO MODAL 850
+    }
+    return () => clearTimeout(temporizador); 
+}, [mostrarModal]);
 
     useEffect(() => {
         const interval = setInterval(() => {
             handleActiveSessionList();
         }, 3000);
-
-        // OJO, TIEMPO DE ACTUALIZAR
+        // OJO, ACTUALIZAR TIEMPO DE SESIONES
 
         return () => clearInterval(interval);
     }, []);
@@ -225,6 +242,7 @@ const formattedChange = (change) => {
             document.removeEventListener('click', handleClickOutside);
         };
     }, []);
+
     useEffect(() => {
         if (mostrarCalculadora && payInputRef.current) {
             payInputRef.current.focus();
@@ -239,39 +257,28 @@ const formattedChange = (change) => {
                     <div className="botones-arriba">
                         {/* <button onClick={irADashboard} className="boton-dash"><img src={iconoDash} alt="Atrás" style={{ width: '30px', height: '30px' }} /> Dashboard</button> */}
                         <button className="boton-atras" onClick={manejarClickAtras}><img src={iconoAtras} alt="Atrás" style={{ width: '20px', height: '20px' }} /> Back</button>
-
                     </div>
                     <div className="ticket">
                         <div className="ticket_table">
-                            {
                                 <div className="ticket-view">
-
                                     <h5> Table number: <strong> {activeSession.table_number}</strong></h5>
-                                    {/* <h5> Items: ✍</h5> */}
-                                    {/* <ul> */}
                                     {activeSession.products && activeSession.products.length > 0 ? (
                                         activeSession.products.map((product, index) => (
                                             <div className="div-product" key={index}>
                                                 <div className="product--name">{product.product_name}</div>
                                                 <div className="product-qty">{product.quantity}</div>
-                                                {/* <div className="product-price">${product.price ? product.price.toFixed(2) : "0.00"}</div> */}
                                                 <div className="product-total"><div className="divisa"> $</div>{(product.price * product.quantity).toFixed(2)}</div>
                                             </div>
-
                                         ))
                                     ) : (
                                         <div className="empty-table-message">▶ Empty table ◀</div>
                                     )}
-                                    {/* </ul> */}
-                                </div>
-                            }
+                                </div>      
                             <h2></h2>
                             <div className="total--price">
                                 <div className="total--price-tittle">Total:</div>
                                 <div className="total--price-amount">${totalToPay.toFixed(2)}</div>
                             </div>
-
-
                         </div>
                     </div>
                     <div className="botones">
@@ -279,16 +286,10 @@ const formattedChange = (change) => {
                         <button className="boton-pagar" onClick={manejarClickPagar}>Pay <br /><img src={iconoPagar} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
                         <button className="boton-anadir" onClick={manejarClickAnadir}>Add <img src={iconoAnadir} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
                         <button className="boton-eliminar">Delete <img src={iconoEliminar} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
-
-
                     </div>
                 </div>
 
-
                 {!mostrarCarta && !mostrarCalculadora ? (
-
-
-
                     <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
                         <div className="loader" style={{ visibility: loading ? 'visible' : 'hidden' }}><span>Loading tables status</span>
                             <div className="progress"></div>
@@ -301,8 +302,7 @@ const formattedChange = (change) => {
                                 onDeselect={handleDeselect}
                                 onClick={() => {
                                     handleActiveSession(mesa.table_number);
-                                    handleMesaClick(mesa.id);
-                                    
+                                    handleMesaClick(mesa.id);                                  
                                 }}
                                 angulo={angulosRotacion[mesa.id]}
                             />
@@ -315,7 +315,6 @@ const formattedChange = (change) => {
                 ) : (
                     <div className="container-calculadora">
                         <div className="calculadora">
-                            {/* <h1>Calculadora</h1> */}
                             <div className="calculadora-total">
                                 <div className="to-pay">
                                     <h2>To Pay:</h2>
@@ -328,7 +327,6 @@ const formattedChange = (change) => {
                                 <div className="to-paid">
                                     <h2>Paid:</h2>
                                     <div className="dollar-group">
-
                                         <input className="pay-input" type="text" onChange={handlePaidAmountChange} ref={payInputRef}/>
                                     </div>
                                 </div>
@@ -340,14 +338,25 @@ const formattedChange = (change) => {
                                     ))}
                                 </div>
                                 <div className="botones-pagar">
-                                    <button className="boton-cash">Cash <br /><img src={iconoMoney} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
-                                    <button className="boton-card">Credit Card <br /><img src={iconoCard} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
+                                    <button className="boton-cash" onClick={manejarClickAtrasConModal}>Cash <br /><img src={iconoMoney} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
+                                    <button className="boton-card" onClick={manejarClickAtrasConModal}>Credit Card <br /><img src={iconoCard} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
                 )}
+                {mostrarModal && (
+                    
+                <div className={`modal-cash ${!modalVisible ? 'fade-out' : ''}`}>
+                    <h3>Ticket invoiced.</h3>
+                    
+                    
+                </div>
+            )}
+                
             </section>
+            
         </>
     );
 };

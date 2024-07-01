@@ -34,7 +34,7 @@ const Login = () => {
 
 				switch(decodedToken.roles) {
 					case "admin": 
-						navigate("/app/dashboard");
+						navigate("/app/caja");
 						break;
 					case "cocina": 
 						navigate("/app/restaurants/1/orders");

@@ -31,7 +31,8 @@ import AdminMenuView from './pages/adminMenuView';
 import EditMenuModal from "./component/EditMenuModal";
 
 import { Invoice } from "./pages/Invoice";
-import { Sidebar } from "./component/sidebar";
+// import { Sidebar } from "./component/sidebar";
+import { Sidebar } from "./component/Sidebar";
 import Navbarglobal from "./component/navbarglobal";
 
 
@@ -50,6 +51,12 @@ const ProtectedRoute = ({ children, role }) => {
 
 const SidebarController = () => {
     const location = useLocation();
+    const token = localStorage.getItem("token");
+  let decodedToken = null;
+
+  if (token) {
+    decodedToken = jwtDecode(token);
+  }
     const pathsToShowSidebar = [
       "/app/caja",
       "/app/mesas",
@@ -63,7 +70,12 @@ const SidebarController = () => {
       matchPath(path, location.pathname)
     );
   
-    return showSidebar ? <Sidebar /> : null;
+    
+    if (decodedToken && decodedToken.roles === "admin" && showSidebar) {
+      return <Sidebar />;
+    }
+  
+    return null;
   };
 
 
