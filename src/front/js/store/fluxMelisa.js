@@ -145,6 +145,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     const result = await response.json();
                     setStore({ ...store, orders: [...store.orders, result] });
+                    console.log(store.orders.id)
                     console.log('Order created successfully:', result);
                     return result;
                 }
@@ -192,6 +193,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log('Order updated successfully:', result);
                 } catch (error) {
                     console.error('Error:', error);
+                    // alert('Error updating order. Please try again.');
                 }
             },
 
@@ -215,6 +217,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log('Order deleted successfully');
                 } catch (error) {
                     console.error('Error:', error);
+                    // alert('Error deleting order. Please try again.');
                 }
             },
 
@@ -294,6 +297,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             getProductById: async (id) => {
                 const data = await productDispatcher.getById(id)
+                // console.log(data)
                 return data;
             },
 
@@ -349,6 +353,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const store = getStore();
                 setStore({ orders: [...store.orders, newOrder] });
             },
+
             getOrderById: async (restaurantId, tableId, orderId) => {
                 const data = await dispatcherOrder.getOrderById(restaurantId, tableId, orderId)
                 return data;
@@ -414,11 +419,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                 console.log("dato en flux getAllActiveSessions", data);
                 return data;
             },
+
             closeActiveSession: async (table_number) => {
                 const data = await sesionsDispatcher.close_session(table_number);
                 console.log("dato en flux closeActiveSession", data)
                 return data;
             },
+
             getPendingOrderList: async (restaurantId) => {
                 const data = await dispatcherOrder.getPendingOrderList(restaurantId);
                 const store = getStore();

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import "../../styles/caja.css";
 import mesasImage from '../../img/mesas.png';
 import menu from "../../img/menu.png";
@@ -19,7 +18,6 @@ import iconoDash from "../../img/dash.png";
 import suelo from "../../img/suelo506.png";
 import { Context } from "../store/appContext";
 import Mesa from "../component/Mesa";
-import mesagreen from "../../img/mesagreen.png"
 
 
 const Caja = () => {
@@ -29,18 +27,21 @@ const Caja = () => {
     const [angulosRotacion, setAngulosRotacion] = useState({});
     const [mostrarCarta, setMostrarCarta] = useState(false);
     const [mostrarCalculadora, setMostrarCalculadora] = useState(false);
-    const { store, actions } = useContext(Context)
-    const [activeSession, setActiveSession] = useState({ id_table: 1, products: [] })
-    const [loading, setLoading] = useState(true)
-    const [selectedTable, setSelectedTable] = useState(null)
+    const { store, actions } = useContext(Context);
+    const [activeSession, setActiveSession] = useState({ id_table: 1, products: [] });
+    const [loading, setLoading] = useState(true);
+    const [selectedTable, setSelectedTable] = useState(null);
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
     const [mesaSeleccionada, setMesaSeleccionada] = useState(null);
     const [productPrices, setProductPrices] = useState([]);
     const [paidAmount, setPaidAmount] = useState(0);
     const totalToPay = activeSession.products.reduce((acc, product) => acc + (product.price * product.quantity), 0);
-    const navigate = useNavigate();
     const payInputRef = useRef(null);
     const [isSessionClosed, setIsSessionClosed] = useState(false)
     const [tableList, setTableList] = useState([])
+
+
 
     const recuperarEstado = async () => {
         const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
@@ -50,11 +51,28 @@ const Caja = () => {
         setAnchoSala(ancho);
         const data = await actions.getTableList()
         setTableList(data)
-       
-       
+
+
         setAngulosRotacion(angulosGuardados);
     };
 
+
+    const abrirModal = () => {
+        setModalVisible(true);
+        setMostrarModal(true);
+    };
+
+    const manejarClickAtrasConModal = () => {
+        manejarClickAtras();
+        abrirModal();
+    };
+
+    const cerrarModal = () => {
+        setModalVisible(false);
+        setTimeout(() => {
+            setMostrarModal(false);
+        }, 500);
+    };
 
     const manejarClickAnadir = () => {
         setMostrarCarta(true);
@@ -80,7 +98,7 @@ const Caja = () => {
 
     const fetchProductPrices = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/app/products');
+            const response = await fetch('${process.env.BACKEND_URL}/app/products');
             const data = await response.json();
             setProductPrices(data);
         } catch (error) {
@@ -190,7 +208,6 @@ const Caja = () => {
     };
 
     const handleClickOutside = (event) => {
-
         if (!event.target.closest('.mesa-container')) {
             handleDeselect();
         }
@@ -214,6 +231,16 @@ const Caja = () => {
         }
         return change.toFixed(2);
     };
+
+    useEffect(() => {
+        let temporizador;
+        if (mostrarModal) {
+            temporizador = setTimeout(() => {
+                cerrarModal();
+            }, 1200); // TIEMPO MODAL 850
+        }
+        return () => clearTimeout(temporizador);
+    }, [mostrarModal]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -261,14 +288,12 @@ const Caja = () => {
                                                 <div className="div-product" key={index}>
                                                     <div className="product--name">{product.product_name}</div>
                                                     <div className="product-qty">{product.quantity}</div>
-                                                    {/* <div className="product-price">${product.price ? product.price.toFixed(2) : "0.00"}</div> */}
                                                     <div className="product-total"><div className="divisa"> $</div>{(product.price * product.quantity).toFixed(2)}</div>
                                                 </div>))}
-                                            <button onClick={() => handleCloseSession(activeSession.table_number)}>Close Session</button>
                                         </>
-                                        ) : (
+                                    ) : (
                                         <div className="empty-table-message">▶ Empty table ◀</div>
-                                        )}
+                                    )}
                                     {/* </ul> */}
                                 </div>
                             }
@@ -293,9 +318,6 @@ const Caja = () => {
 
 
                 {!mostrarCarta && !mostrarCalculadora ? (
-
-
-
                     <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
                         <div className="loader" style={{ visibility: loading ? 'visible' : 'hidden' }}><span>Loading tables status</span>
                             <div className="progress"></div>
@@ -333,7 +355,6 @@ const Caja = () => {
                                 <div className="to-paid">
                                     <h2>Paid:</h2>
                                     <div className="dollar-group">
-
                                         <input className="pay-input" type="text" onChange={handlePaidAmountChange} ref={payInputRef} />
                                     </div>
                                 </div>
@@ -345,11 +366,18 @@ const Caja = () => {
                                     ))}
                                 </div>
                                 <div className="botones-pagar">
-                                    <button className="boton-cash">Cash <br /><img src={iconoMoney} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
-                                    <button className="boton-card">Credit Card <br /><img src={iconoCard} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
+                                    <button className="boton-cash" onClick={() => [manejarClickAtrasConModal(), handleCloseSession(activeSession.table_number)]}>Cash <br /><img src={iconoMoney} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
+                                    <button className="boton-card" onClick={() => manejarClickAtrasConModal()}>Credit Card <br /><img src={iconoCard} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                )}
+                {mostrarModal && (
+
+                    <div className={`modal-cash ${!modalVisible ? 'fade-out' : ''}`}>
+                        <h3>Ticket invoiced.</h3>
+
                     </div>
                 )}
             </section>

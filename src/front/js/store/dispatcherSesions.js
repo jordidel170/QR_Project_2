@@ -3,7 +3,7 @@ import React from "react";
 const sesionsDispatcher = {
   assing_client: async (idTable, idClient) => {
     const response = await fetch(
-      `http://127.0.0.1:5000/app/tables/${idTable}/${idClient}/client`,
+      `${process.env.BACKEND_URL}/app/tables/${idTable}/${idClient}/client`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -27,7 +27,7 @@ const sesionsDispatcher = {
     const requestBody = {
       name: name,
     };
-    const response = await fetch(`http://127.0.0.1:5000/app/client/create`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/app/client/create`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       CORS: "Access-Control-Allow-Origin",
@@ -46,7 +46,7 @@ const sesionsDispatcher = {
     return data;
   },
   put: async (id, name, price, description, image, category) => {
-    const response = await fetch(`http://127.0.0.1:5000/app/products/${id}`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/app/products/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -70,7 +70,7 @@ const sesionsDispatcher = {
     return data;
   },
   getActiveSessions: async () => {
-    const response = await fetch(`http://127.0.0.1:5000/app/sessions`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/app/sessions`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -82,7 +82,7 @@ const sesionsDispatcher = {
     };
     console.log("en dispatcher BODY: ", reqBody);
     const response = await fetch(
-      `http://127.0.0.1:5000/app/sessions/${tableId}/products`,
+      `${process.env.BACKEND_URL}/app/sessions/${tableId}/products`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -95,7 +95,7 @@ const sesionsDispatcher = {
 
   get_session_active: async (table_number) => {
     const response = await fetch(
-      `http://127.0.0.1:5000/app/sessions/${table_number}/active`,
+      `${process.env.BACKEND_URL}/app/sessions/${table_number}/active`,
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -104,15 +104,16 @@ const sesionsDispatcher = {
     return response.json();
   },
 
-  close_session: async (tableId) => {
-    const reqBody = {
+  close_session: async (table_number) => {
+    const requestBody = {
       table_number: table_number,
     };
-    const response = await fetch(`http://127.0.0.1:5000/app/sessions/${tableId}/close`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/app/sessions/${table_number}/close`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(reqBody)
+      body: JSON.stringify(requestBody)
     })
+    return response.json();
   }
 };
 
