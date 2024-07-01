@@ -22,7 +22,6 @@ const adminMenuView = () => {
     setOpenModal(false)
   }
 
-  // console.log(filteredItems)
 
   const fetchProduct = async () => {
     const products = await actions.getProduct()
@@ -32,8 +31,6 @@ const adminMenuView = () => {
 
   useEffect(() => {
     fetchProduct()
-
-
   }, [openModal, productId])
 
   const handleDeleteProduct = async (id) => {
@@ -61,7 +58,6 @@ const adminMenuView = () => {
 
   );
 }
-
 
 
 export default adminMenuView

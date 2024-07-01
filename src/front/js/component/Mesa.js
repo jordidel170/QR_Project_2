@@ -1,4 +1,5 @@
 import React from 'react';
+import iconoMesas from "../../img/icono-mesa.png";
 import mesagreen from "../../img/mesagreen.png";
 
 const Mesa = ({ mesa, onClick, angulo, isSelected, onDeselect }) => {
@@ -24,7 +25,7 @@ const Mesa = ({ mesa, onClick, angulo, isSelected, onDeselect }) => {
             onClick={handleClick}
         >
             <img
-                src={mesa.icono}
+                src={mesa.icon ? mesa.icon : iconoMesas}
                 alt="Mesa"
                 className={` ${isSelected ? 'img-resplandor' : ''} ${mesa.isActive ? 'filtros-mesa' : ''}`}
                 style={{

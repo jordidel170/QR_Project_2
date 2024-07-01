@@ -98,7 +98,6 @@ const Mesas = () => {
 
     const actualizarNombreMesa = async(id, nuevoNombre) => {
        await actions.updateTableNumber(id, nuevoNombre)
-       
     };
 
     useEffect(() => {
@@ -121,8 +120,8 @@ const Mesas = () => {
       }
 
     useEffect(() => {
+        console.log(actions.getTableList())
       fetchTables();
-      
     }, []);
     return (
         <>
@@ -162,7 +161,7 @@ const Mesas = () => {
                                     className="mesa-container"
                                 >
                                     <img
-                                        src={mesa.icon}
+                                        src={mesa.icon ? mesa.icon : iconoMesas}
                                         alt="Mesa"
                                         style={{
                                             width: '60px',

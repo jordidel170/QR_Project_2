@@ -333,6 +333,7 @@ const Caja = () => {
                                     handleMesaClick(mesa.id);
                                 }}
                                 angulo={angulosRotacion[mesa.id]}
+                                
                             />
                         ))}
                     </div>

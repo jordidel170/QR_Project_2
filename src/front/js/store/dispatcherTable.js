@@ -31,7 +31,7 @@ const dispatcherTable = {
     },
 
     getTableList: async () => {
-        const response = await fetch('${process.env.BACKEND_URL}/app/tables', {
+        const response = await fetch(`${process.env.BACKEND_URL}/app/tables`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             CORS: 'Access-Control-Allow-Origin',
