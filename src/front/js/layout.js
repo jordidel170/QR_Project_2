@@ -89,7 +89,8 @@ const Layout = () => {
           <Route element={<ProtectedRoute role="admin"><OrderSuccess /></ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-success" />
           <Route element={<AboutUs />} path="/app/about-us" />
           <Route element={<ProtectedRoute role="admin"><GenerateQR /></ProtectedRoute>} path="/app/generate-qr" />
-          <Route element={<ProtectedRoute role="admin"><KitchenList /></ProtectedRoute>} path="/app/restaurants/:restaurantId/orders" />
+          {/* <Route element={<ProtectedRoute role="admin"><KitchenList /></ProtectedRoute>} path="/app/restaurants/:restaurantId/orders" /> */}
+          <Route element={<ProtectedRoute roles={['admin', 'cocina']}><KitchenList /></ProtectedRoute>} path="/app/restaurants/:restaurantId/orders" />
           <Route element={<ProtectedRoute role="admin"><Invoice /></ProtectedRoute>} path="/app/restaurants/:restaurantId/tables/:tableId/invoices/:invoiceId" />
           <Route element={<h1>Not found!</h1>} />
         </Routes>

@@ -37,7 +37,7 @@ const Login = () => {
 						navigate("/app/dashboard");
 						break;
 					case "cocina": 
-						navigate("/app/kitchenview");
+						navigate("/app/restaurants/1/orders");
 						break;
 					case "Restaurante": 
 						navigate("/app/caja");
