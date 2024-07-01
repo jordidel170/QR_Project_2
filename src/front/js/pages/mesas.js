@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from "react-router-dom";
 import "../../styles/mesas.css";
 import iconoMesas from "../../img/icono-mesa.png";
 import iconoCanto from "../../img/barraCantoTransp.png";
@@ -17,7 +16,8 @@ const Mesas = () => {
     const [tempLargoSala, setTempLargoSala] = useState('10');
     const [tempAnchoSala, setTempAnchoSala] = useState('15');
     const {store, actions} = useContext(Context)
-
+    const [loading, setLoading] = useState(true);
+    
     const girarMesa = (idMesa) => {
         setAngulosRotacion((prevAngulos) => {
             const anguloActual = prevAngulos[idMesa] || 0;
@@ -30,7 +30,7 @@ const Mesas = () => {
     };
 
     
-    const agregarMesa = async(icono) => {
+    const agregarMesa = async(icon) => {
         const maxId = mesas.reduce((max, mesa) => Math.max(max, mesa.id), 0);
        
         const nuevaMesa = {
@@ -38,7 +38,7 @@ const Mesas = () => {
             table_number: `${maxId + 1}`,
             position_x: 0,
             position_y: 10,
-            icono: icono,
+            icono: icon,
         };
         await actions.createNewTable(nuevaMesa)
         setMesas([...mesas, nuevaMesa]);
@@ -116,17 +116,31 @@ const Mesas = () => {
         const tables = await actions.getTableList();
         console.log(tables)
         setMesas(tables);
-        
-      }
+        setLoading(false)
+      };
 
     useEffect(() => {
         console.log(actions.getTableList())
       fetchTables();
     }, []);
+
+    const getIcon = (icon) => {
+        switch(icon) {
+            case "iconoMesas":
+                return iconoMesas;
+            case "iconoBarra":
+                return iconoBarra;
+            case "iconoCanto":
+                return iconoCanto;
+            default:
+                return icon ? icon : iconoMesas;
+        }
+    };
     return (
         <>
         
             <section>
+
                     <h1 className='section-mesas-tittle'>Tables</h1>
                 <div className='principal'>
                     <div className='container-mesas1'>
@@ -143,7 +157,9 @@ const Mesas = () => {
                             style={{ width: '1080px', height: '600px', position: 'relative', border: '1px solid black', backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}
                             onDragOver={permitirSoltar}
                             onDrop={manejarSoltar}
-                        >
+                        >  <div className="loader" style={{ visibility: loading ? 'visible' : 'hidden' }}><span>Loading tables status</span>
+                        <div className="progress"></div>
+                    </div>
                             {mesas.map((mesa) => (
                                 <div
                                     key={mesa.id}
@@ -161,7 +177,7 @@ const Mesas = () => {
                                     className="mesa-container"
                                 >
                                     <img
-                                        src={mesa.icon ? mesa.icon : iconoMesas}
+                                        src={getIcon(mesa.icono)}
                                         alt="Mesa"
                                         style={{
                                             width: '60px',

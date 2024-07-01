@@ -17,6 +17,7 @@ import iconoMoney from "../../img/money1.png";
 import suelo from "../../img/suelo506.png";
 import { Context } from "../store/appContext";
 import Mesa from "../component/Mesa";
+import { useFetcher } from "react-router-dom";
 
 
 const Caja = () => {
@@ -48,9 +49,10 @@ const Caja = () => {
         const angulosGuardados = JSON.parse(localStorage.getItem('angulosRotacion')) || {};
         setLargoSala(largo);
         setAnchoSala(ancho);
+        setAngulosRotacion(angulosGuardados);
         const data = await actions.getTableList()
         setTableList(data)
-        setAngulosRotacion(angulosGuardados);
+        
     };
 
 
@@ -124,8 +126,8 @@ const Caja = () => {
     useEffect(() => {
         const fetchData = async () => {
             recuperarEstado();
-            await fetchProductPrices();
             await handleActiveSessionList();
+            await fetchProductPrices();
             setLoading(false);
         };
         fetchData();
@@ -174,8 +176,10 @@ const Caja = () => {
         setMesas(prevMesas =>
             prevMesas.map((mesa) => {
                 const isActive = dataSessionList.some(session => session.status == 'active' && session.table_number == mesa.table_number);
+                console.log(mesas)
                 return { ...mesa, isActive };
             })
+            
         );
     };
   
@@ -183,7 +187,15 @@ const Caja = () => {
         const closedSession = await actions.closeActiveSession(table_number)
         console.log(closedSession)
         setIsSessionClosed(true)
+        setActiveSession({ table_number: table_number, products: [] });
+        setTableList(prevTableList =>
+            prevTableList.map(mesa => 
+                mesa.table_number === table_number ? { ...mesa, isActive: false } : mesa
+            )
+        );
     }
+
+    
 
     const handleMesaClick = (id) => {
         setMesaSeleccionada(id);
@@ -230,12 +242,12 @@ const Caja = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             handleActiveSessionList();
-        }, 3000);
+        }, 30000);
 
         // OJO, TIEMPO DE ACTUALIZAR
 
         return () => clearInterval(interval);
-    }, []);
+    }, [tableList]);
 
     useEffect(() => {
         document.addEventListener('click', handleClickOutside);
@@ -268,17 +280,20 @@ const Caja = () => {
                                     {/* <h5> Items: ✍</h5> */}
                                     {/* <ul> */}
 
-                                    {activeSession.products && activeSession.products.length > 0 ? (
-                                        activeSession.products.map((product, index) => (
-                                            <div className="div-product" key={index}>
-                                                <div className="product--name">{product.product_name}</div>
-                                                <div className="product-qty">{product.quantity}</div>
-                                                <div className="product-total"><div className="divisa"> $</div>{(product.price * product.quantity).toFixed(2)}</div>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <div className="empty-table-message">▶ Empty table ◀</div>
-                                    )}
+                                      {isSessionClosed || activeSession.products.length === 0 ? (
+                                <div className="empty-table-message">▶ Empty table ◀</div>
+                            ) : (
+                                activeSession.products.map((product, index) => (
+                                    <div className="div-product" key={index}>
+                                        <div className="product--name">{product.product_name}</div>
+                                        <div className="product-qty">{product.quantity}</div>
+                                        <div className="product-total">
+                                            <div className="divisa"> $</div>
+                                            {(product.price * product.quantity).toFixed(2)}
+                                        </div>
+                                    </div>
+                                ))
+                            )}
                                     {/* </ul> */}
                                 </div>
                             }
@@ -352,7 +367,7 @@ const Caja = () => {
                                 </div>
                                 <div className="botones-pagar">
                                     <button className="boton-cash" onClick={() => [manejarClickAtrasConModal(), handleCloseSession(activeSession.table_number)]}>Cash <br /><img src={iconoMoney} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
-                                    <button className="boton-card" onClick={() => manejarClickAtrasConModal()}>Credit Card <br /><img src={iconoCard} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
+                                    <button className="boton-card" onClick={() => [manejarClickAtrasConModal(), handleCloseSession(activeSession.table_number)]}>Credit Card <br /><img src={iconoCard} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
                                 </div>
                             </div>
                         </div>
