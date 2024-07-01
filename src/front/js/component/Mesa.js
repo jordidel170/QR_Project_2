@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import iconoMesas from "../../img/icono-mesa.png";
 import mesagreen from "../../img/mesagreen.png";
+import "../../styles/caja.css"
 
 const Mesa = ({ mesa, onClick, angulo, isSelected, onDeselect }) => {
 
@@ -12,6 +13,9 @@ const Mesa = ({ mesa, onClick, angulo, isSelected, onDeselect }) => {
         }
     };
 
+    useEffect( () => {
+        console.log(mesa)
+    },[])
     return (
         <div
             style={{
@@ -27,7 +31,7 @@ const Mesa = ({ mesa, onClick, angulo, isSelected, onDeselect }) => {
             <img
                 src={mesa.icon ? mesa.icon : iconoMesas}
                 alt="Mesa"
-                className={` ${isSelected ? 'img-resplandor' : ''} ${mesa.isActive ? 'filtros-mesa' : ''}`}
+                className={` ${isSelected ? 'img-resplandor' : ''} ${mesa.status === "occupied" ? 'filtros-mesa' : ''}`}
                 style={{
                     width: '60px',
                     height: '60px',

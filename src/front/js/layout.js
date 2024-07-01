@@ -12,27 +12,18 @@ import { OrderSuccess } from "./pages/OrderSuccess";
 import { KitchenList } from "./pages/KitchenList";
 import { GenerateQR } from "./pages/GenerateQR";
 import { AboutUs } from "./pages/AboutUs";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
 import Login from "./pages/login";
 import injectContext from "./store/appContext";
 
 import Mesas from "./pages/mesas";
-
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
 import Signup from "./pages/signup";
-
 import Dashboard from "./pages/dashboard";
 import Caja from "./pages/caja";
-
-import App from "./component/app";
 import AdminMenuView from './pages/adminMenuView';
-import EditMenuModal from "./component/EditMenuModal";
 
 import { Invoice } from "./pages/Invoice";
 import { Sidebar } from "./component/sidebar";
-import Navbarglobal from "./component/navbarglobal";
+
 
 
 const ProtectedRoute = ({ children, role }) => {
@@ -89,9 +80,7 @@ const Layout = () => {
           <Route element={<ProtectedRoute role="admin"><OrderSuccess /></ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-success" />
           <Route element={<AboutUs />} path="/app/about-us" />
           <Route element={<ProtectedRoute role="admin"><GenerateQR /></ProtectedRoute>} path="/app/generate-qr" />
-          {/* <Route element={<ProtectedRoute role="admin"><KitchenList /></ProtectedRoute>} path="/app/restaurants/:restaurantId/orders" /> */}
           <Route element={<ProtectedRoute roles={['admin', 'cocina']}><KitchenList /></ProtectedRoute>} path="/app/restaurants/:restaurantId/orders" />
-          <Route element={<ProtectedRoute role="admin"><Invoice /></ProtectedRoute>} path="/app/restaurants/:restaurantId/tables/:tableId/invoices/:invoiceId" />
           <Route element={<h1>Not found!</h1>} />
         </Routes>
         <SidebarController />

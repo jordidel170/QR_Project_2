@@ -14,7 +14,6 @@ import iconoAnadir from "../../img/anadir.png";
 import iconoEliminar from "../../img/eliminar.png";
 import iconoCard from "../../img/card1.png";
 import iconoMoney from "../../img/money1.png";
-import iconoDash from "../../img/dash.png";
 import suelo from "../../img/suelo506.png";
 import { Context } from "../store/appContext";
 import Mesa from "../component/Mesa";
@@ -51,8 +50,6 @@ const Caja = () => {
         setAnchoSala(ancho);
         const data = await actions.getTableList()
         setTableList(data)
-
-
         setAngulosRotacion(angulosGuardados);
     };
 
@@ -98,7 +95,7 @@ const Caja = () => {
 
     const fetchProductPrices = async () => {
         try {
-            const response = await fetch('${process.env.BACKEND_URL}/app/products');
+            const response = await fetch(`${process.env.BACKEND_URL}/app/products`);
             const data = await response.json();
             setProductPrices(data);
         } catch (error) {
@@ -131,7 +128,6 @@ const Caja = () => {
             await handleActiveSessionList();
             setLoading(false);
         };
-        console.log(store.tableList)
         fetchData();
     }, []);
 
@@ -146,20 +142,12 @@ const Caja = () => {
         aplicarMedidas();
     }, [largoSala, anchoSala]);
 
-    // const handleActiveSession = async (table_number) => {
-    //     const data = await actions.getActiveSessionTable(table_number);
-    //     if (!data.products || !Array.isArray(data.products)) {
-    //         setActiveSession({ id_table: table_number, products: [] });
-    //         return;
-    //     }
     const handleActiveSession = async (table_number) => {
         const data = await actions.getActiveSessionTable(table_number);
         if (!data.products || !Array.isArray(data.products)) {
             setActiveSession({ table_number: table_number, products: [] });
             return;
         }
-
-
 
         const productsWithPrices = data.products.map(product => {
             const productDetails = productPrices.find(p => p.id === product.id_product);
@@ -178,7 +166,6 @@ const Caja = () => {
             return acc;
         }, {});
 
-        // setActiveSession({ ...data, products: Object.values(groupedProducts) });
         setActiveSession({ table_number: table_number, products: Object.values(groupedProducts) });
     };
 
@@ -191,7 +178,7 @@ const Caja = () => {
             })
         );
     };
-
+  
     const handleCloseSession = async (table_number) => {
         const closedSession = await actions.closeActiveSession(table_number)
         console.log(closedSession)
@@ -220,8 +207,6 @@ const Caja = () => {
         } else {
             payInputRef.current.value += key;
         }
-
-
         handlePaidAmountChange({ target: { value: payInputRef.current.value } });
     };
 
@@ -245,7 +230,7 @@ const Caja = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             handleActiveSessionList();
-        }, 300000);
+        }, 3000);
 
         // OJO, TIEMPO DE ACTUALIZAR
 
@@ -258,6 +243,7 @@ const Caja = () => {
             document.removeEventListener('click', handleClickOutside);
         };
     }, []);
+
     useEffect(() => {
         if (mostrarCalculadora && payInputRef.current) {
             payInputRef.current.focus();
@@ -282,15 +268,14 @@ const Caja = () => {
                                     {/* <h5> Items: ✍</h5> */}
                                     {/* <ul> */}
 
-                                    {isSessionClosed || activeSession.products && activeSession.products.length > 0 ? (
-                                        <>
-                                            {activeSession.products.map((product, index) => (
-                                                <div className="div-product" key={index}>
-                                                    <div className="product--name">{product.product_name}</div>
-                                                    <div className="product-qty">{product.quantity}</div>
-                                                    <div className="product-total"><div className="divisa"> $</div>{(product.price * product.quantity).toFixed(2)}</div>
-                                                </div>))}
-                                        </>
+                                    {activeSession.products && activeSession.products.length > 0 ? (
+                                        activeSession.products.map((product, index) => (
+                                            <div className="div-product" key={index}>
+                                                <div className="product--name">{product.product_name}</div>
+                                                <div className="product-qty">{product.quantity}</div>
+                                                <div className="product-total"><div className="divisa"> $</div>{(product.price * product.quantity).toFixed(2)}</div>
+                                            </div>
+                                        ))
                                     ) : (
                                         <div className="empty-table-message">▶ Empty table ◀</div>
                                     )}
@@ -333,7 +318,6 @@ const Caja = () => {
                                     handleMesaClick(mesa.id);
                                 }}
                                 angulo={angulosRotacion[mesa.id]}
-                                
                             />
                         ))}
                     </div>
