@@ -43,9 +43,6 @@ export const Navbar = ({ onClose }) => {
                                                 <span className='price'>${(meal.price * meal.quantity).toFixed(2)}</span>
                                             </div>
                                         </div>
-                                        <div className="cart-item-actions">
-                                            <button className="btn" onClick={() => handleRemoveFromCart(meal.id)}>−</button>
-                                        </div>
                                     </li>
                                 ))}
                                 <li className="dropdown-item total-amount">

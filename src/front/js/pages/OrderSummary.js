@@ -122,7 +122,7 @@ export const OrderSummary = () => {
                     </div>
                 </div>
                 <div className='order-finish'>
-                <Link to={`/restaurants/${restaurantId}/tables/${tableId}/menu`}>
+                <Link to={`/app/generate-qr/app/restaurants/${restaurantId}/tables/${tableId}/menu`}>
                     <button className="button1">Menu</button>
                 </Link>
                     <button className='button1' onClick={handleFinishOrder}>Finish</button>
