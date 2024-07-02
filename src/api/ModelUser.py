@@ -1,5 +1,6 @@
 
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -105,6 +106,7 @@ class Order(db.Model):
     comment = db.Column(db.String(255), nullable=True)
     payment_method = db.Column(db.String(50), nullable=False)
     total_price = db.Column(db.Float, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     order_items = db.relationship('OrderItem', backref='order', lazy=True)
     invoice = db.relationship('Invoice', back_populates='order', uselist=False)
     
