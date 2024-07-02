@@ -60,29 +60,31 @@ const MenuCategory = ({ category, meals, collapseOthers, isCollapsed }) => {
 export const Menu = () => {
   const { store, actions } = useContext(Context);
   const { tableId } = useParams();
-  // const [client, setClient] = useState({});
-  // const createClient = async () => {
-  //   if (!localStorage.getItem("clientId")) {
-  //     let newClient = await actions.createClient("anonimo");
-  //     setClient(newClient);
-  //     localStorage.setItem("clientId", newClient.id);
-  //   }
-  // };
+  const [client, setClient] = useState({});
+  const createClient = async () => {
+    if (!localStorage.getItem("clientId")) {
+      let newClient = await actions.createClient("anonimo");
+      setClient(newClient);
+      localStorage.setItem("clientId", newClient.id);
+    }
+  };
 
-  // const assingClientToTable = async () => {
-  //   if (!localStorage.getItem("clientId")) {
-  //     console.log("No hay cliente");
-  //     return;
-  //   } else if (!localStorage.getItem("sessionId")) {
-  //     let clientId = localStorage.getItem("clientId");
-  //     const session = await actions.assingClient(tableId, clientId); 
-  //     console.log(session)
-  //     localStorage.setItem("sessionId", session.id_session);
-  //   }
-  // };
+  const assingClientToTable = async () => {
+    if (!localStorage.getItem("clientId")) {
+      console.log("No hay cliente");
+      return;
+    } else if (!localStorage.getItem("sessionId")) {
+      let clientId = localStorage.getItem("clientId");
+      const session = await actions.assingClient(tableId, clientId); 
+      console.log(session)
+      localStorage.setItem("sessionId", session.id_session);
+    }
+  };
   useEffect(() => {
     actions.getMenu();
-  }, [tableId]);
+    createClient();
+    assingClientToTable();
+  }, [tableId, client]);
 
   const [collapsedCategories, setCollapsedCategories] = useState([]);
 

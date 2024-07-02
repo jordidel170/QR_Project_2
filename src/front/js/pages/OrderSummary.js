@@ -28,25 +28,7 @@ export const OrderSummary = () => {
     setPaymentMethod(method);
   };
 
-  const createClient = async () => {
-    if (!localStorage.getItem("clientId")) {
-      let newClient = await actions.createClient("anonimo");
-      setClient(newClient);
-      localStorage.setItem("clientId", newClient.id);
-    }
-  };
-
-  const assingClientToTable = async () => {
-    if (!localStorage.getItem("clientId")) {
-      console.log("No hay cliente");
-      return;
-    } else if (!localStorage.getItem("sessionId")) {
-      let clientId = localStorage.getItem("clientId");
-      const session = await actions.assingClient(tableId, clientId);
-      console.log(session)
-      localStorage.setItem("sessionId", session.id_session);
-    }
-  };
+  
   const handleFinishOrder = async () => {
     if (!paymentMethod) {
       alert('Please choose your payment method!');
@@ -71,9 +53,7 @@ export const OrderSummary = () => {
     }
   }
 
-useEffect( () => {
-  assingClientToTable()
-},[client])
+
 
   return (
     <>
@@ -154,7 +134,7 @@ useEffect( () => {
           <Link to={`app/generate-qr/app/restaurants/${restaurantId}/tables/${tableId}/menu`}>
             <button className="button1">Menu</button>
           </Link>
-          <button className='button1' onClick={() => [handleFinishOrder(),createClient()]}>Finish</button>
+          <button className='button1' onClick={() => handleFinishOrder()}>Finish</button>
         </div>
       </div>
       <Footer />
