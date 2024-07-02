@@ -27,14 +27,12 @@ const MenuCategory = ({ category, meals, collapseOthers, isCollapsed }) => {
   const toggleCollapsed = () => {
     collapseOthers(category);
     setTimeout(() => {
-      // Aquí, queremos mantener la posición actual en x, y mover en y.
-      // Usamos un valor negativo para subir, pero no vamos del todo arriba, sino 300px abajo del inicio.
       const scrollPosition = window.scrollY = 250;
       window.scrollTo({
-        top: scrollPosition, // Mover a la posición calculada.
-        behavior: 'smooth' // Opcional: Añade un efecto de transición suave.
+        top: scrollPosition, 
+        behavior: 'smooth' 
       });
-    }, 100); // Ajusta este tiempo si es necesario.
+    }, 100); 
   };
 
   
@@ -62,31 +60,29 @@ const MenuCategory = ({ category, meals, collapseOthers, isCollapsed }) => {
 export const Menu = () => {
   const { store, actions } = useContext(Context);
   const { tableId } = useParams();
-  const [client, setClient] = useState({});
-  const createClient = async () => {
-    if (!localStorage.getItem("clientId")) {
-      let newClient = await actions.createClient("anonimo");
-      setClient(newClient);
-      localStorage.setItem("clientId", newClient.id);
-    }
-  };
+  // const [client, setClient] = useState({});
+  // const createClient = async () => {
+  //   if (!localStorage.getItem("clientId")) {
+  //     let newClient = await actions.createClient("anonimo");
+  //     setClient(newClient);
+  //     localStorage.setItem("clientId", newClient.id);
+  //   }
+  // };
 
-  const assingClientToTable = async () => {
-    if (!localStorage.getItem("clientId")) {
-      console.log("No hay cliente");
-      return;
-    } else if (!localStorage.getItem("sessionId")) {
-      let clientId = localStorage.getItem("clientId");
-      const session = await actions.assingClient(tableId, clientId); 
-      console.log(session)
-      localStorage.setItem("sessionId", session.id_session);
-    }
-  };
+  // const assingClientToTable = async () => {
+  //   if (!localStorage.getItem("clientId")) {
+  //     console.log("No hay cliente");
+  //     return;
+  //   } else if (!localStorage.getItem("sessionId")) {
+  //     let clientId = localStorage.getItem("clientId");
+  //     const session = await actions.assingClient(tableId, clientId); 
+  //     console.log(session)
+  //     localStorage.setItem("sessionId", session.id_session);
+  //   }
+  // };
   useEffect(() => {
     actions.getMenu();
-    createClient();
-    assingClientToTable();
-  }, [tableId, client]);
+  }, [tableId]);
 
   const [collapsedCategories, setCollapsedCategories] = useState([]);
 

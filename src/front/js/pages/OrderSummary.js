@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams, useNavigate } from "react-router-dom";
@@ -13,6 +12,7 @@ export const OrderSummary = () => {
   const [comment, setComment] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const { restaurantId, tableId } = useParams();
+  const [client, setClient] = useState({});
 
   const totalPrice = store.cart.reduce(
     (total, meal) => total + meal.price * meal.quantity,
@@ -24,53 +24,72 @@ export const OrderSummary = () => {
   };
 
 
-    const handlePaymentMethodChange = (method) => {
-        setPaymentMethod(method);
-    };
-    const handleFinishOrder = async() => {
-        if (!paymentMethod) {
-            alert('Please choose your payment method!');
-            return;
-        }
+  const handlePaymentMethodChange = (method) => {
+    setPaymentMethod(method);
+  };
 
-        try {
-            actions.addProductToTable(tableId, store.cart);
-            const orderResult = await actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
-        console.log('Order result:', orderResult);
-        if (orderResult && orderResult.id) {
-            const orderId = orderResult.id;
-            console.log('Order ID:', orderId);
-            const invoiceResult = await actions.createInvoice(restaurantId, tableId, orderId);
-            actions.clearCart();
-            navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`);
-        } else {
-            throw new Error('Order result is undefined or missing the order ID');
-        }
-        } catch (error) {
-            console.error('Error finishing order:', error);
-            alert('Error finishing order. Please try again.');
-        }
-     
-              
-                
-            }
-     
-    
-    return (
-        <>
-            <Navbar />
-            <div className="order-summary">
-                <h2>Order Summary</h2>
-                <ul>
-                    {store.cart.map((meal, index) => (
-                        <li key={index}>
-                            <div>{meal.name}</div>
-                            <div>x {meal.quantity}</div>
-                            <div className="butt">
-                            {meal.quantity === 1 ? (
-                <>
+  const createClient = async () => {
+    if (!localStorage.getItem("clientId")) {
+      let newClient = await actions.createClient("anonimo");
+      setClient(newClient);
+      localStorage.setItem("clientId", newClient.id);
+    }
+  };
+
+  const assingClientToTable = async () => {
+    if (!localStorage.getItem("clientId")) {
+      console.log("No hay cliente");
+      return;
+    } else if (!localStorage.getItem("sessionId")) {
+      let clientId = localStorage.getItem("clientId");
+      const session = await actions.assingClient(tableId, clientId);
+      console.log(session)
+      localStorage.setItem("sessionId", session.id_session);
+    }
+  };
+  const handleFinishOrder = async () => {
+    if (!paymentMethod) {
+      alert('Please choose your payment method!');
+      return;
+    }
+
+    try {
+      actions.addProductToTable(tableId, store.cart);
+      const orderResult = await actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
+      console.log('Order result:', orderResult);
+      if (orderResult && orderResult.id) {
+        const orderId = orderResult.id;
+        console.log('Order ID:', orderId);
+        actions.clearCart();
+        navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`);
+      } else {
+        throw new Error('Order result is undefined or missing the order ID');
+      }
+    } catch (error) {
+      console.error('Error finishing order:', error);
+      alert('Error finishing order. Please try again.');
+    }
+  }
+
+useEffect( () => {
+  assingClientToTable()
+},[client])
+
+  return (
+    <>
+      <Navbar />
+      <div className="order-summary">
+        <h2>Order Summary</h2>
+        <ul>
+          {store.cart.map((meal, index) => (
+            <li key={index}>
+              <div>{meal.name}</div>
+              <div>x {meal.quantity}</div>
+              <div className="butt">
+                {meal.quantity === 1 ? (
+                  <>
                     <button className='trash-icon' onClick={() => actions.removeItem(meal.id)}>
-                    <i className="fa-solid fa-trash fa-xs"></i>
+                      <i className="fa-solid fa-trash fa-xs"></i>
                     </button>
                     <button
                       className="butt1"
@@ -114,33 +133,33 @@ export const OrderSummary = () => {
           ></textarea>
         </div>
 
-                <div className="payment-method">
-                    <label htmlFor="payment">Payment Method:</label>
-                    <div className="payment-icons">
-                        <button className={paymentMethod === 'credit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('credit')}>
-                        <i class="fa-solid fa-credit-card"></i> Credit Card
-                        </button>
-                        <button className={paymentMethod === 'debit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('debit')}>
-                        <i class="fa-solid fa-building-columns"></i> Debit Card
-                        </button>
-                        <button className={paymentMethod === 'paypal' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('paypal')}>
-                        <i class="fa-brands fa-paypal"></i> PayPal
-                        </button>
-                        <button className={paymentMethod === 'cash' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('cash')}>
-                        <i class="fa-solid fa-money-bill"></i> Pay at Cashier
-                        </button>
-                    </div>
-                </div>
-                <div className='order-finish'>
-                <Link to={`/restaurants/${restaurantId}/tables/${tableId}/menu`}>
-                    <button className="button1">Back to Menu</button>
-                </Link>
-                    <button className='button1' onClick={handleFinishOrder}>Finish</button>
-                </div>
-            </div>
-            <Footer />
-        </>
-    );
+        <div className="payment-method">
+          <label htmlFor="payment">Payment Method:</label>
+          <div className="payment-icons">
+            <button className={paymentMethod === 'credit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('credit')}>
+              <i class="fa-solid fa-credit-card"></i> Credit Card
+            </button>
+            <button className={paymentMethod === 'debit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('debit')}>
+              <i class="fa-solid fa-building-columns"></i> Debit Card
+            </button>
+            <button className={paymentMethod === 'paypal' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('paypal')}>
+              <i class="fa-brands fa-paypal"></i> PayPal
+            </button>
+            <button className={paymentMethod === 'cash' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('cash')}>
+              <i class="fa-solid fa-money-bill"></i> Pay at Cashier
+            </button>
+          </div>
+        </div>
+        <div className='order-finish'>
+          <Link to={`app/generate-qr/app/restaurants/${restaurantId}/tables/${tableId}/menu`}>
+            <button className="button1">Menu</button>
+          </Link>
+          <button className='button1' onClick={() => [handleFinishOrder(),createClient()]}>Finish</button>
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
 
 };
 

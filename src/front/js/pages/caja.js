@@ -1,12 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import "../../styles/caja.css";
-import mesasImage from '../../img/mesas.png';
-import menu from "../../img/menu.png";
-import factura from "../../img/factura.png";
-import ajustes from "../../img/ajustes.png";
-import pantone from "../../img/pantone.png";
-import cajero from "../../img/cajero.png";
-import iconoMesas from "../../img/icono-mesa.png";
 import iconoAtras from "../../img/flecha-hacia-atras.png";
 import iconoLlave from "../../img/llave.png";
 import iconoPagar from "../../img/pagar.png";
@@ -17,7 +10,7 @@ import iconoMoney from "../../img/money1.png";
 import suelo from "../../img/suelo506.png";
 import { Context } from "../store/appContext";
 import Mesa from "../component/Mesa";
-import { useFetcher } from "react-router-dom";
+
 
 
 const Caja = () => {
@@ -191,7 +184,7 @@ const Caja = () => {
         setTableList(prevTableList =>
             prevTableList.map(mesa => 
                 mesa.table_number === table_number ? { ...mesa, isActive: false } : mesa
-            )
+            ),
         );
     }
 
