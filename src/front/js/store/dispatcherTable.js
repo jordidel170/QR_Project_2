@@ -7,7 +7,7 @@ const dispatcherTable = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             CORS: 'Access-Control-Allow-Origin',
-            body: JSON.stringify({ "table_number": new_table.table_number, "position_x": new_table.position_x, "position_y": new_table.position_y, "icono": new_table.icono })
+            body: JSON.stringify({ "table_number": new_table.table_number, "position_x": new_table.position_x, "position_y": new_table.position_y, "icon": new_table.icon })
         })
         console.log(response)
         if (!response.ok) throw Error("table_number is required", 400)
@@ -61,7 +61,7 @@ const dispatcherTable = {
             method: 'PATCH',
             headers: { "Content-Type": "application/json" },
             CORS: 'Access-Control-Allow-Origin',
-            body: JSON.stringify({ table_number: table_number })
+            body: JSON.stringify({ "table_number": table_number })
         });
         if (!response.ok) throw Error("Error updating table positions")
 

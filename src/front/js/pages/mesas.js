@@ -38,7 +38,7 @@ const Mesas = () => {
             table_number: `${maxId + 1}`,
             position_x: 0,
             position_y: 10,
-            icono: icon,
+            icon: icon,
         };
         await actions.createNewTable(nuevaMesa)
         setMesas([...mesas, nuevaMesa]);
