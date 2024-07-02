@@ -21,10 +21,21 @@ const MenuItem = ({ meal }) => (
   </li>
 );
 
+
+
 const MenuCategory = ({ category, meals, collapseOthers, isCollapsed }) => {
   const toggleCollapsed = () => {
     collapseOthers(category);
+    setTimeout(() => {
+      const scrollPosition = window.scrollY = 250;
+      window.scrollTo({
+        top: scrollPosition, 
+        behavior: 'smooth' 
+      });
+    }, 100); 
   };
+
+  
 
   return (
     <div className="menu-category">
@@ -50,6 +61,7 @@ export const Menu = () => {
   const { store, actions } = useContext(Context);
   const { tableId } = useParams();
   const [client, setClient] = useState({});
+
   const createClient = async () => {
     if (!localStorage.getItem("clientId")) {
       let newClient = await actions.createClient("anonimo");

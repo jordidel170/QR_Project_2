@@ -13,7 +13,7 @@ section {
     width: 100%;
     min-height: 100vh;
     /* background: url(https://img.freepik.com/free-photo/freshness-plate-seafood-sushi-avocado-cucumber-rice-nori-generated-by-artificial-intelligence_25030-65595.jpg?t=st=1717675532~exp=1717679132~hmac=645bbe4f7f007a22d38dd98aeba7be1474df03b5c22d348c5dc2d7fc14930980&w=1060) no-repeat; */
-    background: url(https://img.freepik.com/free-photo/happy-waiter-holding-plates-with-food-looking-camera-while-serving-guests-restaurant_637285-1707.jpg?t=st=1717841689~exp=1717845289~hmac=7ed9b0e68289f0cc453f21f8f4d9997e65fb41889eb7c741e926c116d32fb059&w=900) no-repeat;
+    background: url(https://img.freepik.com/free-photo/top-view-yummy-sweet-bagels-sugar-powdered-white-desk_140725-81098.jpg?t=st=1719518207~exp=1719521807~hmac=cb403341c4105857d2652ea0ff67a7deef79a90c4f2120486080a1f43008d1a3&w=900) no-repeat;
     /* background: url(https://img.freepik.com/free-photo/golden-cutlery-with-textile-plate-dark-background-top-view_1220-6607.jpg?t=st=1717841257~exp=1717844857~hmac=6bc0961ad656d2f7a1c4f60b7226e436ad40190427c1266fb024acd87762399e&w=900) no-repeat; */
     /* background: url(https://img.freepik.com/free-photo/dinner-table-with-bunch-green-oil-bottle-garlic-spoon-mixed-color-table_140725-86332.jpg?t=st=1717841286~exp=1717844886~hmac=6f432b948dbafbe122e68f8cbba5e1d51d0880d1faa5b7d1acefa351eabcf63f&w=900) no-repeat; */
     /* background: url(https://img.freepik.com/free-photo/high-angle-friends-reading-menu-restaurant_23-2150384795.jpg?t=st=1717842826~exp=1717846426~hmac=b5cb84759c98f65d9f19739db585df24c1411fa67b56f0bd085e3aa0410cf1a1&w=900) no-repeat; */
@@ -22,6 +22,7 @@ section {
 }
 
 .container-ticket {
+    margin-left: 6%;
     margin-right: 10px;
     background: rgba(255, 255, 255, 0.4);
     position: relative;
@@ -32,9 +33,34 @@ section {
     border-radius: 20px;
 }
 
+.filtros-mesa {
+
+    filter: brightness(150%) sepia(0%) saturate(1000%) hue-rotate(100deg);
+}
+
+.img-resplandor {
+    /* box-shadow: 0 0 8px 5px yellow; */
+    /* filter: hue-rotate(90deg); */
+    filter: brightness(145%) sepia(0%) saturate(1000%) hue-rotate(355deg) drop-shadow(0px 0px 15px rgb(163, 0, 0));
+
+    /* filter:  */
+    /* background-color: #f9fd00;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    transform: scale(1.05); */
+    /* filter: grayscale(100%); */
+}
+
+
+
+
+
 .container-caja-mesas {
+    user-select: none;
     background: rgba(255, 255, 255, 0.4);
     position: relative;
+    /* width: auto;
+    height: auto; */
     /* width: 600px; */
     backdrop-filter: blur(15px);
     border: 2px solid rgba(255, 255, 255, .6);
@@ -42,7 +68,95 @@ section {
     /* height: 600px; */
 }
 
+.ticket_table{
+    height: 100%;
+}
+.ticket-view{
+    margin: 2px;
+    padding: 5px;
+    border: 2px solid rgb(122, 122, 122);
+    border-radius: 6px;
+    height: 88.2%;
+    width: 98%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
 
+
+.div-product {
+    /* background: rgba(255, 255, 255, 0.5); */
+    width: 100%;
+    display: flex;
+
+    align-items: center;
+    /* margin: 1px; */
+    height: 8%;
+    /* padding: 3px; */
+    border-bottom: 2px solid rgb(122, 122, 122);
+    /* border-top: 1px solid rgb(122, 122, 122); */
+    border-radius: 6px;
+}
+
+.product--name {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 70%;
+    padding-left: 3px;
+}
+
+.product-qty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 9%;
+    border-right: 2px solid rgb(122, 122, 122);
+    border-left: 2px solid rgb(122, 122, 122);
+}
+.product-total{
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 2px;
+}
+.total--price{
+    border: 2px solid rgb(122, 122, 122);
+    font-size: 35px;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 40px;
+    width: 98%;
+    margin-bottom: 6px;
+    position: absolute;
+    bottom: 19%;
+    border-radius: 6px;
+    
+    
+}
+.total--price-tittle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+}
+.total--price-amount{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-weight: bold;
+}
+
+.ticket_table{
+    display: flex;
+    justify-content: center;    
+    
+}
 .container-caja-mesas h1 {
     display: flex;
     justify-content: center;
@@ -73,13 +187,13 @@ section {
 }
 
 .ticket {
-    height: 71.1%;
+    height: 71.5%;
 }
 
 .botones {
 
     margin-left: 1px;
-    height: 20%;
+    height: 19.5%;
     /* border: 1px solid black; */
     flex: 1 1 100%;
     display: flex;
@@ -94,11 +208,12 @@ section {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    height: 8.5%;
 }
 
 .boton-atras {
-    width: 48.5%;
-    border-radius: 6px 18px 6px 6px;
+    width: 99%;
+    border-radius: 18px 18px 6px 6px;
     border: 0 solid transparent;
     background-color: lightblue;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
@@ -161,6 +276,7 @@ section {
     outline-color: rgba(255, 255, 255, 0.5);
     outline-offset: 0px;
 }
+
 .boton-eliminar:hover {
     outline: 1px solid;
     border: 1px solid transparent;
@@ -186,6 +302,7 @@ section {
     outline-offset: 0px;
     z-index: 25;
 }
+
 .boton-pagar:hover {
     outline: 1px solid;
     border: 1px solid transparent;
@@ -196,7 +313,7 @@ section {
 }
 
 .boton-anadir {
-    
+
     border-radius: 6px;
     height: 47%;
     width: 32%;
@@ -211,6 +328,7 @@ section {
     outline-color: rgba(255, 255, 255, 0.5);
     outline-offset: 0px;
 }
+
 .boton-anadir:hover {
     outline: 1px solid;
     border: 1px solid transparent;
@@ -235,6 +353,7 @@ section {
     outline-color: rgba(255, 255, 255, 0.5);
     outline-offset: 0px;
 }
+
 .boton-abrir-caja:hover {
     outline: 1px solid;
     border: 1px solid transparent;
@@ -248,28 +367,373 @@ section {
 .carta-caja {
     background: rgba(255, 255, 255, 0.4);
     position: relative;
-    min-width: 750px;
+    min-width: 770px;
     max-width: 750px;
     backdrop-filter: blur(15px);
     border: 2px solid rgba(255, 255, 255, .6);
     border-radius: 20px;
-    min-height: 700px;
+    min-height: 550px;
+}
+.container-calculadora {
+    min-width: 770px;
+    max-width: 770px;
+    height: 550px;
 }
 
-
-.carta-caja h1 {
+.carta-caja h1, .container-calculadora h1 {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 15%;
     font-size: 2.6rem;
-    color: #fff;
+    color: #000000;
     text-align: center;
     font-weight: bold;
 }
 
+.calculadora{
+    background: rgba(255, 255, 255, 0.4);
+    width: 300px;
+    height: 100%;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, .6);
+    border-radius: 20px;
+}
+.calculadora-total{
+    /* border: 1px solid black; */
+    height: 100%;
+    margin-left: 1px;
+    margin-right: 1px;
+    display: flex;
+    
+    flex-direction: column;
+}
+.to-pay{
+    max-height: 8.9%;
+    margin-top: 1px;
+    width: 100%;
+    background: black;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 15%;
+    font-size: 2.6rem;
+    color: #000000;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px 20px 0px 20px;
+    border-radius: 18px 18px 6px 6px;
+    color: white;
+}
+.to-change{
+    max-height: 8.9%;
+    margin-top: 2px;
+    width: 100%;
+    background: rgb(23, 105, 7);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 15%;
+    font-size: 2.6rem;
+    color: #000000;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px 20px 0px 20px;
+    border-radius: 6px 6px 6px 6px;
+    color: white;
+}
+.to-paid{
+    max-height: 8.9%;
+    margin-top: 2px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0);
+    border: 2px solid rgba(43, 43, 43, 0.6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 15%;
+    font-size: 2.6rem;
+    color: #000000;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px 20px 0px 20px;
+    border-radius: 6px 6px 6px 6px;
+    color: white;  
+}
+
+.pay-input::-webkit-outer-spin-button,
+.pay-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.pay-input[type=number] {
+    -moz-appearance: textfield;
+  }
+.pay-input:focus {
+    outline: none;
+    border: none;
+}
+.to-pay h3, .to-change h3 {
+    margin-top: 3px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.to-paid h3, .to-paid h2{
+    font-weight: bold;
+    color: black;
+}   
+.to-paid h2{
+    margin-top: 2px;
+}
+
+.pay-input{
+    /* border: 5px solid black; */
+    color: black;
+    font-size: 30px;
+    font-weight: bold;
+    border: none;
+    background: transparent;
+    min-width: 10%;
+    
+    max-width: 100%;
+    height: 100%;
+    margin-bottom: 5px;
+    text-align: right;
+    /* border-left: 2px solid rgba(43, 43, 43, 0.6); */
+}
+.dollar-group{
+    width: 54%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid black; */
+}
+.dollar-sign {
+    /* padding-left: 50px; */
+    
+    margin-bottom: 6px;
+    font-size: 30px;
+    color: #000000;
+    margin-right: 5px; /* Ajusta el espaciado según sea necesario */
+}
+.teclado {
+    margin: 0px;
+    margin-top: 5px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Crea 3 columnas */
+    gap: 5px; /* Espacio entre botones */
+}
+.teclado-btn:hover{
+    background: rgba(2, 212, 240, 0.4);
+}
+
+.teclado-btn {
+    background: rgba(170, 245, 255, 0.4);
+    border: 2px solid rgba(0, 0, 0, 0.6);
+    font-size: 30px;
+    height: 66.5px;
+    border-radius: 6px 6px 6px 6px;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 10px; /* Espaciado interno */
+    /* Tamaño de letra */
+    /* Agrega más estilos según necesites */
+}
+.to-change.negative {
+    background-color: rgb(192, 4, 4);
+}
+
+.botones-pagar{
+    margin-top: 3px;
+    height: 100%;
+    /* border: 1px solid black; */
+display: flex;
+}
+.boton-cash{
+    border: 2px solid rgb(0, 0, 0, 0.6);
+    margin-right: 1.5px;
+    border-radius: 6px 6px 6px 18px;
+    height: 99%;
+    width: 50%;
+    color: #fff;
+    font-size: 20px;
+    background-color: rgb(23, 105, 7);
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 0px;
+    text-shadow: none;
+    -webkit-transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all 1000ms cubic-bezier(0.19, 1, 0.22, 1);
+    outline-color: rgba(255, 255, 255, 0.5);
+    outline-offset: 0px;
+    z-index: 25;
+}
+.boton-card{
+    border: 2px solid rgb(0, 0, 0, 0.6);
+    margin-left: 1.5px;
+    border-radius: 6px 6px 18px 6px;
+    height: 99%;
+    width: 50%;
+    color: #fff;
+    font-size: 20px;
+    background-color: rgb(141, 0, 0);
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 0px;
+    text-shadow: none;
+    -webkit-transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all 1000ms cubic-bezier(0.19, 1, 0.22, 1);
+    outline-color: rgba(255, 255, 255, 0.5);
+    outline-offset: 0px;
+    z-index: 25;
+}
+
+
+/* .loader{
+    transform: translateX(50%);
+    padding: 10px;
+    position: absolute;
+    top: -25px;
+    width: 50%;
+    height: 20px;
+   border: 1px solid #000000;
+} */
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 25px;
+    background: #dfdfdf;
+    border-radius: 10px;
+    margin: 0 auto;
+    overflow: hidden;
+
+    transform: translateX(10%);
+    padding: 10px;
+    position: absolute;
+    top: -30px;
+    border: 1px solid #000000;
+}
+
+.loader span {
+    top: 10px;
+    right: 10px;
+}
+
+.progress {
+    position: absolute;
+    top: 2%;
+    left: 0;
+    bottom: 0;
+    height: 30px;
+    width: 50%;
+    /* background: linear-gradient(to right, rgba(30,87,153,0) 0%,rgba(30,87,153,0.8) 15%,rgba(30,87,153,1) 19%,rgba(30,87,153,1) 20%,rgba(41,137,216,1) 50%,rgba(30,87,153,1) 80%,rgba(30,87,153,1) 81%,rgba(30,87,153,0.8) 85%,rgba(30,87,153,0) 100%); */
+    background: linear-gradient(to right, rgba(3, 219, 0, 0) 0%, rgba(3, 219, 0, 0.8) 15%, rgba(3, 219, 0, 1) 19%, rgba(3, 219, 0, 1) 20%, rgba(0, 255, 0, 1) 50%, rgba(3, 219, 0, 1) 80%, rgba(3, 219, 0, 1) 81%, rgba(3, 219, 0, 0.8) 85%, rgba(3, 219, 0, 0) 100%);
+    animation: slide 1.4s infinite;
+}
+
+.container-modal-cash{
+    position: absolute;
+    border: 1px solid black;
+    width: 100%;
+    height: 300px;
+}
+
+.modal-cash{
+    left: 36.9%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    position: absolute;
+    z-index: 1500;
+    margin: 2px;
+    padding: 5px;
+    border: 8px solid rgb(0, 0, 0);
+    border-radius: 18px;
+    height: 20%;
+    width: 20.8%;
+    display: flex;
+    flex-direction: column;
+    background: rgba(4, 0, 255, 0.4);
+}
+
+.modal-cash p{
+    font-size: 25px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.modal-cash h3{
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.modal-insufficient-payment{
+    left: 36.9%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    position: absolute;
+    z-index: 1500;
+    margin: 2px;
+    padding: 5px;
+    border: 8px solid rgb(0, 0, 0);
+    border-radius: 18px;
+    height: 20%;
+    width: 20.8%;
+    display: flex;
+    flex-direction: column;
+    background: rgb(209, 0, 0);
+}
+
+.modal-insufficient-payment h3{
+    margin-top: 15px;
+    /* border: 1px solid #ffffff; */
+    font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.modal-insufficient-payment p{
+    /* border: 1px solid #ffffff; */
+    text-align: center;
+    font-weight: bold;
+    color: #ebebeb;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.modal-cash.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
+
+@keyframes slide {
+    from {
+        left: -50%;
+    }
+
+    to {
+        left: 100%;
+    }
+}
+
+
+
 @media (min-width: 768px) and (max-width: 1300px) {
-    .container-ticket{
+    .container-ticket {
         height: 95vh;
     }
-  }
+}

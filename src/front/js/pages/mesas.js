@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from "react-router-dom";
 import "../../styles/mesas.css";
 import iconoMesas from "../../img/icono-mesa.png";
 import iconoCanto from "../../img/barraCantoTransp.png";
@@ -17,7 +16,8 @@ const Mesas = () => {
     const [tempLargoSala, setTempLargoSala] = useState('10');
     const [tempAnchoSala, setTempAnchoSala] = useState('15');
     const {store, actions} = useContext(Context)
-
+    
+    
     const girarMesa = (idMesa) => {
         setAngulosRotacion((prevAngulos) => {
             const anguloActual = prevAngulos[idMesa] || 0;
@@ -30,29 +30,29 @@ const Mesas = () => {
     };
 
     
-    const agregarMesa = async(icono) => {
+    const agregarMesa = async(icon) => {
         const maxId = mesas.reduce((max, mesa) => Math.max(max, mesa.id), 0);
        
         const nuevaMesa = {
             id: maxId + 1,
             table_number: `${maxId + 1}`,
-            posicion: { x: 0, y: 10 },
-            icono: icono,
+            position_x: 0,
+            position_y: 10,
+            icon: icon,
         };
-        await actions.createNewTable(nuevaMesa.table_number)
+        await actions.createNewTable(nuevaMesa)
         setMesas([...mesas, nuevaMesa]);
     };
-
-    
-    const moverMesa = (id, nuevaPosicion) => {
-        setMesas(mesas.map(mesa => {
-            if (mesa.id === id) {
-                return { ...mesa, posicion: nuevaPosicion };
+ 
+    const moverMesa = async (id, nuevaPosicion) => {
+        const mesa = mesas.find(mesa => mesa.id === id);
+        if (mesa) {
+            const response = await actions.updateTablePosition(id, nuevaPosicion);
+            if (response) {
+                setMesas(mesas.map(mesa => mesa.id === id ? { ...mesa, position_x: nuevaPosicion.x, position_y: nuevaPosicion.y } : mesa));
             }
-            return mesa;
-        }));
+        }
     };
-
     const iniciarArrastre = (e, id) => {
         e.dataTransfer.setData("text/plain", id);
         e.dataTransfer.setDragImage(e.target, 25, 25);
@@ -79,29 +79,25 @@ const Mesas = () => {
 
     const eliminarMesa = async(table_number) => {
         await actions.delete_table(table_number)
-        const updatedTables = mesas.filter(mesa => console.log(mesa.id) !== id)
-       
-        setMesas(...mesas, updatedTables);
-        
+        setMesas(mesas.filter(mesa => mesa.table_number !== table_number))
     };
 
     const manejarSoltar = (e) => {
         e.preventDefault();
         const contenedor = e.target.getBoundingClientRect();
         const id = e.dataTransfer.getData("text/plain");
-        const ajusteX = 46;
-        const ajusteY = 46;
+        const ajusteX = 26;
+        const ajusteY = 26;
         const nuevaPosicion = {
             x: e.clientX - contenedor.left - ajusteX,
             y: e.clientY - contenedor.top - ajusteY
         };
+        console.log(id)
         moverMesa(parseInt(id), nuevaPosicion);
     };
 
-    const actualizarNombreMesa = (id, nuevoNombre) => {
-        setMesas(mesasPrevias => mesasPrevias.map(mesa =>
-            mesa.id === id ? { ...mesa, nombre: nuevoNombre } : mesa
-        ));
+    const actualizarNombreMesa = async(id, nuevoNombre) => {
+       await actions.updateTableNumber(id, nuevoNombre)
     };
 
     useEffect(() => {
@@ -116,47 +112,45 @@ const Mesas = () => {
     }, [largoSala, anchoSala]);
 
 
-    useEffect(() => {
+    const fetchTables = async () => {
+        const tables = await actions.getTableList();
+        console.log(tables)
+        setMesas(tables);
         
-        const mesasGuardadas = localStorage.getItem('mesas');
-        const angulosGuardados = localStorage.getItem('angulosRotacion');
-        const largoSalaGuardado = localStorage.getItem('largoSala');
-        const anchoSalaGuardado = localStorage.getItem('anchoSala');
-        const tempLargoSalaGuardado = localStorage.getItem('tempLargoSala');
-        const tempAnchoSalaGuardado = localStorage.getItem('tempAnchoSala');
-        const nombreSalonGuardado = localStorage.getItem('nombreSalon');
-      
-        if (mesasGuardadas) setMesas(JSON.parse(mesasGuardadas));
-        if (angulosGuardados) setAngulosRotacion(JSON.parse(angulosGuardados));
-        if (largoSalaGuardado) setLargoSala(JSON.parse(largoSalaGuardado));
-        if (anchoSalaGuardado) setAnchoSala(JSON.parse(anchoSalaGuardado));
-        if (tempLargoSalaGuardado) setTempLargoSala(JSON.parse(tempLargoSalaGuardado));
-        if (tempAnchoSalaGuardado) setTempAnchoSala(JSON.parse(tempAnchoSalaGuardado));
-        if (nombreSalonGuardado) setNombreSalon(nombreSalonGuardado);
-      }, []);
-      
-      const guardarEstado = () => {
-    
-        localStorage.setItem('mesas', JSON.stringify(mesas));
-        localStorage.setItem('angulosRotacion', JSON.stringify(angulosRotacion));
-        localStorage.setItem('largoSala', JSON.stringify(largoSala));
-        localStorage.setItem('anchoSala', JSON.stringify(anchoSala));
-        localStorage.setItem('tempLargoSala', JSON.stringify(tempLargoSala));
-        localStorage.setItem('tempAnchoSala', JSON.stringify(tempAnchoSala));
-        localStorage.setItem('nombreSalon', nombreSalon);
-        alert('Guardado con éxito');
       };
 
+    useEffect(() => {
+        console.log(actions.getTableList())
+      fetchTables();
+    }, []);
+
+    const getIcon = (icon) => {
+        
+        switch(icon) {
+            case "/icono-mesa.png":
+                return "/icono-mesa.png";
+            case "/barraVertTransp.png":
+                console.log(icon, "este es el console log del icono")
+                return "/barraVertTransp.png";
+            case "/barraCantoTransp.png":
+                return "/barraCantoTransp.png";
+            default:
+                return icon ? icon : iconoMesas;
+        }
+    };
     return (
         <>
+        
             <section>
+
+                    <h1 className='section-mesas-tittle'>Tables</h1>
                 <div className='principal'>
                     <div className='container-mesas1'>
-                        <h3>Agregar Mesa</h3>
+                        <h3>Add Tables</h3>
                         <img src={iconoMesas} alt="Agregar Mesa" onClick={() => agregarMesa(iconoMesas)} style={{ cursor: 'pointer', width: '50px', height: '50px' }} />
                         <img src={iconoBarra} alt="Agregar Mesa" onClick={() => agregarMesa(iconoBarra)} style={{ cursor: 'pointer', width: '50px', height: '50px' }} />
                         <img src={iconoCanto} alt="Agregar Mesa" onClick={() => agregarMesa(iconoCanto)} style={{ cursor: 'pointer', width: '50px', height: '50px' }} />
-                        <button className='editar' onClick={() => setModoEdicion(!modoEdicion)}>Editar elementos</button>
+                        <button className='editar' onClick={() => setModoEdicion(!modoEdicion)}>Edit elements</button>
                     </div>
                     <div className='top-bottom-container'>
                         <h3>{nombreSalon}</h3>
@@ -165,7 +159,7 @@ const Mesas = () => {
                             style={{ width: '1080px', height: '600px', position: 'relative', border: '1px solid black', backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}
                             onDragOver={permitirSoltar}
                             onDrop={manejarSoltar}
-                        >
+                        > 
                             {mesas.map((mesa) => (
                                 <div
                                     key={mesa.id}
@@ -176,14 +170,14 @@ const Mesas = () => {
                                         cursor: 'grab',
                                         color: 'white',
                                         position: 'absolute',
-                                        left: mesa.posicion.x,
-                                        top: mesa.posicion.y,
-                                        zIndex: parseInt(mesa.table_number.replace(/\D/g, '')) || 1
+                                        left: mesa.position_x,
+                                        top: mesa.position_y,
+                                        zIndex: parseInt(mesa.table_number.toString().replace(/\D/g, '')) || 1
                                     }}
                                     className="mesa-container"
                                 >
                                     <img
-                                        src={mesa.icono}
+                                        src={getIcon(mesa.icon)}
                                         alt="Mesa"
                                         style={{
                                             width: '60px',
@@ -200,7 +194,7 @@ const Mesas = () => {
                                                 defaultValue={mesa.table_number}
                                                 onBlur={(e) => actualizarNombreMesa(mesa.id, e.target.value)}
                                             />
-                                            <button className='eliminar-mesa' onClick={() => eliminarMesa(mesa.id)} style={{ position: 'absolute', transform: 'translateX(-50%)', backgroundColor: 'red', color: 'white' }}>X</button>
+                                            <button className='eliminar-mesa' onClick={() => eliminarMesa(mesa.table_number)} style={{ position: 'absolute', transform: 'translateX(-50%)', backgroundColor: 'red', color: 'white' }}>X</button>
                                             <button className='girar-mesa' onClick={() => girarMesa(mesa.id)} style={{ position: 'absolute', transform: 'translateX(-50%)', bottom: '-20px' }}>⭮</button>
                                         </>
                                     ) : (
@@ -211,14 +205,14 @@ const Mesas = () => {
                         </div>
                     </div>
                     <div className='container-mesas'>
-                        <h3>Editar<br />Salón</h3>
+                        <h3>Edit<br />Room</h3>
                         <div className='sala-container'>
-                            <p className='titulos'>Nombre<br /> del salón</p>
+                            <p className='titulos'>Name<br /> of Room</p>
                             <input className='nombre-sala' type="text" value={nombreSalon} onChange={(e) => setNombreSalon(e.target.value)} placeholder="Nombre" />
                         </div>
-                        <h3>Tamaño</h3>
+                        <h3>Size</h3>
                         <div className='sala-container'>
-                            <p className='titulos'>Largo m</p>
+                            <p className='titulos'>Height</p>
                             <input
                                 type="number"
                                 className='nombre-sala'
@@ -229,7 +223,7 @@ const Mesas = () => {
                                 }}
                                 placeholder="Largo"
                             />
-                            <p className='titulos'>Ancho m</p>
+                            <p className='titulos'>Width</p>
                             <input
                                 type="number"
                                 className='nombre-sala'
@@ -240,13 +234,11 @@ const Mesas = () => {
                                 }}
                                 placeholder="Ancho"
                             />
-                            <button className='guardar' onClick={guardarEstado}>Guardar</button>
-                            <Link to="../app/dashboard" className='link-boton-dash'>
-                            <button className='salir'>Salir</button>
-                            </Link>
+                            <button className='guardar' onClick={ () =>{fetchTables(); alert("Tables saved succesfully!")}}>Save</button>
                         </div>
                     </div>
                 </div>
+                
             </section>
         </>
     );

@@ -2,18 +2,48 @@
     box-sizing: border-box;
 }
 
-.principal {
+.h-100{
+    background: none;
+    min-height: 100%;
+}
+.about-us-container{ 
+    height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        padding-bottom: 12%;
+        /* background: url(https://img.freepik.com/free-photo/freshness-plate-seafood-sushi-avocado-cucumber-rice-nori-generated-by-artificial-intelligence_25030-65595.jpg?t=st=1717675532~exp=1717679132~hmac=645bbe4f7f007a22d38dd98aeba7be1474df03b5c22d348c5dc2d7fc14930980&w=1060) no-repeat; */
+        background: url(https://img.freepik.com/free-photo/top-view-yummy-sweet-bagels-sugar-powdered-white-desk_140725-81098.jpg?t=st=1719518207~exp=1719521807~hmac=cb403341c4105857d2652ea0ff67a7deef79a90c4f2120486080a1f43008d1a3&w=900) no-repeat;
+        /* background: url(https://img.freepik.com/free-photo/golden-cutlery-with-textile-plate-dark-background-top-view_1220-6607.jpg?t=st=1717841257~exp=1717844857~hmac=6bc0961ad656d2f7a1c4f60b7226e436ad40190427c1266fb024acd87762399e&w=900) no-repeat; */
+        /* background: url(https://img.freepik.com/free-photo/dinner-table-with-bunch-green-oil-bottle-garlic-spoon-mixed-color-table_140725-86332.jpg?t=st=1717841286~exp=1717844886~hmac=6f432b948dbafbe122e68f8cbba5e1d51d0880d1faa5b7d1acefa351eabcf63f&w=900) no-repeat; */
+        /* background: url(https://img.freepik.com/free-photo/high-angle-friends-reading-menu-restaurant_23-2150384795.jpg?t=st=1717842826~exp=1717846426~hmac=b5cb84759c98f65d9f19739db585df24c1411fa67b56f0bd085e3aa0410cf1a1&w=900) no-repeat; */
+        background-position: center;
+        background-size: cover;
+    
+}
+.principal-about {
+    
+    padding-left: 150px;
+    
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 90%;
+   height: 50%;
 }
 
-.title {
+.title-about {
+    position: relative;
+    left: 5.5%;
+    padding-bottom: 3%;
     display: flex;
     justify-content: center;
-    color: white;
-    text-shadow: black 0 0 20px;
-    font-size: 250%;
+    color: #FB923C;
+    text-shadow: rgb(255, 255, 255) 0 0 20px;
+    font-size: 270%;
+    font-weight: bold;
 }
 
 .bck-color {
@@ -35,6 +65,11 @@
     align-items: center;
     height: 25%;
     padding-bottom: 3%;
+}
+
+.name h2{
+    font-size: clamp(1rem, 2vw, 2rem);
+    font-weight: bold;
 }
 
 .alias {
@@ -60,7 +95,7 @@
     font-size: larger;
 }
 .datos p {
-    font-size: 10px;
+    font-size: 15px;
 }
 .alt {
     height: 44vh;
@@ -68,12 +103,12 @@
 
 .borders {
     border: 6px solid #FB923C;
-    border-radius: 20px;
+    border-radius: 15px;
 }
 
 .foto-img {
-    border-top-left-radius: 13px;
-    border-top-right-radius: 13px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     border-bottom: 6px solid #FB923C;
     width: 100%;
     height: 100%;
@@ -81,6 +116,8 @@
 
 .front,
 .back {
+    top: 0px;
+    left: 0px;
     position: absolute;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -99,6 +136,7 @@
 
 .back {
     height: 100%;
+    
 }
 
 .vuelta {
@@ -108,7 +146,7 @@
 }
 
 .card {
-    height: 100%;
+    height: 120%;
     margin: 2%;
     background-color: transparent;
     min-height: 95%;

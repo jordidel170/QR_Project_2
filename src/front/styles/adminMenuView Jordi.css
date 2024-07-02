@@ -1,0 +1,311 @@
+
+.section-menu {
+    display: flex;
+    justify-content: flex-start;
+
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url(https://img.freepik.com/free-photo/top-view-yummy-sweet-bagels-sugar-powdered-white-desk_140725-81098.jpg?t=st=1719518207~exp=1719521807~hmac=cb403341c4105857d2652ea0ff67a7deef79a90c4f2120486080a1f43008d1a3&w=900) no-repeat;
+    background-position: left 0px bottom 50%;
+    background-size: 100%;
+    background-attachment: fixed;
+}
+
+.main-container{
+    /* border: 1px solid lightgrey; */
+    position: relative;
+    
+    margin-left: 155px;
+    width: 98%;
+    height: 100%;
+    margin-right: 10px;
+
+}
+.menu-container {
+    
+    /* margin-right: 20px; */
+    margin-top: 25px;
+    
+    width: 100%;
+    min-height: 96vh;
+
+}
+
+.menu-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    /* flex-direction: row; */
+    justify-content: center;
+
+    width: 100%;
+}
+
+.section-adminMenu-tittle {
+    position: absolute;
+    z-index: 25;
+    top: 12px;
+    left: 3px;
+    text-decoration: underline;
+}
+
+.menu-categories {
+    /* border: 1px solid lightgrey; */
+    display: flex;
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 30px;
+    display: flex;
+    gap: 1%;
+    margin-bottom: 20px;
+    width: 100%;
+
+}
+
+.menu-categories .category {
+
+    /* padding: 10px 20px; */
+    /* margin: 5px; */
+    /* margin-right: 50px; */
+    width: 15%;
+    cursor: pointer;
+    border-radius: 6px 6px 18px 18px;
+    border: 3px solid rgb(0, 0, 0);
+}
+
+.menu-categories .category:hover {
+    background-color: #4b4b4b;
+}
+
+.menu-categories .category.active {
+    background-color: #4b4b4b;
+    color: rgb(253, 253, 253);
+}
+
+
+.menu-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+    gap: 0px;
+}
+
+
+.menu-item {
+    background: rgba(255, 255, 255, 0.70);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    height: 22em;
+    border: 2px solid #5e5e5e;
+    backdrop-filter: blur(15px);
+
+}
+
+.menu-item:hover {
+    transform: scale(1.05);
+    border: 2px solid #000000;
+}
+
+.menu-item img {
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.menu-item h3 {
+    font-size: 18px;
+    color: #000000;
+    font-weight: bold;
+    margin-bottom: 0px;
+    height: 8%;
+}
+
+.menu-item p {
+    font-size: 16px;
+    color: #777;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: white-space 0.5s ease;
+}
+
+
+.description {
+    /* max-height: 3em; */
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.5s ease;
+}
+.description p{
+    font-size: 15px;
+    color: #333;
+    font-weight: bold;
+}
+
+
+.menu-item:hover .description p {
+    white-space: normal;
+}
+
+.menu-item:hover .description {
+    max-height: 100em;
+}
+
+.menu-item {
+    flex: 1 1 auto;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    margin: 10px;
+}
+
+.menu-item:hover img {
+    /* transform: scale(0.5);  */
+    z-index: 1;
+}
+
+.description {
+    /* max-height: 3em;  */
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.menu-item:hover .figuremenu-item {
+    max-height: 8em;
+    transition: 0.3s;
+    margin-bottom: 0;
+}
+
+/* .menu-item:hover .description {
+    max-height: 100em; 
+} */
+
+.menu-item .price {
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.material-symbols-outlined {
+    border: 1px solid black;
+    border-color: gray;
+    font-size: 30px;
+    border-radius: 10px;
+
+}
+
+.figuremenu-item {
+    height: 150px;
+}
+
+.editButton {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.editButton button {
+    width: 45px;
+}
+
+.update-message {
+    margin-top: 10px;
+    color: #ed4e14;
+    font-weight: bold;
+}
+
+.menu-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+
+    padding-right: 5px;
+}
+
+.menu-buttons button {
+    font-size: 19px;
+    margin: 4px;
+}
+
+.dash {
+    border: 1px solid rgb(255, 255, 255);
+    width: 20%;
+    background: rgb(253, 117, 117);
+    border-radius: 18px 18px 6px 6px;
+    min-width: 200px;
+}
+
+.createproduct {
+    border: 1px solid rgb(255, 255, 255);
+    width: 20%;
+    background: linear-gradient(to bottom, rgba(235,241,246,1) 0%,rgba(0,0,0,1) 0%,rgba(255,255,255,1) 30%,rgba(235,241,246,1) 70%,rgba(0,0,0,1) 100%);
+    border-radius: 18px 6px 18px 6px;
+    min-width: 200px;
+    text-decoration: underline;
+}
+
+.dash:hover {
+    background: rgb(255, 42, 42);
+}
+
+.createproduct:hover {
+    background-color: #000000;
+    border-radius: 6px 18px 6px 18px;
+    transform: scale(1.10);
+}
+
+.starters{
+    /* background: linear-gradient(to bottom, rgba(0, 255, 13, 0.692) 0%,rgb(255, 255, 255, 0.70) 100%); */
+    background: linear-gradient(135deg, rgba(81,221,0,1) 0%,rgba(81,221,0,0.6) 10%,rgba(247,247,247,0.4) 15%,rgba(247,247,247,0) 25%,rgba(247,247,247,0) 50%,rgba(247,247,247,0) 75%,rgba(247,247,247,0.4) 85%,rgba(81,221,0,0.6) 90%,rgba(81,221,0,1) 100%);
+}
+.mains{
+    background: linear-gradient(135deg, rgba(239,231,0,1) 0%,rgba(239,231,0,0.6) 10%,rgba(247,247,247,0.4) 15%,rgba(247,247,247,0) 25%,rgba(247,247,247,0) 50%,rgba(247,247,247,0) 75%,rgba(247,247,247,0.4) 85%,rgba(239,231,0,0.6) 90%,rgba(239,231,0,1) 100%);
+}
+.desserts{
+    background: linear-gradient(135deg, rgba(211,0,81,1) 0%,rgba(211,0,81,0.6) 10%,rgba(247,247,247,0.4) 15%,rgba(247,247,247,0) 25%,rgba(247,247,247,0) 50%,rgba(247,247,247,0) 75%,rgba(247,247,247,0.4) 85%,rgba(211,0,81,0.6) 90%,rgba(211,0,81,1) 100%);
+}
+.drinks{
+    background: linear-gradient(135deg, rgba(0,17,206,1) 0%,rgba(0,17,206,0.6) 10%,rgba(247,247,247,0.4) 15%,rgba(247,247,247,0) 25%,rgba(247,247,247,0) 50%,rgba(247,247,247,0) 75%,rgba(247,247,247,0.4) 85%,rgba(0,17,206,0.6) 90%,rgba(0,17,206,1) 100%);
+}
+
+.starters1{
+    text-shadow: -1px 1px 14px rgba(0,0,0,1);
+    color: azure;
+    background: linear-gradient(135deg, rgba(81,221,0,1) 0%,rgba(81,221,0,0) 15%,rgba(81,221,0,1) 50%,rgba(81,221,0,0) 85%,rgba(81,221,0,1) 100%);
+}
+
+.mains1{
+    text-shadow: -1px 1px 14px rgba(0,0,0,1);
+    color: azure;
+    background: linear-gradient(135deg, rgba(239,231,0,1) 0%,rgba(239,231,0,0) 15%,rgba(239,231,0,1) 50%,rgba(239,231,0,0) 85%,rgba(239,231,0,1) 100%);
+}
+.desserts1{
+    text-shadow: -1px 1px 14px rgba(0,0,0,1);
+    color: azure;
+    background: linear-gradient(135deg, rgba(211,0,81,1) 0%,rgba(211,0,81,0) 15%,rgba(211,0,81,1) 50%,rgba(211,0,81,0) 85%,rgba(211,0,81,1) 100%);
+}
+.drinks1{
+    text-shadow: -1px 1px 14px rgba(0,0,0,1);
+    color: azure;
+    background: linear-gradient(135deg, rgba(0,17,206,1) 0%,rgba(0,17,206,0) 15%,rgba(0,17,206,1) 50%,rgba(0,17,206,0) 85%,rgba(0,17,206,1) 100%);
+}
+
+
+@MEDIA (MAX-WIDTH: 400PX) {
+
+    .menu-container {
+        margin-left: 0;
+    }
+}

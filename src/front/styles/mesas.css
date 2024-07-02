@@ -92,17 +92,21 @@ section{
 }
 
 .guardar{
-    border-radius: 0;
+    background: rgb(22, 180, 1);
+    border-radius: 0 0 17px 17px;
+    height: 42%;
+    
 }
 .guardar:hover{
-    background: rgb(61, 61, 61);
+    background: rgb(12, 104, 0);
     color: #fff;
 }
 
 .mesa-container {
     position: relative;
-    width: 100px;
-    height: 100px;
+    
+    width: 60px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,8 +118,8 @@ section{
     width: 15px;
     height: 15px;
     position: absolute;
-    top: 21%;
-    right: 51%;
+    top: 5px;
+    left: 15px;
     transform: translate(50%, -50%);
     background-color: red;
     color: white;
@@ -133,8 +137,8 @@ section{
     width: 15px;
     height: 15px;
     position: absolute;
-    top: 21%;
-    right: 18%;
+    top: 5px;
+    right: 0px;
     transform: translate(50%, -50%);
     background-color: rgb(2, 153, 4);
     color: white;
@@ -147,14 +151,15 @@ section{
 }
 
 .numeroMesa{
-    bottom: 11px;
+    top: 19px;
     position: absolute;
-    padding-bottom: 30px;
+    padding-bottom: px;
     font-weight: bold;
+    height: 2px;
 }
 
 .input-nombre-mesa{
-    bottom: 41px;
+    bottom: 17px;
     font-weight: bold;
     position: absolute;
     text-align: center;
@@ -165,7 +170,7 @@ section{
 }
 
 .nombre-sala{
-    background: rgba(185, 185, 185, 0.6);
+    background: rgba(117, 117, 117, 0.6);
     width: 100%;
     border: none;
     text-align: center;
@@ -173,6 +178,11 @@ section{
     text-decoration-color: #000000;
     font-weight: bold;
     border-bottom: 2px solid #fff;
+}
+
+.sala-container{
+    
+    height: 50%;
 }
 
 .titulos{
@@ -198,14 +208,24 @@ section{
 
 .top-bottom-container h3{
     font-size: 2rem;
-    color: #fff;
+    color: #030303;
     text-align: center;
     font-weight: bold;
 }
 
 .principal{
+    padding-left: 150px;
+    /* border: 1px solid #fff; */
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     width: 100%;
+}
+
+.section-mesas-tittle{
+    position: absolute;
+    z-index: 25;
+    top: 2%;
+    left: 1%;
+    text-decoration: underline;
 }
