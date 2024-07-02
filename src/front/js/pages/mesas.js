@@ -125,13 +125,15 @@ const Mesas = () => {
     }, []);
 
     const getIcon = (icon) => {
+        
         switch(icon) {
-            case "iconoMesas":
-                return iconoMesas;
-            case "iconoBarra":
-                return iconoBarra;
-            case "iconoCanto":
-                return iconoCanto;
+            case "/icono-mesa.png":
+                return "/icono-mesa.png";
+            case "/barraVertTransp.png":
+                console.log(icon, "este es el console log del icono")
+                return "/barraVertTransp.png";
+            case "/barraCantoTransp.png":
+                return "/barraCantoTransp.png";
             default:
                 return icon ? icon : iconoMesas;
         }
@@ -175,7 +177,7 @@ const Mesas = () => {
                                     className="mesa-container"
                                 >
                                     <img
-                                        src={getIcon(mesa.icono)}
+                                        src={getIcon(mesa.icon)}
                                         alt="Mesa"
                                         style={{
                                             width: '60px',
