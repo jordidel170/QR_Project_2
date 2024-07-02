@@ -4,8 +4,6 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import {jwtDecode} from "jwt-decode";
 import { Navigate } from "react-router-dom";
-
-import { Home } from "./pages/home";
 import { Menu } from "./pages/menu";
 import { OrderSummary } from "./pages/OrderSummary";
 import { OrderSuccess } from "./pages/OrderSuccess";
@@ -14,14 +12,11 @@ import { GenerateQR } from "./pages/GenerateQR";
 import { AboutUs } from "./pages/AboutUs";
 import Login from "./pages/login";
 import injectContext from "./store/appContext";
-
 import Mesas from "./pages/mesas";
 import Signup from "./pages/signup";
 import Dashboard from "./pages/dashboard";
 import Caja from "./pages/caja";
 import AdminMenuView from './pages/adminMenuView';
-
-import { Invoice } from "./pages/Invoice";
 import { Sidebar } from "./component/sidebar";
 
 
@@ -82,18 +77,17 @@ const Layout = () => {
         
           <Route element={<Login />} path="/app/login" />
           <Route element={<Signup />} path="/app/signup" />
-          <Route element={<Home />} path="/app/home" />
           <Route path="/" element={<Navigate to="/app/caja" />} />
-          <Route element={<ProtectedRoute role="admin"><Caja /></ProtectedRoute>} path="/app/caja" />
+          <Route element={<ProtectedRoute role={"admin"}><Caja /></ProtectedRoute>} path="/app/caja" />
           <Route element={<ProtectedRoute role="admin"><Dashboard /></ProtectedRoute>} path="/app/dashboard" />
           <Route element={<ProtectedRoute role="admin"><Mesas /></ProtectedRoute>} path="/app/mesas" />
           <Route element={<ProtectedRoute role="admin"><AdminMenuView /></ProtectedRoute>} path="/app/adminmenu" />
-          <Route element={<Menu />} path="/app/generate-qr/app/restaurants/:restaurantId/tables/:tableId/menu" />
-          <Route element={<OrderSummary />} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
-          <Route element={<OrderSuccess />} path="/restaurants/:restaurantId/tables/:tableId/order-success" />
           <Route element={<AboutUs />} path="/app/about-us" />
           <Route element={<ProtectedRoute role="admin"><GenerateQR /></ProtectedRoute>} path="/app/generate-qr" />
           <Route element={<ProtectedRoute roles={['admin', 'cocina']}><KitchenList /></ProtectedRoute>} path="/app/restaurants/:restaurantId/orders" />
+          <Route element={<Menu />} path="/app/restaurants/:restaurantId/tables/:tableId/menu" />
+          <Route element={<OrderSummary />} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
+          <Route element={<OrderSuccess />} path="/restaurants/:restaurantId/tables/:tableId/order-success" />
           <Route element={<h1>Not found!</h1>} />
         </Routes>
         <SidebarController />

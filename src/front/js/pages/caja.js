@@ -10,7 +10,7 @@ import iconoMoney from "../../img/money1.png";
 import suelo from "../../img/suelo506.png";
 import { Context } from "../store/appContext";
 import Mesa from "../component/Mesa";
-
+import { Navigate,useNavigate } from "react-router-dom";
 
 
 const Caja = () => {
@@ -211,7 +211,7 @@ const Caja = () => {
     const handleClickOutside = (event) => {
         if (!event.target.closest('.mesa-container')) {
             handleDeselect();
-            handleDeselect();
+            
         }
     };
 
@@ -581,7 +581,7 @@ return (
                                 ))}
                             </div>
                             <div className="botones-pagar">
-                                <button className="boton-cash" onClick={() => { manejarClickAtrasConModal(); handleCloseSession(activeSession.table_number); }}>Cash <br /><img src={iconoMoney} alt="Cash" style={{ width: '50px', height: '50px' }} /></button>
+                                <button className="boton-cash" onClick={() => { manejarClickCash(); handleCloseSession(activeSession.table_number); }}>Cash <br /><img src={iconoMoney} alt="Cash" style={{ width: '50px', height: '50px' }} /></button>
                                 <button className="boton-card" onClick={() => { manejarClickAtrasConModal(); handleCloseSession(activeSession.table_number); }}>Credit Card <br /><img src={iconoCard} alt="Credit Card" style={{ width: '50px', height: '50px' }} /></button>
                             </div>
                         </div>

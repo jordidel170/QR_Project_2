@@ -8,29 +8,37 @@ export const KitchenList = () => {
   const { restaurantId } = useParams();
   const [completedItems, setCompletedItems] = useState({});
   const [elapsedTimes, setElapsedTimes] = useState({});
-  const [expandedOrder, setExpandedOrder] = useState(null);
+  const [expandedOrders, setExpandedOrders] = useState({});
 
   useEffect(() => {
     if (restaurantId) {
       actions.getPendingOrderList(restaurantId);
     }
   }, [restaurantId]);
-
   useEffect(() => {
     if (store.orders) {
       const initialCompletedItems = {};
       const initialElapsedTimes = {};
+      const initialExpandedOrders = {};
 
       store.orders.forEach((order) => {
-        initialCompletedItems[order.id] = {};
-        order.order_items.forEach((item) => {
-          initialCompletedItems[order.id][item.id] = false;
-        });
-        initialElapsedTimes[order.id] = 0;
+        if (!completedItems[order.id]) {
+          initialCompletedItems[order.id] = {};
+          order.order_items.forEach((item) => {
+            initialCompletedItems[order.id][item.id] = false;
+          });
+        }
+        if (!elapsedTimes[order.id]) {
+          initialElapsedTimes[order.id] = 0;
+        }
+        if (!expandedOrders[order.id]) {
+          initialExpandedOrders[order.id] = false;
+        }
       });
 
-      setCompletedItems(initialCompletedItems);
-      setElapsedTimes(initialElapsedTimes);
+      setCompletedItems((prevCompletedItems) => ({ ...prevCompletedItems, ...initialCompletedItems }));
+      setElapsedTimes((prevElapsedTimes) => ({ ...prevElapsedTimes, ...initialElapsedTimes }));
+      setExpandedOrders((prevExpandedOrders) => ({ ...prevExpandedOrders, ...initialExpandedOrders }));
     }
   }, [store.orders]);
 
@@ -54,7 +62,7 @@ export const KitchenList = () => {
       if (restaurantId) {
         actions.getPendingOrderList(restaurantId);
       }
-    }, 5000);
+    }, 50000);
 
     return () => clearInterval(interval);
   }, [restaurantId, actions]);
@@ -111,12 +119,10 @@ export const KitchenList = () => {
   };
 
   const toggleExpandOrder = (orderId, isHeaderClick) => {
-    if (expandedOrder !== orderId) {
-      // Expandir el pedido si no está expandido
-      setExpandedOrder(orderId);
+    if (expandedOrders !== orderId) {
+      setExpandedOrders(orderId);
     } else if (isHeaderClick) {
-      // Contraer el pedido solo si ya está expandido y se hace clic en order-header-up
-      setExpandedOrder(null);
+      setExpandedOrders(null);
     }
   };
 
@@ -131,7 +137,7 @@ export const KitchenList = () => {
         return (
           <div
             key={order.id}
-            className={`order-container ${isOlderThanOneMinutes ? 'order-old' : ''} ${expandedOrder === order.id ? 'expanded' : ''}`}
+            className={`order-container ${isOlderThanOneMinutes ? 'order-old' : ''} ${expandedOrders === order.id ? 'expanded' : ''}`}
             onClick={() => toggleExpandOrder(order.id, false)}
           >
             <div className='order-header' onClick={(e) => {
@@ -170,6 +176,7 @@ export const KitchenList = () => {
                 </p>
               </div>
             </div>
+            <p className='order-date'>{formatDateTime(order.created_at)}</p>
             <ul className="order-items-list">
               {order.order_items.map((item) => (
                 <li key={item.id} className={`order-item ${completedItems[order.id]?.[item.id] ? 'completed' : ''}`}>
