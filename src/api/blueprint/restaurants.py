@@ -145,7 +145,8 @@ def create_order(restaurant_id, table_id):
         table_id=table_id,
         comment=comment,
         payment_method=payment_method,
-        total_price=total_price
+        total_price=total_price,
+        created_at=datetime.utcnow() 
     )
     db.session.add(order)
     db.session.commit()
