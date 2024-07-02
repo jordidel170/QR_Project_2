@@ -141,8 +141,8 @@ export const KitchenList = () => {
             onClick={() => toggleExpandOrder(order.id, false)}
           >
             <div className='order-header' onClick={(e) => {
-                  e.stopPropagation(); // Evita que el clic se propague al contenedor order-container
-                  toggleExpandOrder(order.id, true); // Maneja el clic en order-header-up para contraer o expandir
+                  e.stopPropagation(); 
+                  toggleExpandOrder(order.id, true); 
                 }}>
               <div
                 className='order-header-up'>

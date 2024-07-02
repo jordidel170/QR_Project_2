@@ -37,11 +37,11 @@
 }
 
 .order-container.collapsed {
-  height: 100px; /* Adjust as needed for the collapsed height */
+  height: 100px;
 }
 
 .order-container.expanded {
-  height: 400px; /* Adjust as needed for the expanded height */
+  height: 442px; 
   overflow-y: auto;
 }
 
