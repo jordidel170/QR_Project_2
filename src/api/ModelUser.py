@@ -121,6 +121,7 @@ class Order(db.Model):
             "comment": self.comment,
             "payment_method": self.payment_method,
             "total_price": self.total_price,
+            "created_at": self.created_at.isoformat(),
             "order_items": [item.serialize() for item in self.order_items]
         }
 
