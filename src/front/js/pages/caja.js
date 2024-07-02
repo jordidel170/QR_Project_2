@@ -24,8 +24,6 @@ const Caja = () => {
     const [activeSession, setActiveSession] = useState({ id_table: 1, products: [] });
     const [loading, setLoading] = useState(true);
     const [selectedTable, setSelectedTable] = useState(null);
-    const [mostrarModal, setMostrarModal] = useState(false);
-    const [modalVisible, setModalVisible] = useState(false);
     const [mesaSeleccionada, setMesaSeleccionada] = useState(null);
     const [productPrices, setProductPrices] = useState([]);
     const [paidAmount, setPaidAmount] = useState(0);
@@ -33,7 +31,9 @@ const Caja = () => {
     const payInputRef = useRef(null);
     const [isSessionClosed, setIsSessionClosed] = useState(false)
     const [tableList, setTableList] = useState([])
-
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalInsufficientPaymentVisible, setModalInsufficientPaymentVisible] = useState(false);
 
 
     const recuperarEstado = async () => {
@@ -45,7 +45,7 @@ const Caja = () => {
         setAngulosRotacion(angulosGuardados);
         const data = await actions.getTableList()
         setTableList(data)
-        
+
     };
 
 
@@ -54,17 +54,18 @@ const Caja = () => {
         setMostrarModal(true);
     };
 
-    const manejarClickAtrasConModal = () => {
-        manejarClickAtras();
-        abrirModal();
-    };
-
     const cerrarModal = () => {
         setModalVisible(false);
         setTimeout(() => {
             setMostrarModal(false);
         }, 500);
     };
+
+    const manejarClickAtrasConModal = () => {
+        manejarClickAtras();
+        abrirModal();
+    };
+
 
     const manejarClickAnadir = () => {
         setMostrarCarta(true);
@@ -172,23 +173,23 @@ const Caja = () => {
                 console.log(mesas)
                 return { ...mesa, isActive };
             })
-            
+
         );
     };
-  
+
     const handleCloseSession = async (table_number) => {
         const closedSession = await actions.closeActiveSession(table_number)
         console.log(closedSession)
         setIsSessionClosed(true)
         setActiveSession({ table_number: table_number, products: [] });
         setTableList(prevTableList =>
-            prevTableList.map(mesa => 
+            prevTableList.map(mesa =>
                 mesa.table_number === table_number ? { ...mesa, isActive: false } : mesa
             ),
         );
     }
 
-    
+
 
     const handleMesaClick = (id) => {
         setMesaSeleccionada(id);
@@ -207,7 +208,6 @@ const Caja = () => {
 
     const handleKeyPress = (key) => {
         if (key === '⌫') {
-
             payInputRef.current.value = payInputRef.current.value.slice(0, -1);
         } else {
             payInputRef.current.value += key;
@@ -220,6 +220,27 @@ const Caja = () => {
             return "0.00";
         }
         return change.toFixed(2);
+    };
+
+    const manejarClickCash = () => {
+        if (totalToPay === 0) {
+            return;
+        }
+
+        if (paidAmount < totalToPay) {
+            setModalInsufficientPaymentVisible(true);
+        } else {
+            setModalInsufficientPaymentVisible(false);
+            abrirModal();
+        }
+
+        if (change >= 0) {
+            setMostrarCalculadora(false);
+            setMostrarCarta(false);
+            handleDeselect();
+        } else {
+            setMostrarCalculadora(true);
+        }
     };
 
     useEffect(() => {
@@ -254,6 +275,32 @@ const Caja = () => {
             payInputRef.current.focus();
         }
     }, [mostrarCalculadora]);
+    
+    useEffect(() => {
+        if (change >= 0) {
+            setModalInsufficientPaymentVisible(false);
+        }
+    }, [change]);
+
+
+    useEffect(() => {
+        const handleCloseModal = (event) => {
+            if (
+                modalInsufficientPaymentVisible &&
+                (event.type === 'click' || event.type === 'keydown')
+            ) {
+                setModalInsufficientPaymentVisible(false);
+            }
+        };
+
+        document.addEventListener('click', handleCloseModal);
+        document.addEventListener('keydown', handleCloseModal);
+
+        return () => {
+            document.removeEventListener('click', handleCloseModal);
+            document.removeEventListener('keydown', handleCloseModal);
+        };
+    }, [modalInsufficientPaymentVisible]);
 
     return (
         <>
@@ -273,20 +320,20 @@ const Caja = () => {
                                     {/* <h5> Items: ✍</h5> */}
                                     {/* <ul> */}
 
-                                      {isSessionClosed || activeSession.products.length === 0 ? (
-                                <div className="empty-table-message">▶ Empty table ◀</div>
-                            ) : (
-                                activeSession.products.map((product, index) => (
-                                    <div className="div-product" key={index}>
-                                        <div className="product--name">{product.product_name}</div>
-                                        <div className="product-qty">{product.quantity}</div>
-                                        <div className="product-total">
-                                            <div className="divisa"> $</div>
-                                            {(product.price * product.quantity).toFixed(2)}
-                                        </div>
-                                    </div>
-                                ))
-                            )}
+                                    {isSessionClosed || activeSession.products.length === 0 ? (
+                                        <div className="empty-table-message">▶ Empty table ◀</div>
+                                    ) : (
+                                        activeSession.products.map((product, index) => (
+                                            <div className="div-product" key={index}>
+                                                <div className="product--name">{product.product_name}</div>
+                                                <div className="product-qty">{product.quantity}</div>
+                                                <div className="product-total">
+                                                    <div className="divisa"> $</div>
+                                                    {(product.price * product.quantity).toFixed(2)}
+                                                </div>
+                                            </div>
+                                        ))
+                                    )}
                                     {/* </ul> */}
                                 </div>
                             }
@@ -371,6 +418,12 @@ const Caja = () => {
                     <div className={`modal-cash ${!modalVisible ? 'fade-out' : ''}`}>
                         <h3>Ticket invoiced.</h3>
 
+                    </div>
+                )}
+                {modalInsufficientPaymentVisible && (
+                    <div className="modal-insufficient-payment">
+                        <h3>Insufficient Payment</h3>
+                        <p>Please pay the full amount before proceeding.</p>
                     </div>
                 )}
             </section>
