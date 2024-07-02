@@ -51,7 +51,7 @@ export const KitchenList = () => {
         });
         return updatedElapsedTimes;
       });
-    }, 1000);
+    }, 100000);
 
     return () => clearInterval(interval);
   }, [store.orders]);

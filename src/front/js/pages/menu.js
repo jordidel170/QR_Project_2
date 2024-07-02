@@ -61,6 +61,7 @@ export const Menu = () => {
   const { store, actions } = useContext(Context);
   const { tableId } = useParams();
   const [client, setClient] = useState({});
+
   const createClient = async () => {
     if (!localStorage.getItem("clientId")) {
       let newClient = await actions.createClient("anonimo");

@@ -10,8 +10,7 @@ import iconoMoney from "../../img/money1.png";
 import suelo from "../../img/suelo506.png";
 import { Context } from "../store/appContext";
 import Mesa from "../component/Mesa";
-import { Navigate,useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 const Caja = () => {
     const [largoSala, setLargoSala] = useState('600px');
@@ -30,12 +29,11 @@ const Caja = () => {
     const totalToPay = activeSession.products.reduce((acc, product) => acc + (product.price * product.quantity), 0);
     const navigate = useNavigate();
     const payInputRef = useRef(null);
-    const [isSessionClosed, setIsSessionClosed] = useState(false)
-    const [tableList, setTableList] = useState([])
+    const [isSessionClosed, setIsSessionClosed] = useState(false);
+    const [tableList, setTableList] = useState([]);
     const [mostrarModal, setMostrarModal] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalInsufficientPaymentVisible, setModalInsufficientPaymentVisible] = useState(false);
-
 
     const recuperarEstado = async () => {
         const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
@@ -44,11 +42,9 @@ const Caja = () => {
         setLargoSala(largo);
         setAnchoSala(ancho);
         setAngulosRotacion(angulosGuardados);
-        const data = await actions.getTableList()
-        setTableList(data)
-
+        const data = await actions.getTableList();
+        setTableList(data);
     };
-
 
     const abrirModal = () => {
         setModalVisible(true);
@@ -66,11 +62,9 @@ const Caja = () => {
         if (totalToPay === 0) {
             return;
         }
-
         manejarClickAtras();
         abrirModal();
     };
-
 
     const manejarClickAnadir = () => {
         setMostrarCarta(true);
@@ -111,7 +105,6 @@ const Caja = () => {
         } else {
             setPaidAmount(0);
         }
-
     };
 
     const resetPaidAmount = () => {
@@ -124,16 +117,6 @@ const Caja = () => {
     const change = paidAmount - totalToPay;
 
     useEffect(() => {
-        const fetchData = async () => {
-            recuperarEstado();
-            await handleActiveSessionList();
-            await fetchProductPrices();
-            setLoading(false);
-        };
-        fetchData();
-    }, []);
-
-    useEffect(() => {
         const aplicarMedidas = () => {
             const contenedorMesas = document.querySelector('.container-caja-mesas');
             if (contenedorMesas) {
@@ -143,8 +126,6 @@ const Caja = () => {
         };
         aplicarMedidas();
     }, [largoSala, anchoSala]);
-
-
 
     const handleActiveSession = async (table_number) => {
         const data = await actions.getActiveSessionTable(table_number);
@@ -171,33 +152,37 @@ const Caja = () => {
         }, {});
 
         setActiveSession({ table_number: table_number, products: Object.values(groupedProducts) });
+        await handleActiveSessionList();
     };
 
     const handleActiveSessionList = async () => {
         const dataSessionList = await actions.getActiveSessionList();
         setMesas(prevMesas =>
             prevMesas.map((mesa) => {
-                const isActive = dataSessionList.some(session => session.status == 'active' && session.table_number == mesa.table_number);
-                console.log(mesas)
-                return { ...mesa, isActive };
+                const isActive = dataSessionList.some(session => session.status === 'active' && session.table_number === mesa.table_number);
+                return { ...mesa, status: isActive ? 'occupied' : 'available' }
             })
-
+        );
+        setTableList(prevTableList =>
+            prevTableList.map((mesa) => {
+                const isActive = dataSessionList.some(session => session.status === 'active' && session.table_number === mesa.table_number);
+                return { ...mesa, status: isActive ? 'occupied' : 'available' };
+            })
         );
     };
 
     const handleCloseSession = async (table_number) => {
-        const closedSession = await actions.closeActiveSession(table_number)
-        console.log(closedSession)
-        setIsSessionClosed(true)
+        const closedSession = await actions.closeActiveSession(table_number);
+        console.log(closedSession);
+        setIsSessionClosed(true);
         setActiveSession({ table_number: table_number, products: [] });
         setTableList(prevTableList =>
             prevTableList.map(mesa =>
-                mesa.table_number === table_number ? { ...mesa, isActive: false } : mesa
+                mesa.table_number === table_number ? { ...mesa, status: 'available' } : mesa
             ),
         );
-    }
-
-
+        await handleActiveSessionList();
+    };
 
     const handleMesaClick = (id) => {
         setMesaSeleccionada(id);
@@ -211,7 +196,6 @@ const Caja = () => {
     const handleClickOutside = (event) => {
         if (!event.target.closest('.mesa-container')) {
             handleDeselect();
-            
         }
     };
 
@@ -221,7 +205,6 @@ const Caja = () => {
         } else {
             payInputRef.current.value += key;
         }
-
         handlePaidAmountChange({ target: { value: payInputRef.current.value } });
     };
 
@@ -242,6 +225,7 @@ const Caja = () => {
         } else {
             setModalInsufficientPaymentVisible(false);
             abrirModal();
+            handleCloseSession(activeSession.table_number);
         }
 
         if (change >= 0) {
@@ -255,7 +239,7 @@ const Caja = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            recuperarEstado();
+            await recuperarEstado();
             await fetchProductPrices();
             await handleActiveSessionList();
             setLoading(false);
@@ -287,10 +271,9 @@ const Caja = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            handleActiveSessionList();
-        }, 3000);
+            handleActiveSessionList()
+        }, 10000);
         // OJO, ACTUALIZAR TIEMPO DE SESIONES
-
         return () => clearInterval(interval);
     }, [tableList]);
 
@@ -313,7 +296,6 @@ const Caja = () => {
         }
     }, [change]);
 
-
     useEffect(() => {
         const handleCloseModal = (event) => {
             if (
@@ -333,279 +315,125 @@ const Caja = () => {
         };
     }, [modalInsufficientPaymentVisible]);
 
-    useEffect(() => {
-        if (change >= 0) {
-            setModalInsufficientPaymentVisible(false);
-        }
-    }, [change]);
-
-    useEffect(() => {
-        const handleCloseModal = (event) => {
-            if (
-                modalInsufficientPaymentVisible &&
-                (event.type === 'click' || event.type === 'keydown')
-            ) {
-                setModalInsufficientPaymentVisible(false);
-            }
-        };
-
-        document.addEventListener('click', handleCloseModal);
-        document.addEventListener('keydown', handleCloseModal);
-
-        return () => {
-            document.removeEventListener('click', handleCloseModal);
-            document.removeEventListener('keydown', handleCloseModal);
-        };
-    }, [modalInsufficientPaymentVisible]);
-
-//     return (
-//         <>
-//             <section>
-//                 <h1 className='section-mesas-tittle'>Cash</h1>
-//                 <div className="container-ticket">
-//                     <div className="botones-arriba">
-//                         <button className="boton-atras" onClick={manejarClickAtras}><img src={iconoAtras} alt="Atrás" style={{ width: '20px', height: '20px' }} /> Back</button>
-//                     </div>
-//                     <div className="ticket">
-//                         <div className="ticket_table">
-//                             {
-//                                 <div className="ticket-view">
-//                                     <h5> Table number: <strong> {activeSession.table_number}</strong></h5>
-//                                     {/* <h5> Items: ✍</h5> */}
-//                                     {/* <ul> */}
-
-//                                     {isSessionClosed || activeSession.products.length === 0 ? (
-//                                         <div className="empty-table-message">▶ Empty table ◀</div>
-//                                     ) : (
-//                                         activeSession.products && activeSession.products.length > 0 ? (
-//                                             activeSession.products.map((product, index) => (
-//                                                 <div className="div-product" key={index}>
-//                                                     <div className="product--name">{product.product_name}</div>
-//                                                     <div className="product-qty">{product.quantity}</div>
-//                                                     <div className="product-total">
-//                                                         <div className="divisa"> $</div>
-//                                                         {(product.price * product.quantity).toFixed(2)}
-//                                                     </div>
-//                                                     <div className="product-total">
-//                                                         <div className="divisa"> $</div>{(product.price * product.quantity).toFixed(2)}</div>
-//                                                 </div>
-//                                             ))
-//                                         )}
-//                                 </div>
-//                             }
-//                             <h2></h2>
-//                             <div className="total--price">
-//                                 <div className="total--price-tittle">Total:</div>
-//                                 <div className="total--price-amount">${totalToPay.toFixed(2)}</div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                     <div className="botones">
-//                         <button onClick={abrirCaja} className="boton-abrir-caja">Open Cash<img src={iconoLlave} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
-//                         <button className="boton-pagar" onClick={manejarClickPagar}>Pay <br /><img src={iconoPagar} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
-//                         <button className="boton-anadir" onClick={manejarClickAnadir}>Add <img src={iconoAnadir} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
-//                         <button className="boton-eliminar">Delete <img src={iconoEliminar} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
-//                     </div>
-//                 </div>
-
-//                 {!mostrarCarta && !mostrarCalculadora ? (
-//                     <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
-//                         <div className="loader" style={{ visibility: loading ? 'visible' : 'hidden' }}><span>Loading tables status</span>
-//                             <div className="progress"></div>
-//                         </div>
-//                         {tableList.map((mesa) => (
-//                             <Mesa
-//                                 key={mesa.id}
-//                                 mesa={mesa}
-//                                 isSelected={selectedTable === mesa.table_number || mesaSeleccionada === mesa.id}
-//                                 onDeselect={handleDeselect}
-//                                 onClick={() => {
-//                                     handleActiveSession(mesa.table_number);
-//                                     handleMesaClick(mesa.id);
-//                                     handleMesaClick(mesa.id);
-//                                 }}
-//                                 angulo={angulosRotacion[mesa.id]}
-//                             />
-//                         ))}
-//                     </div>
-//                 ) : mostrarCarta ? (
-//                     <div className="carta-caja">
-//                         <h1>Carta</h1>
-//                     </div>
-//                 ) : (
-//                     <div className="container-calculadora">
-//                         <div className="calculadora">
-//                             <div className="calculadora-total">
-//                                 <div className="to-pay">
-//                                     <h2>To Pay:</h2>
-//                                     <h3>{activeSession.products.reduce((acc, product) => acc + (product.price * product.quantity), 0).toFixed(2)}</h3>
-//                                 </div>
-//                                 <div className={`to-change ${change < -0.001 ? 'negative' : ''}`}>
-//                                     <h2>Change:</h2>
-//                                     <h3>{formattedChange(change)}</h3>
-//                                 </div>
-//                                 <div className="to-paid">
-//                                     <h2>Paid:</h2>
-//                                     <div className="dollar-group">
-//                                         <input className="pay-input" type="text" onChange={handlePaidAmountChange} ref={payInputRef} />
-//                                     </div>
-//                                 </div>
-//                                 <div className="teclado">
-//                                     {['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '⌫'].map((key) => (
-//                                         <button key={key} className="teclado-btn" onClick={() => handleKeyPress(key)}>
-//                                             {key}
-//                                         </button>
-//                                     ))}
-//                                 </div>
-//                                 <div className="botones-pagar">
-//                                     <button className="boton-cash" onClick={() => [manejarClickAtrasConModal(), handleCloseSession(activeSession.table_number)]}>Cash <br /><img src={iconoMoney} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
-//                                     <button className="boton-card" onClick={() => [manejarClickAtrasConModal(), handleCloseSession(activeSession.table_number)]}>Credit Card <br /><img src={iconoCard} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
-//                                     <button className="boton-cash" onClick={manejarClickCash}>
-//                                         Cash <br />
-//                                         <img src={iconoMoney} alt="Atrás" style={{ width: '50px', height: '50px' }} />
-//                                     </button>
-//                                     <button className="boton-card" onClick={manejarClickAtrasConModal}>Credit Card <br /><img src={iconoCard} alt="Atrás" style={{ width: '50px', height: '50px' }} /></button>
-//                                 </div>
-
-//                             </div>
-//                         </div>
-//                     </div>
-//                 )}
-//                 {mostrarModal && (
-//                     <div className={`modal-cash ${mostrarModal ? 'fade-in' : 'fade-out'}`}>
-//                         <h3>Ticket invoiced.</h3>
-//                     </div>
-//                 )}
-
-
-//                 {modalInsufficientPaymentVisible && (
-//                     <div className="modal-insufficient-payment">
-//                         <h3>Insufficient Payment</h3>
-//                         <p>Please pay the full amount before proceeding.</p>
-
-//                     </div>
-//                 )}
-
-//             </section>
-
-//         </>
-//     );
-// };
-
-
-// export default Caja;
-return (
-    <>
-        <section>
-            <h1 className='section-mesas-tittle'>Cash</h1>
-            <div className="container-ticket">
-                <div className="botones-arriba">
-                    <button className="boton-atras" onClick={manejarClickAtras}><img src={iconoAtras} alt="Atrás" style={{ width: '20px', height: '20px' }} /> Back</button>
+    const updateMesaStatus = (table_number, status) => {
+        setMesas(prevMesas => 
+            prevMesas.map(mesa => 
+                mesa.table_number === table_number ? { ...mesa, status: status } : mesa
+            )
+        );
+    };
+    
+    return (
+        <>
+            <section>
+                <h1 className='section-mesas-tittle'>Cash</h1>
+                <div className="container-ticket">
+                    <div className="botones-arriba">
+                        <button className="boton-atras" onClick={manejarClickAtras}><img src={iconoAtras} alt="Atrás" style={{ width: '20px', height: '20px' }} /> Back</button>
+                    </div>
+                    <div className="ticket">
+                        <div className="ticket_table">
+                            <div className="ticket-view">
+                                <h5> Table number: <strong> {activeSession.table_number}</strong></h5>
+                                {isSessionClosed || activeSession.products.length === 0 ? (
+                                    <div className="empty-table-message">▶ Empty table ◀</div>
+                                ) : (
+                                    activeSession.products.map((product, index) => (
+                                        <div className="div-product" key={index}>
+                                            <div className="product--name">{product.product_name}</div>
+                                            <div className="product-qty">{product.quantity}</div>
+                                            <div className="product-total"><div className="divisa"> $</div>{(product.price * product.quantity).toFixed(2)}</div>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                            <div className="total--price">
+                                <div className="total--price-tittle">Total:</div>
+                                <div className="total--price-amount">${totalToPay.toFixed(2)}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="botones">
+                        <button onClick={abrirCaja} className="boton-abrir-caja">Open Cash<img src={iconoLlave} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
+                        <button className="boton-pagar" onClick={manejarClickPagar}>Pay <br /><img src={iconoPagar} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
+                        <button className="boton-anadir" onClick={manejarClickAnadir}>Add <img src={iconoAnadir} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
+                        <button className="boton-eliminar">Delete <img src={iconoEliminar} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
+                    </div>
                 </div>
-                <div className="ticket">
-                    <div className="ticket_table">
-                        <div className="ticket-view">
-                            <h5> Table number: <strong> {activeSession.table_number}</strong></h5>
-                            {isSessionClosed || activeSession.products.length === 0 ? (
-                                <div className="empty-table-message">▶ Empty table ◀</div>
-                            ) : (
-                                activeSession.products.map((product, index) => (
-                                    <div className="div-product" key={index}>
-                                        <div className="product--name">{product.product_name}</div>
-                                        <div className="product-qty">{product.quantity}</div>
-                                        <div className="product-total"><div className="divisa"> $</div>{(product.price * product.quantity).toFixed(2)}</div>
+
+                {!mostrarCarta && !mostrarCalculadora ? (
+                    <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
+                        <div className="loader" style={{ visibility: loading ? 'visible' : 'hidden' }}><span>Loading tables status</span>
+                            <div className="progress"></div>
+                        </div>
+                        {tableList.map((mesa) => (
+                            <Mesa
+                                key={mesa.id}
+                                mesa={mesa}
+                                isSelected={selectedTable === mesa.table_number || mesaSeleccionada === mesa.id}
+                                onDeselect={handleDeselect}
+                                onClick={() => {
+                                    handleActiveSession(mesa.table_number);
+                                    handleMesaClick(mesa.id);
+                                }}
+                                updateMesaStatus={updateMesaStatus}
+                                angulo={angulosRotacion[mesa.id]}
+                                
+                            />
+                        ))}
+                    </div>
+                ) : mostrarCarta ? (
+                    <div className="carta-caja">
+                        <h1>Carta</h1>
+                    </div>
+                ) : (
+                    <div className="container-calculadora">
+                        <div className="calculadora">
+                            <div className="calculadora-total">
+                                <div className="to-pay">
+                                    <h2>To Pay:</h2>
+                                    <h3>{activeSession.products.reduce((acc, product) => acc + (product.price * product.quantity), 0).toFixed(2)}</h3>
+                                </div>
+                                <div className={`to-change ${change < -0.001 ? 'negative' : ''}`}>
+                                    <h2>Change:</h2>
+                                    <h3>{formattedChange(change)}</h3>
+                                </div>
+                                <div className="to-paid">
+                                    <h2>Paid:</h2>
+                                    <div className="dollar-group">
+                                        <input className="pay-input" type="text" onChange={handlePaidAmountChange} ref={payInputRef} />
                                     </div>
-                                ))
-                            )}
-                        </div>
-                        <div className="total--price">
-                            <div className="total--price-tittle">Total:</div>
-                            <div className="total--price-amount">${totalToPay.toFixed(2)}</div>
-                        </div>
-                    </div>
-                </div>
-                <div className="botones">
-                    <button onClick={abrirCaja} className="boton-abrir-caja">Open Cash<img src={iconoLlave} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
-                    <button className="boton-pagar" onClick={manejarClickPagar}>Pay <br /><img src={iconoPagar} alt="Atrás" style={{ width: '35px', height: '35px' }} /></button>
-                    <button className="boton-anadir" onClick={manejarClickAnadir}>Add <img src={iconoAnadir} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
-                    <button className="boton-eliminar">Delete <img src={iconoEliminar} alt="Atrás" style={{ width: '25px', height: '25px' }} /></button>
-                </div>
-            </div>
-
-            {!mostrarCarta && !mostrarCalculadora ? (
-                <div className="container-caja-mesas" style={{ backgroundImage: `url(${suelo})`, backgroundSize: '110px', backgroundPosition: 'center' }}>
-                    <div className="loader" style={{ visibility: loading ? 'visible' : 'hidden' }}><span>Loading tables status</span>
-                        <div className="progress"></div>
-                    </div>
-                    {tableList.map((mesa) => (
-                        <Mesa
-                            key={mesa.id}
-                            mesa={mesa}
-                            isSelected={selectedTable === mesa.table_number || mesaSeleccionada === mesa.id}
-                            onDeselect={handleDeselect}
-                            onClick={() => {
-                                handleActiveSession(mesa.table_number);
-                                handleMesaClick(mesa.id);
-                            }}
-                            angulo={angulosRotacion[mesa.id]}
-                        />
-                    ))}
-                </div>
-            ) : mostrarCarta ? (
-                <div className="carta-caja">
-                    <h1>Carta</h1>
-                </div>
-            ) : (
-                <div className="container-calculadora">
-                    <div className="calculadora">
-                        <div className="calculadora-total">
-                            <div className="to-pay">
-                                <h2>To Pay:</h2>
-                                <h3>{activeSession.products.reduce((acc, product) => acc + (product.price * product.quantity), 0).toFixed(2)}</h3>
-                            </div>
-                            <div className={`to-change ${change < -0.001 ? 'negative' : ''}`}>
-                                <h2>Change:</h2>
-                                <h3>{formattedChange(change)}</h3>
-                            </div>
-                            <div className="to-paid">
-                                <h2>Paid:</h2>
-                                <div className="dollar-group">
-                                    <input className="pay-input" type="text" onChange={handlePaidAmountChange} ref={payInputRef} />
+                                </div>
+                                <div className="teclado">
+                                    {['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '⌫'].map((key) => (
+                                        <button key={key} className="teclado-btn" onClick={() => handleKeyPress(key)}>
+                                            {key}
+                                        </button>
+                                    ))}
+                                </div>
+                                <div className="botones-pagar">
+                                    <button className="boton-cash" onClick={manejarClickCash}>Cash <br /><img src={iconoMoney} alt="Cash" style={{ width: '50px', height: '50px' }} /></button>
+                                    <button className="boton-card" onClick={manejarClickCash}>Credit Card <br /><img src={iconoCard} alt="Credit Card" style={{ width: '50px', height: '50px' }} /></button>
                                 </div>
                             </div>
-                            <div className="teclado">
-                                {['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '⌫'].map((key) => (
-                                    <button key={key} className="teclado-btn" onClick={() => handleKeyPress(key)}>
-                                        {key}
-                                    </button>
-                                ))}
-                            </div>
-                            <div className="botones-pagar">
-                                <button className="boton-cash" onClick={() => { manejarClickCash(); handleCloseSession(activeSession.table_number); }}>Cash <br /><img src={iconoMoney} alt="Cash" style={{ width: '50px', height: '50px' }} /></button>
-                                <button className="boton-card" onClick={() => { manejarClickAtrasConModal(); handleCloseSession(activeSession.table_number); }}>Credit Card <br /><img src={iconoCard} alt="Credit Card" style={{ width: '50px', height: '50px' }} /></button>
-                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-            {mostrarModal && (
-                <div className={`modal-cash ${modalVisible ? 'fade-in' : 'fade-out'}`}>
-                    <h3>Ticket invoiced.</h3>
-                </div>
-            )}
-            {modalInsufficientPaymentVisible && (
-                <div className="modal-insufficient-payment">
-                    <h3>Insufficient Payment</h3>
-                    <p>Please pay the full amount before proceeding.</p>
-                </div>
-            )}
-        </section>
-    </>
-);
+                )}
+                {mostrarModal && (
+                    <div className={`modal-cash ${modalVisible ? 'fade-in' : 'fade-out'}`}>
+                        <h3>Ticket invoiced.</h3>
+                    </div>
+                )}
+                {modalInsufficientPaymentVisible && (
+                    <div className="modal-insufficient-payment">
+                        <h3>Insufficient Payment</h3>
+                        <p>Please pay the full amount before proceeding.</p>
+                    </div>
+                )}
+            </section>
+        </>
+    );
 };
 
 export default Caja;
-
-
-
 

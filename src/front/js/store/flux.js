@@ -117,18 +117,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const result = await response.json();
                     setStore({ ...store, orders: [...store.orders, result] });
                     console.log('Order created successfully2:', result);
+                    return responseSession;
                 } catch (error) {
                     console.error('Error:', error);
                     // alert('Error creating order. Please try again.');
                 }
 
-
-                //                     const result = await response.json();
-                //                     console.log('Order created successfully:', result);
-                //                     setStore({ ...store, orders: [...store.orders, result]});
-                //                     return result;
-
-                //                 } catch (error) {
 
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/app/restaurants/${restaurantId}/tables/${tableId}/orders`, {
