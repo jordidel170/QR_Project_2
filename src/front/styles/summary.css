@@ -3,6 +3,11 @@
     margin: 0 auto;
     padding: 20px;
   }
+  .order-success {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 13px;
+  }
   
   .order-summary h2 {
     font-size: 24px;
@@ -24,7 +29,37 @@
   .order-summary li div {
     flex: 1;
   }
-  
+  .ordered-items-list {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    max-width: 600px;
+}
+
+.ordered-items-list h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.ordered-items-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ordered-items-list li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-right: -45px;
+}
+
+.ordered-items-list div {
+    margin-top: 10px;
+
+}
+.ordered-items-list li div {
+  flex: 1; 
+}
   .button1 {
     /* margin-top: 20px; */
     padding: 10px 20px;
@@ -56,7 +91,16 @@
     border-top: 1px solid #ccc;
     padding-top: 10px;
   }
-  
+  .order-total {
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-right:20px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+  }
   .order-summary .butt1 {
     width: 30px;
     height: 30px;

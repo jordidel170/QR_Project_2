@@ -68,6 +68,42 @@ export const OrderSummary = () => {
               <div className="butt">
                 {meal.quantity === 1 ? (
                   <>
+        try {
+            actions.addProductToTable(tableId, store.cart);
+            const orderResult = await actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
+        console.log('Order result:', orderResult);
+        if (orderResult && orderResult.id) {
+            const orderId = orderResult.id;
+            console.log('Order ID:', orderId);
+            const invoiceResult = await actions.createInvoice(restaurantId, tableId, orderId);
+            // actions.clearCart();
+            navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`);
+        } else {
+            throw new Error('Order result is undefined or missing the order ID');
+        }
+        } catch (error) {
+            console.error('Error finishing order:', error);
+            alert('Error finishing order. Please try again.');
+        }
+     
+              
+                
+            }
+     
+    
+    return (
+        <>
+            <Navbar />
+            <div className="order-summary">
+                <h2>Order Summary</h2>
+                <ul>
+                    {store.cart.map((meal, index) => (
+                        <li key={index}>
+                            <div>{meal.name}</div>
+                            <div>x {meal.quantity}</div>
+                            <div className="butt">
+                            {meal.quantity === 1 ? (
+                <>
                     <button className='trash-icon' onClick={() => actions.removeItem(meal.id)}>
                       <i className="fa-solid fa-trash fa-xs"></i>
                     </button>
@@ -125,21 +161,33 @@ export const OrderSummary = () => {
             <button className={paymentMethod === 'paypal' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('paypal')}>
               <i class="fa-brands fa-paypal"></i> PayPal
             </button>
-            <button className={paymentMethod === 'cash' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('cash')}>
-              <i class="fa-solid fa-money-bill"></i> Pay at Cashier
-            </button>
-          </div>
-        </div>
-        <div className='order-finish'>
-          <Link to={`app/generate-qr/app/restaurants/${restaurantId}/tables/${tableId}/menu`}>
-            <button className="button1">Menu</button>
-          </Link>
-          <button className='button1' onClick={() => handleFinishOrder()}>Finish</button>
-        </div>
-      </div>
-      <Footer />
-    </>
-  );
+                <div className="payment-method">
+                    <label htmlFor="payment">Payment Method:</label>
+                    <div className="payment-icons">
+                        {/* <button className={paymentMethod === 'credit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('credit')}>
+                        <i class="fa-solid fa-credit-card"></i> Credit Card
+                        </button>
+                        <button className={paymentMethod === 'debit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('debit')}>
+                        <i class="fa-solid fa-building-columns"></i> Debit Card
+                        </button>
+                        <button className={paymentMethod === 'paypal' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('paypal')}>
+                        <i class="fa-brands fa-paypal"></i> PayPal
+                        </button> */}
+                        <button className={paymentMethod === 'cash' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('cash')}>
+                        <i class="fa-solid fa-money-bill"></i> Pay at Cashier
+                        </button>
+                    </div>
+                </div>
+                <div className='order-finish'>
+                <Link to={`/restaurants/${restaurantId}/tables/${tableId}/menu`}>
+                    <button className="button1">Back to Menu</button>
+                </Link>
+                    <button className='button1' onClick={handleFinishOrder}>Finish</button>
+                </div>
+            </div>
+            <Footer />
+        </>
+    );
 
 };
 

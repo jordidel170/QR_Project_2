@@ -95,7 +95,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                         name: meal.name,
                         quantity: meal.quantity,
                         price: meal.price,
-                    }))
+                    })),
+                    created_at: new Date().toISOString()
                 };
 
                 try {

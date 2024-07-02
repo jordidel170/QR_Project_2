@@ -1,7 +1,7 @@
 
 .kitchen-list {
-  width: 100%;
-  height: 100%;
+  min-height:100%;
+  min-width: 100%;
   display: flex;
   flex-wrap: wrap;
   
@@ -106,84 +106,8 @@
   justify-content: space-between;
   gap: 16px;
 }
-
-.kitchen-list-apartado {
-  border: 2px solid #ed4e14;
-  color: transparent;
-  height: 100vh;
-  width: 50px;
-  z-index: -1;
-  padding-left: 50px;
-}
-.kitchen-list-container{
-display: flex;
-}
-/* .kitchen-list {
-  display: flex;
-  flex-wrap: wrap;
+.order-date {
+  text-align: center;
 }
 
-.order-container {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin: 10px;
-  padding: 10px;
-  width: 200px;
-  position: relative;
-  background-color: #f9f9f9;
-}
 
-.order-container.order-old {
-  background-color: #f8d7da;
-}
-
-.order-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.order-header h5 {
-  margin: 0;
-  font-size: 14px;
-}
-
-.order-items-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.order-item {
-  margin: 5px 0;
-}
-
-.order-item label {
-  display: flex;
-  align-items: center;
-}
-
-.order-item input[type="checkbox"] {
-  margin-right: 5px;
-}
-
-.done-button {
-  width: 100%;
-  padding: 5px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  position: absolute;
-  bottom: 10px;
-}
-
-.done-button.done {
-  background-color: #6c757d;
-} */
-/* 
-.done-button:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-} */
