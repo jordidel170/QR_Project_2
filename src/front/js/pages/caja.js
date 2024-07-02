@@ -131,6 +131,7 @@ const Caja = () => {
         const data = await actions.getActiveSessionTable(table_number);
         if (!data.products || !Array.isArray(data.products)) {
             setActiveSession({ table_number: table_number, products: [] });
+            setIsSessionClosed(false)
             return;
         }
 
@@ -152,7 +153,7 @@ const Caja = () => {
         }, {});
 
         setActiveSession({ table_number: table_number, products: Object.values(groupedProducts) });
-        await handleActiveSessionList();
+
     };
 
     const handleActiveSessionList = async () => {
@@ -175,7 +176,8 @@ const Caja = () => {
         const closedSession = await actions.closeActiveSession(table_number);
         console.log(closedSession);
         setIsSessionClosed(true);
-        setActiveSession({ table_number: table_number, products: [] });
+        // setActiveSession({ table_number: table_number, products: [] });
+        setActiveSession({ table_number: null, products: [] });
         setTableList(prevTableList =>
             prevTableList.map(mesa =>
                 mesa.table_number === table_number ? { ...mesa, status: 'available' } : mesa
@@ -272,7 +274,7 @@ const Caja = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             handleActiveSessionList()
-        }, 10000);
+        }, 1000);
         // OJO, ACTUALIZAR TIEMPO DE SESIONES
         return () => clearInterval(interval);
     }, [tableList]);
@@ -322,7 +324,8 @@ const Caja = () => {
             )
         );
     };
-    
+    useEffect(() => {
+    }, [activeSession]);
     return (
         <>
             <section>
@@ -335,8 +338,11 @@ const Caja = () => {
                         <div className="ticket_table">
                             <div className="ticket-view">
                                 <h5> Table number: <strong> {activeSession.table_number}</strong></h5>
-                                {isSessionClosed || activeSession.products.length === 0 ? (
-                                    <div className="empty-table-message">▶ Empty table ◀</div>
+                                {/* {isSessionClosed || activeSession.products.length === 0 ? (
+                                    <div className="empty-table-message">▶ Empty table ◀</div> */}
+                                    {activeSession.products.length === 0 && !isSessionClosed ? (
+                <div className="empty-table-message">▶ Empty table ◀</div>
+
                                 ) : (
                                     activeSession.products.map((product, index) => (
                                         <div className="div-product" key={index}>
