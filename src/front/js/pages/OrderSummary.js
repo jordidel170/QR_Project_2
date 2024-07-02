@@ -123,7 +123,7 @@ export const OrderSummary = () => {
                 </div>
                 <div className='order-finish'>
                 <Link to={`/restaurants/${restaurantId}/tables/${tableId}/menu`}>
-                    <button className="button1">Back to Menu</button>
+                    <button className="button1">Menu</button>
                 </Link>
                     <button className='button1' onClick={handleFinishOrder}>Finish</button>
                 </div>

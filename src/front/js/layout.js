@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes, useLocation, matchPath } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation, matchPath, Redirect } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import {jwtDecode} from "jwt-decode";
@@ -41,6 +41,12 @@ const ProtectedRoute = ({ children, role }) => {
 
 const SidebarController = () => {
     const location = useLocation();
+    const token = localStorage.getItem("token");
+  let decodedToken = null;
+
+  if (token) {
+    decodedToken = jwtDecode(token);
+  }
     const pathsToShowSidebar = [
       "/app/caja",
       "/app/mesas",
@@ -50,11 +56,16 @@ const SidebarController = () => {
       "/app/restaurants/:restaurantId/orders"
     ];
   
-    const showSidebar = pathsToShowSidebar.some(path =>
+    const showSidebar = pathsToShowSidebar.some((path) =>
       matchPath(path, location.pathname)
     );
   
-    return showSidebar ? <Sidebar /> : null;
+    
+    if (decodedToken && decodedToken.roles === "admin" && showSidebar) {
+      return <Sidebar />;
+    }
+  
+    return null;
   };
 
 
@@ -68,16 +79,18 @@ const Layout = () => {
     <BrowserRouter basename={basename}>
       <ScrollToTop>
         <Routes>
+        
           <Route element={<Login />} path="/app/login" />
           <Route element={<Signup />} path="/app/signup" />
           <Route element={<Home />} path="/app/home" />
+          <Route path="/" element={<Navigate to="/app/caja" />} />
           <Route element={<ProtectedRoute role="admin"><Caja /></ProtectedRoute>} path="/app/caja" />
           <Route element={<ProtectedRoute role="admin"><Dashboard /></ProtectedRoute>} path="/app/dashboard" />
           <Route element={<ProtectedRoute role="admin"><Mesas /></ProtectedRoute>} path="/app/mesas" />
           <Route element={<ProtectedRoute role="admin"><AdminMenuView /></ProtectedRoute>} path="/app/adminmenu" />
-          <Route element={<ProtectedRoute role="admin"><Menu /></ProtectedRoute>} path="/app/generate-qr/app/restaurants/:restaurantId/tables/:tableId/menu" />
-          <Route element={<ProtectedRoute role="admin"><OrderSummary /></ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
-          <Route element={<ProtectedRoute role="admin"><OrderSuccess /></ProtectedRoute>} path="/restaurants/:restaurantId/tables/:tableId/order-success" />
+          <Route element={<Menu />} path="/app/generate-qr/app/restaurants/:restaurantId/tables/:tableId/menu" />
+          <Route element={<OrderSummary />} path="/restaurants/:restaurantId/tables/:tableId/order-summary" />
+          <Route element={<OrderSuccess />} path="/restaurants/:restaurantId/tables/:tableId/order-success" />
           <Route element={<AboutUs />} path="/app/about-us" />
           <Route element={<ProtectedRoute role="admin"><GenerateQR /></ProtectedRoute>} path="/app/generate-qr" />
           <Route element={<ProtectedRoute roles={['admin', 'cocina']}><KitchenList /></ProtectedRoute>} path="/app/restaurants/:restaurantId/orders" />
