@@ -12,7 +12,6 @@ export const OrderSummary = () => {
   const [comment, setComment] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const { restaurantId, tableId } = useParams();
-  const [client, setClient] = useState({});
 
   const totalPrice = store.cart.reduce(
     (total, meal) => total + meal.price * meal.quantity,
@@ -24,50 +23,15 @@ export const OrderSummary = () => {
   };
 
 
-  const handlePaymentMethodChange = (method) => {
-    setPaymentMethod(method);
-  };
+    const handlePaymentMethodChange = (method) => {
+        setPaymentMethod(method);
+    };
+    const handleFinishOrder = async() => {
+        if (!paymentMethod) {
+            alert('Please choose your payment method!');
+            return;
+        }
 
-  
-  const handleFinishOrder = async () => {
-    if (!paymentMethod) {
-      alert('Please choose your payment method!');
-      return;
-    }
-
-    try {
-      actions.addProductToTable(tableId, store.cart);
-      const orderResult = await actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
-      console.log('Order result:', orderResult);
-      if (orderResult && orderResult.id) {
-        const orderId = orderResult.id;
-        console.log('Order ID:', orderId);
-        actions.clearCart();
-        navigate(`/restaurants/${restaurantId}/tables/${tableId}/order-success`);
-      } else {
-        throw new Error('Order result is undefined or missing the order ID');
-      }
-    } catch (error) {
-      console.error('Error finishing order:', error);
-      alert('Error finishing order. Please try again.');
-    }
-  }
-
-
-
-  return (
-    <>
-      <Navbar />
-      <div className="order-summary">
-        <h2>Order Summary</h2>
-        <ul>
-          {store.cart.map((meal, index) => (
-            <li key={index}>
-              <div>{meal.name}</div>
-              <div>x {meal.quantity}</div>
-              <div className="butt">
-                {meal.quantity === 1 ? (
-                  <>
         try {
             actions.addProductToTable(tableId, store.cart);
             const orderResult = await actions.createOrder(restaurantId, tableId, comment, paymentMethod, totalPrice);
@@ -105,7 +69,7 @@ export const OrderSummary = () => {
                             {meal.quantity === 1 ? (
                 <>
                     <button className='trash-icon' onClick={() => actions.removeItem(meal.id)}>
-                      <i className="fa-solid fa-trash fa-xs"></i>
+                    <i className="fa-solid fa-trash fa-xs"></i>
                     </button>
                     <button
                       className="butt1"
@@ -149,30 +113,9 @@ export const OrderSummary = () => {
           ></textarea>
         </div>
 
-        <div className="payment-method">
-          <label htmlFor="payment">Payment Method:</label>
-          <div className="payment-icons">
-            <button className={paymentMethod === 'credit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('credit')}>
-              <i class="fa-solid fa-credit-card"></i> Credit Card
-            </button>
-            <button className={paymentMethod === 'debit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('debit')}>
-              <i class="fa-solid fa-building-columns"></i> Debit Card
-            </button>
-            <button className={paymentMethod === 'paypal' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('paypal')}>
-              <i class="fa-brands fa-paypal"></i> PayPal
-            </button>
                 <div className="payment-method">
                     <label htmlFor="payment">Payment Method:</label>
                     <div className="payment-icons">
-                        {/* <button className={paymentMethod === 'credit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('credit')}>
-                        <i class="fa-solid fa-credit-card"></i> Credit Card
-                        </button>
-                        <button className={paymentMethod === 'debit' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('debit')}>
-                        <i class="fa-solid fa-building-columns"></i> Debit Card
-                        </button>
-                        <button className={paymentMethod === 'paypal' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('paypal')}>
-                        <i class="fa-brands fa-paypal"></i> PayPal
-                        </button> */}
                         <button className={paymentMethod === 'cash' ? 'selected' : ''} onClick={() => handlePaymentMethodChange('cash')}>
                         <i class="fa-solid fa-money-bill"></i> Pay at Cashier
                         </button>
