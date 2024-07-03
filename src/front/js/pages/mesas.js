@@ -111,6 +111,11 @@ const Mesas = () => {
         actualizarTamañoSala();
     }, [largoSala, anchoSala]);
 
+    useEffect(() => {
+        localStorage.setItem('largoSala', JSON.stringify(largoSala));
+        localStorage.setItem('anchoSala', JSON.stringify(anchoSala));
+        localStorage.setItem('angulosRotacion', JSON.stringify(angulosRotacion));
+    }, [largoSala, anchoSala, angulosRotacion]);
 
     const fetchTables = async () => {
         const tables = await actions.getTableList();

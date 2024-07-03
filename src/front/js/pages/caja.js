@@ -35,16 +35,49 @@ const Caja = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalInsufficientPaymentVisible, setModalInsufficientPaymentVisible] = useState(false);
 
+    // const recuperarEstado = async () => {
+    //     const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
+    //     const ancho = JSON.parse(localStorage.getItem('anchoSala')) || '600px';
+    //     const angulosGuardados = JSON.parse(localStorage.getItem('angulosRotacion')) || {};
+    //     console.log(angulosGuardados)
+    //     setLargoSala(largo);
+    //     setAnchoSala(ancho);
+    //     setAngulosRotacion(angulosGuardados);
+    //     const data = await actions.getTableList();
+    //     setTableList(data);
+    // };
     const recuperarEstado = async () => {
-        const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
-        const ancho = JSON.parse(localStorage.getItem('anchoSala')) || '600px';
-        const angulosGuardados = JSON.parse(localStorage.getItem('angulosRotacion')) || {};
-        setLargoSala(largo);
-        setAnchoSala(ancho);
-        setAngulosRotacion(angulosGuardados);
-        const data = await actions.getTableList();
-        setTableList(data);
+        try {
+            // Intenta recuperar los datos del localStorage
+            const largo = JSON.parse(localStorage.getItem('largoSala')) || '600px';
+            const ancho = JSON.parse(localStorage.getItem('anchoSala')) || '600px';
+            const angulosGuardados = JSON.parse(localStorage.getItem('angulosRotacion')) || {};
+    
+            console.log('Datos del localStorage:', { largo, ancho, angulosGuardados });
+    
+            // Establece los estados con los valores recuperados o predeterminados
+            setLargoSala(largo);
+            setAnchoSala(ancho);
+            setAngulosRotacion(angulosGuardados);
+    
+            // Recupera la lista de mesas desde la base de datos
+            const data = await actions.getTableList();
+            setTableList(data);
+            console.log('Datos de la base de datos:', data);
+        } catch (error) {
+            console.error('Error al recuperar el estado:', error);
+        }
     };
+    const fetchData = async () => {
+            
+        await recuperarEstado();
+        await fetchProductPrices();
+        await handleActiveSessionList();
+        setLoading(false);
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const abrirModal = () => {
         setModalVisible(true);
@@ -239,17 +272,7 @@ const Caja = () => {
         }
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            await recuperarEstado();
-            await fetchProductPrices();
-            await handleActiveSessionList();
-            setLoading(false);
-        };
-
-        fetchData();
-    }, []);
-
+  
     useEffect(() => {
         const aplicarMedidas = () => {
             const contenedorMesas = document.querySelector('.container-caja-mesas');
