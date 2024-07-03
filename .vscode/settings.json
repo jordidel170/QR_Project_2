@@ -9,5 +9,6 @@
   },
   "[css]": {
     "editor.defaultFormatter": "vscode.css-language-features"
-  }
+  },
+  "python.analysis.extraPaths": ["./src/api"]
 }
