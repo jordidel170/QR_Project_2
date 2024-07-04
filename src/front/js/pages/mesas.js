@@ -43,11 +43,30 @@ const Mesas = () => {
         await actions.createNewTable(nuevaMesa)
         setMesas([...mesas, nuevaMesa]);
     };
- 
+    const manejarSoltar = (e) => {
+        e.preventDefault();
+        const contenedor = e.target.getBoundingClientRect();
+        const id = e.dataTransfer.getData("text/plain");
+        const ajusteX = 26;
+        const ajusteY = 26;
+        const nuevaPosicion = {
+            x: e.clientX - contenedor.left - ajusteX,
+            y: e.clientY - contenedor.top - ajusteY
+        };
+       
+        moverMesa(parseInt(id), nuevaPosicion);
+    };
+
+    const actualizarNombreMesa = async(id, nuevoNombre) => {
+       await actions.updateTableNumber(id, nuevoNombre)
+    };
+
     const moverMesa = async (id, nuevaPosicion) => {
+        console.log(mesas)
         const mesa = mesas.find(mesa => mesa.id === id);
+        console.log(mesa.id)
         if (mesa) {
-            const response = await actions.updateTablePosition(id, nuevaPosicion);
+            const response = await actions.updateTablePosition(mesa.table_number, nuevaPosicion);
             if (response) {
                 setMesas(mesas.map(mesa => mesa.id === id ? { ...mesa, position_x: nuevaPosicion.x, position_y: nuevaPosicion.y } : mesa));
             }
@@ -82,24 +101,7 @@ const Mesas = () => {
         setMesas(mesas.filter(mesa => mesa.table_number !== table_number))
     };
 
-    const manejarSoltar = (e) => {
-        e.preventDefault();
-        const contenedor = e.target.getBoundingClientRect();
-        const id = e.dataTransfer.getData("text/plain");
-        const ajusteX = 26;
-        const ajusteY = 26;
-        const nuevaPosicion = {
-            x: e.clientX - contenedor.left - ajusteX,
-            y: e.clientY - contenedor.top - ajusteY
-        };
-        console.log(id)
-        moverMesa(parseInt(id), nuevaPosicion);
-    };
-
-    const actualizarNombreMesa = async(id, nuevoNombre) => {
-       await actions.updateTableNumber(id, nuevoNombre)
-    };
-
+   
     useEffect(() => {
         if (tempLargoSala != null && tempAnchoSala != null) {
             setLargoSala(tempLargoSala);
@@ -135,7 +137,6 @@ const Mesas = () => {
             case "/icono-mesa.png":
                 return "/icono-mesa.png";
             case "/barraVertTransp.png":
-                console.log(icon, "este es el console log del icono")
                 return "/barraVertTransp.png";
             case "/barraCantoTransp.png":
                 return "/barraCantoTransp.png";
