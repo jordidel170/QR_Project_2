@@ -51,7 +51,7 @@ const Signup = () => {
                     if (tokenLocalStoraged) {
                         setTimeout(() => {
                             setIsLoading(false);
-                            navigate("/app/home");
+                            navigate("/app/caja");
                             setToken(tokenLocalStoraged);
                         }, 3000);
                     }
