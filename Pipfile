@@ -23,6 +23,7 @@ pymysql = "*"
 flask-jwt-extended = "*"
 cryptography = "*"
 crypto = "*"
+qrcode = "*"
 
 [requires]
 python_version = "3.12"
