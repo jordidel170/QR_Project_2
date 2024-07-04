@@ -1,11 +1,13 @@
 
 import os
-from flask import Flask, request, jsonify, url_for
-
+from flask import Flask, request, jsonify, url_for, send_from_directory
 from utils import APIException, generate_sitemap
 from app import app
 from admin import setup_admin
 from commands import setup_commands
+
+static_file_dir = os.path.join(os.path.dirname(
+    os.path.realpath(__file__)), '../public/')
 
 setup_admin(app)
 setup_commands(app)
@@ -17,11 +19,15 @@ def handle_invalid_usage(error):
 
 @app.route('/')
 def sitemap():
-    return generate_sitemap(app)
+    return send_from_directory(static_file_dir, 'index.html')
 
+@app.route('/admin-dashboard')
+def admin_dashboard():
+    return generate_sitemap(app)
 
 if __name__ == '__main__':
 
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
     
+   
