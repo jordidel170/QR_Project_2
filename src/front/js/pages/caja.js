@@ -82,11 +82,6 @@ const Caja = () => {
         handleCloseSession(activeSession.table_number);
     };
 
-    const manejarClickAnadir = () => {
-        setMostrarCarta(true);
-        setMostrarCalculadora(false);
-        resetPaidAmount();
-    };
 
     const manejarClickAtras = () => {
         setMostrarCarta(false);

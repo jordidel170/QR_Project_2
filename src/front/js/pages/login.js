@@ -39,11 +39,8 @@ const Login = () => {
 					case "cocina": 
 						navigate("/app/restaurants/1/orders");
 						break;
-					case "Restaurante": 
+					case "caja": 
 						navigate("/app/caja");
-						break;
-					case "mesa1": 
-						navigate("/app/restaurants/1/tables/1/menu");
 						break;
 					default:
 						throw new Error("Rol no reconocido");
