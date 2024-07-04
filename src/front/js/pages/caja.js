@@ -275,7 +275,7 @@ const Caja = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             handleActiveSessionList()
-        }, 1000);
+        }, 10000);
         // OJO, ACTUALIZAR TIEMPO DE SESIONES
         return () => clearInterval(interval);
     }, [tableList]);
