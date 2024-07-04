@@ -51,18 +51,19 @@ export const KitchenList = () => {
         });
         return updatedElapsedTimes;
       });
-    }, 100000);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [store.orders]);
 
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (restaurantId) {
         actions.getPendingOrderList(restaurantId);
       }
-    }, 50000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [restaurantId, actions]);
