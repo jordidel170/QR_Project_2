@@ -108,7 +108,7 @@ class Product(db.Model):
         
         
 class ProductTable(db.Model):
-    __tablename__ = 'producttable'
+    __tablename__ = 'product_table'
     id = db.Column(db.Integer, primary_key=True)
     id_session = db.Column(db.Integer, db.ForeignKey('table_session.id'), nullable=False)
     id_product = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
@@ -191,7 +191,7 @@ class Order(db.Model):
         }
 
 class OrderItem(db.Model):
-    __tablename__ = 'orderitem'
+    __tablename__ = 'order_item'
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
     menu_id = db.Column(db.Integer, nullable=False)
@@ -233,7 +233,7 @@ class Invoice(db.Model):
         
         
 class InvoiceDetail(db.Model):
-    __tablename__ = 'invoicedetail'
+    __tablename__ = 'invoice_detail'
     id = db.Column(db.Integer, primary_key=True)
     id_invoice = db.Column(db.Integer, db.ForeignKey('invoice.id'), nullable=False)
     id_product = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
