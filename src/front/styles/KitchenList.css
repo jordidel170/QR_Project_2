@@ -23,12 +23,12 @@
   position: relative;
   background-color: white;
   margin: 10px;
-  width: 280px;
+  width: 275px;
   border-radius: 5px;
   overflow: hidden;
   transition: transform 0.3s;
   transition: height 0.3s ease;
-  height: 200px;
+  height: 232px;
   cursor: pointer;
 }
 .order-container:hover {
@@ -63,6 +63,7 @@
   justify-content: space-between;
 }
 .order-header-below{
+  justify-content: center;
   display: flex;
   margin: auto;
   width: 29%;
