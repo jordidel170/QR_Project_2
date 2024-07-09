@@ -1,39 +1,26 @@
-# Stage 1: Build React frontend
-FROM node:14 AS build
-
-WORKDIR /app
-
-# Copiar los archivos de configuración de npm y el código fuente de React
-COPY package*.json ./
-RUN npm install
-COPY . ./
-RUN npm run build
-
-# Stage 2: Setup Flask backend
+# Usa la imagen base oficial de Python
 FROM python:3.9-slim
 
+# Establece el directorio de trabajo
 WORKDIR /app
 
-# Instalar dependencias necesarias para construir mysqlclient
+# Instala dependencias necesarias
 RUN apt-get update && apt-get install -y \
     gcc \
     pkg-config \
     libmariadb-dev
 
-# Copiar y instalar las dependencias de Python
+# Copia el archivo de requisitos
 COPY requirements.txt .
+
+# Instala las dependencias de Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar el código fuente de Flask y la build de React
+# Copia todo el contenido del proyecto
 COPY . .
 
-# Establecer las variables de entorno necesarias
-ENV FLASK_APP=src/app.py
-ENV FLASK_RUN_HOST=0.0.0.0
-
-# Exponer el puerto en el que la aplicación correrá
+# Expone el puerto
 EXPOSE 5000
 
-# Comando por defecto para correr la aplicación
-CMD ["flask", "run"]
-
+# Comando para ejecutar la aplicación
+CMD ["python", "src/main.py"]
