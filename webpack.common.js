@@ -1,48 +1,47 @@
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  entry: [
-    './src/front/js/index.js'
-  ],
+  entry: './src/front/js/index.js',
   output: {
+    path: path.resolve(__dirname, 'build'), // Asegúrate de que la salida sea en 'build'
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public'),
-    publicPath: '/'
   },
+  mode: 'production', // Cambia a 'development' si estás en desarrollo
   module: {
     rules: [
-        {
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          use: ['babel-loader']
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+            plugins: ['@babel/plugin-syntax-jsx'],
+          },
         },
-        {
-          test: /\.(css|scss)$/, use: [{
-              loader: "style-loader" // creates style nodes from JS strings
-          }, {
-              loader: "css-loader" // translates CSS into CommonJS
-          }]
-        }, //css only files
-        {
-          test: /\.(png|svg|jpg|gif|jpeg|webp)$/, use: {
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/,
+        use: [
+          {
             loader: 'file-loader',
-            options: { name: '[name].[ext]' }
-          }
-        }, //for images
-        { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, use: ['file-loader'] } //for fonts
-    ]
-  },
-  resolve: {
-    extensions: ['*', '.js']
+            options: {
+              name: '[path][name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-        favicon: '4geeks.ico',
-        template: 'template.html'
+      template: './template.html',
+      favicon: false, // Desactiva el favicon si no lo necesitas
     }),
-    new Dotenv({ safe: true, systemvars: true })
-  ]
+  ],
 };

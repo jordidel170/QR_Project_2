@@ -1,28 +1,34 @@
-# Usa la imagen base oficial de Python
-FROM python:3.9-slim
+# Etapa 1: Construcción del frontend
+FROM node:14 AS frontend
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install
+COPY webpack.common.js webpack.dev.js webpack.prod.js ./
+COPY .babelrc ./
+COPY template.html ./
+COPY public ./public
+COPY src/front ./src/front
+RUN npm install @babel/preset-react
+RUN npm install -g webpack webpack-cli
+RUN npm run build -- --config webpack.prod.js
 
-# Establece el directorio de trabajo
+# Etapa 2: Construcción del backend
+FROM python:3.9-slim AS backend
 WORKDIR /app
 
-# Instala dependencias necesarias
+# Instalar pkg-config y las dependencias necesarias
 RUN apt-get update && apt-get install -y \
     gcc \
     pkg-config \
     libmariadb-dev
 
-# Copia el archivo de requisitos
-COPY requirements.txt .
-
-# Instala las dependencias de Python
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
+COPY src/ ./
+COPY .env ./
 
-# Copia todo el contenido del proyecto
-COPY . .
+# Copiar el contenido del frontend construido
+COPY --from=frontend /app/build /app/public
 
-# Expone el puerto
-EXPOSE 5000
-
-# Comando para ejecutar la aplicación
-CMD ["python", "src/main.py"]
-
-
+# Comando para iniciar la aplicación
+CMD ["python", "main.py"]

@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
+# Cargar el archivo .env
 load_dotenv()
 
 app = Flask(__name__)
@@ -61,6 +62,7 @@ app.register_blueprint(generateqr_bp, url_prefix='/app')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
+
 
 
 
