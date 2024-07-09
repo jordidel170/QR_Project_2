@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, jsonify, send_from_directory, redirect
 from utils import APIException, generate_sitemap
-from app import app  # Asegúrate de que app.py esté en el mismo directorio que main.py o ajusta la importación según tu estructura de proyecto
+from app import app
 from admin import setup_admin
 from commands import setup_commands
 
@@ -24,11 +24,6 @@ def send_public(path):
 def index():
     return redirect('/app/caja')
 
-# Servir el frontend en /app/caja
-@app.route('/app/caja')
-def serve_caja():
-    return send_from_directory(static_file_dir, 'index.html')
-
 # Redirigir todas las demás rutas al index.html de React
 @app.route('/app/<path:path>')
 def catch_all(path):
@@ -39,5 +34,6 @@ def catch_all(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+
 
 
